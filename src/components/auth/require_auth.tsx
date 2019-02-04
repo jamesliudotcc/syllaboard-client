@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom';
 
 export const PrivateRoute = ({component: ComposedComponent, ...rest}: any) => {
 
@@ -13,18 +13,18 @@ export const PrivateRoute = ({component: ComposedComponent, ...rest}: any) => {
           pathname: '/signin',
           state: {
             from: props.location,
-            message: 'You need to sign in'
-          }
-        }}/>
+            message: 'You need to sign in',
+          },
+        }}/>;
       } else {
-        return <ComposedComponent {...props}/>
+        return <ComposedComponent {...props}/>;
       }
     }
 
     render() {
       return (
         <Route {...rest} render={this.handleRender.bind(this)}/>
-      )
+      );
     }
   }
 
@@ -32,6 +32,6 @@ export const PrivateRoute = ({component: ComposedComponent, ...rest}: any) => {
     return {authenticated: state.auth.authenticated};
   }
 
-  const AuthenticationContainer = connect(mapStateToProps)(Authentication)
-  return <AuthenticationContainer/>
-}
+  const AuthenticationContainer = connect(mapStateToProps)(Authentication);
+  return <AuthenticationContainer/>;
+};

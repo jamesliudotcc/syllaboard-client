@@ -1,14 +1,19 @@
-import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE } from '../actions/types';
+import { Action, Actions } from '../actions/types';
 
-export default function authReducer(state = {}, action: any) {
+export interface AuthState {
+  authenticated: boolean;
+  error: string;
+}
+
+export function authReducer(state: AuthState = {authenticated: false, error: ''}, action: Action) {
   switch (action.type) {
-    case AUTH_USER:
+    case Actions.AUTH_USER:
       return {...state, error: '', authenticated: true};
-    case UNAUTH_USER:
+    case Actions.UNAUTH_USER:
       return {...state, authenticated: false};
-    case AUTH_ERROR:
+    case Actions.AUTH_ERROR:
       return {...state, error: action.payload};
-    case FETCH_MESSAGE:
+    case Actions.FETCH_MESSAGE:
       return {...state, message: action.payload};
     default:
       return state;

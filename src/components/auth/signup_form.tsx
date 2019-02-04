@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { reduxForm, Field } from 'redux-form'
+import * as React from 'react';
+import { Field, reduxForm } from 'redux-form';
 // import RaisedButton from 'material-ui/RaisedButton'
-import { renderTextField } from './form_helpers'
+import { renderTextField } from './form_helpers';
 
 class SignupForm extends React.Component<any, any> {
 
@@ -9,12 +9,12 @@ class SignupForm extends React.Component<any, any> {
     if (this.props.errorMessage) {
       return <div className="alert alert-danger">
         <strong>Oops: </strong>{this.props.errorMessage}
-      </div>
+      </div>;
     }
   }
 
   render() {
-    const {handleSubmit} = this.props
+    const {handleSubmit} = this.props;
 
     return (
       <div>
@@ -43,7 +43,7 @@ class SignupForm extends React.Component<any, any> {
           <button type="submit">Sign Up</button>
         </form>
       </div>
-    )
+    );
   }
 }
 
@@ -51,26 +51,25 @@ const validate = (values: any) => {
   const errors: any = {};
 
   if (values.password !== values.passwordConfirmation) {
-    errors.password = 'Passwords must match'
+    errors.password = 'Passwords must match';
   }
 
   if (!values.email) {
-    errors.email = 'Please enter an email'
+    errors.email = 'Please enter an email';
   }
 
   if (!values.password) {
-    errors.password = 'Please enter a password'
+    errors.password = 'Please enter a password';
   }
 
   if (!values.passwordConfirmation) {
-    errors.passwordConfirmation = 'Please confirm your password'
+    errors.passwordConfirmation = 'Please confirm your password';
   }
 
-  return errors
-}
-
+  return errors;
+};
 
 export default reduxForm({
   form: 'signup',
-  validate
-})(SignupForm)
+  validate,
+})(SignupForm);

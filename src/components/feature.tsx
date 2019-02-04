@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import * as actions from '../actions'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as actions from '../actions';
 
 class Feature extends Component<any, any> {
 
   componentWillMount() {
-    this.props.fetchMessage()
+    this.props.fetchMessage();
   }
 
   render() {
@@ -25,14 +25,14 @@ class Feature extends Component<any, any> {
         </p>
       </div>
 
-    )
+    );
   }
 }
 
 function mapStateToProps(state: any) {
   return {
-    message: state.auth.message
-  }
+    message: state.auth.message,
+  };
 }
 
-export default connect(mapStateToProps, actions)(Feature)
+export default connect(mapStateToProps, actions)(Feature);

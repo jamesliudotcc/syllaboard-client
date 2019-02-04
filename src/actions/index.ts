@@ -1,68 +1,76 @@
-import axios from 'axios'
-import { UNAUTH_USER, AUTH_USER, AUTH_ERROR, FETCH_MESSAGE } from './types'
-const ROOT_URL = 'http://localhost:3090'
+import axios from 'axios';
+import * as AC from './creators';
+import * as AT from './types';
 
-export function signinUser({email, password}: any): any {
+import { Credentials } from '../Types';
 
-  return function (dispatch: any) {
+import { Dispatch } from 'redux';
 
+const ROOT_URL = 'http://localhost:3090';
+
+export const signinUser: any = ({email, password}: Credentials): (dispatch: Dispatch) => void => {
+  return (dispatch) => {
     // submit email and password to server
-    const request = axios.post(`${ROOT_URL}/signin`, {email, password})
+    const request = axios.post(`${ROOT_URL}/signin`, {email, password});
     request
-      .then(response => {
+      .then((response) => {
         // -Save the JWT token
-        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('token', response.data.token);
 
         // -if request is good, we need to update state to indicate user is authenticated
-        dispatch({type: AUTH_USER})
+        dispatch(AC.authUser());
       })
 
       // If request is bad...
       // -Show an error to the user
       .catch(() => {
-        dispatch(authError('bad login info'))
-      })
+        dispatch(AC.authError('bad login info'));
+      });
+  };
+};
 
-  }
-}
+export const signoutUser = () => {
+  localStorage.removeItem('token');
+  return AC.unAuthUser();
+};
 
-export function signoutUser() {
-  localStorage.removeItem('token')
-  return {
-    type: UNAUTH_USER
-  }
-}
-
-export function signupUser({email, password, passwordConfirmation}: any) {
-  return function (dispatch: any) {
+export const signupUser: any = ({email, password, passwordConfirmation}: Credentials) => {
+  return (dispatch: any) => {
     axios.post(`${ROOT_URL}/signup`, {email, password, passwordConfirmation})
-      .then(response => {
-        dispatch({type: AUTH_USER})
-        localStorage.setItem('token', response.data.token)
+      .then((response) => {
+        dispatch(AC.authUser());
+        localStorage.setItem('token', response.data.token);
       })
       .catch(({response}) => {
-        dispatch(authError(response.data.error))
-      })
-  }
-}
+        dispatch(AC.authError(response.data.error));
+      });
+  };
+};
 
-export function authError(error: any) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
-  }
-}
-
-export function fetchMessage() {
-  return function (dispatch: any) {
+export const fetchMessage: any = () => {
+  return (dispatch: any) => {
     axios.get(ROOT_URL, {
-      headers: {authorization: localStorage.getItem('token')}
+      headers: {authorization: localStorage.getItem('token')},
     })
-      .then(response => {
-        dispatch({
-          type: FETCH_MESSAGE,
-          payload: response.data.message
-        })
-      })
-  }
+      .then((response) => {
+        dispatch(AC.fetchMessage(response.data.message));
+      });
+  };
+};
+
+export type DispatchFunction = (dispatch: Dispatch) => void;
+export type AsyncDispatch = (args?: any) => DispatchFunction;
+export interface Credentials {
+  email: string;
+  password: string;
+  passwordConfirmation?: string;
+}
+
+// interface for mapDispatchToProps
+export interface DispatchPropTypes {
+  fetchMessage: typeof fetchMessage;
+  signupUser: typeof signupUser;
+  signoutUser: typeof signoutUser;
+  signinUser: typeof signinUser;
+  authError: typeof AC.authError;
 }

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Header extends Component<any, any> {
 
@@ -12,8 +12,8 @@ class Header extends Component<any, any> {
         </li>,
         <li key={2} className="nav-item">
           <Link className="nav-link" to="/feature">Protected Site</Link>
-        </li>
-      ]
+        </li>,
+      ];
     } else {
       return [
         <li key={1} className="nav-item">
@@ -24,8 +24,8 @@ class Header extends Component<any, any> {
         </li>,
         <li key={3} className="nav-item">
           <Link className="nav-link" to="/feature">Protected Site</Link>
-        </li>
-      ]
+        </li>,
+      ];
     }
   }
 
@@ -37,14 +37,14 @@ class Header extends Component<any, any> {
           {this.renderLinks()}
         </ul>
       </nav>
-    )
+    );
   }
 }
 
 function mapStateToProps(state: any) {
   return {
-    authenticated: state.auth.authenticated
-  }
+    authenticated: state.auth.authenticated,
+  };
 }
 
-export default connect(mapStateToProps,)(Header)
+export default connect(mapStateToProps)(Header);

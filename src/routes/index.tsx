@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router';
 
 import NoMatch from '../components/NoMatch';
 
+import { PrivateRoute } from '../components/auth/require_auth';
 import Signin from '../components/auth/signin';
 import Signout from '../components/auth/signout';
 import Signup from '../components/auth/signup';
-import Feature from '../components/feature';
-import Header from '../components/header';
-import { PrivateRoute } from '../components/auth/require_auth';
-import Welcome from '../components/welcome';
+import Feature from '../components/Feature';
+import Header from '../components/Header';
+import Welcome from '../components/Welcome';
 
 const routes = (
   <div>
