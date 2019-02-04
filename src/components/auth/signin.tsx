@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../actions';
 import SigninForm from './signin_form';
@@ -20,18 +19,6 @@ interface OwnProps {
   test: string;
 }
 
-// interface StateProps {
-//   errorMessage: string;
-//   authenticated: boolean;
-// }
-
-// interface DispatchProps {
-//   // authError: typeof AC.authError;
-//   authError: (error: string) => void;
-//   // signinUser: (cred: Credentials) => void;
-//   signinUser: typeof actions.signinUser;
-// }
-
 const mapStateToProps = (state: State) => ({
   authenticated: state.auth.authenticated,
   errorMessage: state.auth.error,
@@ -42,22 +29,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   signinUser: (cred: Credentials) => actions.signinUser(cred)(dispatch),
 });
 
-// Magic happening here
 const { propsGeneric, connect } =
   connectedComponentHelper<OwnProps>()(mapStateToProps, mapDispatchToProps);
 type ComponentProps = typeof propsGeneric;
 
-// // Use the inferred ComponentProps type as generic type parameter
-// class MyComponent extends React.Component<ComponentProps, {}> {
-//   // ...
-// }
+type Props = RouteComponentProps<any> & ComponentProps;
 
-// // type SignInProps = OwnProps & DispatchProps & StateProps;
-// type SignInProps = RouteComponentProps<any> & StateProps & DispatchProps & OwnProps;
-
-type props = RouteComponentProps<any> & ComponentProps;
-
-class Signin extends React.Component<props, {}> {
+class Signin extends React.Component<Props, {}> {
 
   componentWillUnmount() {
     if (this.props.errorMessage) {
@@ -70,7 +48,7 @@ class Signin extends React.Component<props, {}> {
     return location.state && <div className="alert alert-danger">{location.state.message}</div>;
   }
 
-  handleSubmit = ({email, password}: Credentials) => {
+  handleSubmit = ({email, password}: any) => {
     this.props.signinUser({email, password});
   }
 
@@ -100,41 +78,4 @@ class Signin extends React.Component<props, {}> {
   }
 }
 
-
-// export default connect<StateProps, DispatchProps, RouteComponentProps<any>>(
-// // @ts-ignore
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(Signin);
-
-// export default typedConnect(mapStateToProps, mapDispatchToProps)(Signin);
-
-// export default connect<StateProps, DispatchProps, RouteComponentProps<any>>
-// (mapStateToProps, mapDispatchToProps)(Counter)
-
-// interface OwnProps {
-//   componentOwnProp: string;
-// }
-
-// function mapStateToProps(state: State) {
-//   return {
-//     someProperty: state.someProperty
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   // ...
-// }
-
-// // Magic happening here
-// const { propsGeneric, connect } =
-//   connectedComponentHelper<OwnProps>()(mapStateToProps, mapDispatchToProps);
-// type ComponentProps = typeof propsGeneric;
-
-// // Use the inferred ComponentProps type as generic type parameter
-// class MyComponent extends React.Component<ComponentProps, {}> {
-//   // ...
-// }
-
-// Export the connected component
 export default connect(Signin);

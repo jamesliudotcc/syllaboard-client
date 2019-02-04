@@ -1,21 +1,26 @@
 import * as React from 'react';
 
 import { RouteComponentProps } from 'react-router';
-import { connectedComponentHelper } from './utils/connectedComponent';
-import { State } from './reducers';
-import { Dispatch } from 'redux';
-import { Credentials } from '../../Types';
-import * as actions from '../../actions';
+import { connectedComponentHelper } from './src/utils/connectedComponent';
 
+import { Dispatch } from 'redux';
+import { State } from './src/reducers';
+
+import * as actions from './src/actions';
+import { Credentials } from './src/Types';
+
+// Define props specific to component
 interface OwnProps {
   test: string;
 }
 
+// Define props from Redux state
 const mapStateToProps = (state: State) => ({
   authenticated: state.auth.authenticated,
   errorMessage: state.auth.error,
 });
 
+// Define actions from redux actions
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   authError: (error: string) => dispatch(AC.authError(error)),
   signinUser: (cred: Credentials) => actions.signinUser(cred)(dispatch),
