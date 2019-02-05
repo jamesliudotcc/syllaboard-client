@@ -43,6 +43,7 @@ export const signupUser = ({
   lastName,
   email,
   password,
+  cohortKey,
 }: SignUpInfo) => {
   return (dispatch: Dispatch): void => {
     axios
@@ -51,13 +52,14 @@ export const signupUser = ({
         lastName,
         email,
         password,
+        cohortKey,
       })
       .then(response => {
         dispatch(AC.authUser());
         localStorage.setItem('token', response.data.token);
       })
       .catch(({ response }) => {
-        dispatch(AC.authError(response.data.error));
+        dispatch(AC.authError(response.data));
       });
   };
 };

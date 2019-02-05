@@ -58,6 +58,12 @@ class SignupForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="password"/>
 
+          <Field
+            label="Cohort Key"
+            name="cohortKey"
+            component={renderTextField}
+            type="text"/>
+
           <button type="submit">Sign Up</button>
         </form>
       </div>
@@ -90,6 +96,10 @@ const validate = (values: SignUpInfo) => {
 
   if (!values.passwordConfirmation) {
     errors.passwordConfirmation = 'Please confirm your password';
+  }
+
+  if (!values.cohortKey) {
+    errors.cohortKey = 'Please enter the cohort key sent to you';
   }
 
   return errors;
