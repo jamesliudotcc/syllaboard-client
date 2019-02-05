@@ -1,17 +1,23 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { Credentials } from '../Types';
+import { SERVER_URL } from '../constants';
+import { Credentials, SignUpInfo } from '../Types';
 import * as AC from './creators';
 import * as AT from './types';
 
-const ROOT_URL = 'http://localhost:3090';
+/*
+ * Dispatch Actions
+ */
 
-export const signinUser = ({email, password}: Credentials) => {
+export const signinUser = ({ email, password }: Credentials) => {
   return (dispatch: Dispatch): void => {
     // submit email and password to server
-    const request = axios.post(`${ROOT_URL}/signin`, {email, password});
+    const request = axios.post(`${SERVER_URL}/auth/signin`, {
+      email,
+      password,
+    });
     request
-      .then((response) => {
+      .then(response => {
         // -Save the JWT token
         localStorage.setItem('token', response.data.token);
 
@@ -32,14 +38,25 @@ export const signoutUser = (): AT.UnAuthUser => {
   return AC.unAuthUser();
 };
 
-export const signupUser = ({email, password, passwordConfirmation}: Credentials) => {
+export const signupUser = ({
+  firstName,
+  lastName,
+  email,
+  password,
+}: SignUpInfo) => {
   return (dispatch: Dispatch): void => {
-    axios.post(`${ROOT_URL}/signup`, {email, password, passwordConfirmation})
-      .then((response) => {
+    axios
+      .post(`${SERVER_URL}/auth/signup`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then(response => {
         dispatch(AC.authUser());
         localStorage.setItem('token', response.data.token);
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
         dispatch(AC.authError(response.data.error));
       });
   };
@@ -47,10 +64,11 @@ export const signupUser = ({email, password, passwordConfirmation}: Credentials)
 
 export const fetchMessage = () => {
   return (dispatch: Dispatch): void => {
-    axios.get(ROOT_URL, {
-      headers: {authorization: localStorage.getItem('token')},
-    })
-      .then((response) => {
+    axios
+      .get(`${SERVER_URL}/auth/test`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
+      .then(response => {
         dispatch(AC.fetchMessage(response.data.message));
       });
   };

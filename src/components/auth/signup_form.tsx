@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { renderTextField } from './form_helpers';
 
-import { Credentials } from '../../Types';
+import { SignUpInfo } from '../../Types';
 
 interface OwnProps {
   errorMessage: string;
 }
 
-type Props = OwnProps & InjectedFormProps<Credentials, OwnProps>;
+type Props = OwnProps & InjectedFormProps<SignUpInfo, OwnProps>;
 
 class SignupForm extends React.Component<Props, {}> {
 
@@ -27,6 +27,18 @@ class SignupForm extends React.Component<Props, {}> {
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
+
+          <Field
+            label="First Name"
+            name="firstName"
+            component={renderTextField}
+            type="text"/>
+
+          <Field
+            label="Last Name"
+            name="lastName"
+            component={renderTextField}
+            type="text"/>
 
           <Field
             label="Email"
@@ -53,8 +65,16 @@ class SignupForm extends React.Component<Props, {}> {
   }
 }
 
-const validate = (values: any) => {
+const validate = (values: SignUpInfo) => {
   const errors: any = {};
+
+  if (!values.firstName) {
+    errors.firstName = 'Please enter a first name';
+  }
+
+  if (!values.lastName) {
+    errors.lastName = 'Please enter a last name';
+  }
 
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Passwords must match';
@@ -75,7 +95,7 @@ const validate = (values: any) => {
   return errors;
 };
 
-export default reduxForm<Credentials, OwnProps>({
+export default reduxForm<SignUpInfo, OwnProps>({
   form: 'signup',
   validate,
 })(SignupForm);

@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import * as actions from '../../actions';
 import * as AC from '../../actions/creators';
 import { State } from '../../reducers';
-import { Credentials } from '../../Types';
+import { SignUpInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import SignupForm from './Signup_form';
 
@@ -16,7 +16,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   authError: (error: string) => dispatch(AC.authError(error)),
-  signupUser: (cred: Credentials) => actions.signupUser(cred)(dispatch),
+  signupUser: (cred: SignUpInfo) => actions.signupUser(cred)(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(
@@ -34,8 +34,8 @@ class Signup extends React.Component<Props, {}> {
     }
   }
 
-  handleSubmit = ({ email, password, passwordConfirmation }: any): any => {
-    this.props.signupUser({ email, password, passwordConfirmation });
+  handleSubmit = (input: SignUpInfo): any => {
+    this.props.signupUser(input);
   };
 
   getRedirectPath() {
