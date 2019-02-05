@@ -1,23 +1,13 @@
 import * as React from 'react';
-import { Redirect } from 'react-router-dom';
-import * as actions from '../../actions';
-import SigninForm from './signin_form';
-
-
-import * as AC from '../../actions/creators';
-
-import { Dispatch } from 'redux';
-import { DispatchPropTypes } from '../../actions';
-import { State } from '../../reducers';
-
 import { RouteComponentProps } from 'react-router';
+import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import * as actions from '../../actions';
+import * as AC from '../../actions/creators';
+import { State } from '../../reducers';
 import { Credentials } from '../../Types';
-
 import { connectedComponentHelper } from '../../utils/connectedComponent';
-
-interface OwnProps {
-  test: string;
-}
+import SigninForm from './Signin_form';
 
 const mapStateToProps = (state: State) => ({
   authenticated: state.auth.authenticated,
@@ -30,7 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const { propsGeneric, connect } =
-  connectedComponentHelper<OwnProps>()(mapStateToProps, mapDispatchToProps);
+  connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
 type ComponentProps = typeof propsGeneric;
 
 type Props = RouteComponentProps<any> & ComponentProps;
@@ -48,7 +38,7 @@ class Signin extends React.Component<Props, {}> {
     return location.state && <div className="alert alert-danger">{location.state.message}</div>;
   }
 
-  handleSubmit = ({email, password}: any) => {
+  handleSubmit = ({email, password}: Credentials) => {
     this.props.signinUser({email, password});
   }
 
@@ -71,8 +61,6 @@ class Signin extends React.Component<Props, {}> {
       :
       <div>
         {this.displayRedirectMessages()}
-        {/*
-        //@ts-ignore */}
         <SigninForm onSubmit={this.handleSubmit} errorMessage={this.props.errorMessage}/>
       </div>;
   }

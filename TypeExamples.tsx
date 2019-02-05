@@ -1,15 +1,13 @@
 import * as React from 'react';
-
 import { RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
+import * as actions from './src/actions';
+import * as AC from './src/actions/creators';
+import { State } from './src/reducers';
+import { Credentials } from './src/Types';
 import { connectedComponentHelper } from './src/utils/connectedComponent';
 
-import { Dispatch } from 'redux';
-import { State } from './src/reducers';
-
-import * as actions from './src/actions';
-import { Credentials } from './src/Types';
-
-// Define props specific to component
+// Define props specific to component if needed
 interface OwnProps {
   test: string;
 }
@@ -28,6 +26,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // Magic happening here
 // Use helper function to attach redux state/dispatch types to OwnProps
+// Replace OwnProps with {} if component doesn't have it's own props
 const { propsGeneric, connect } =
   connectedComponentHelper<OwnProps>()(mapStateToProps, mapDispatchToProps);
 type ReduxProps = typeof propsGeneric;
@@ -41,7 +40,7 @@ class MyComponent extends React.Component<ComponentProps, {}> {
   render() {
     return (
       <div>
-        Useful things go here
+        {this.props.location}
       </div>
     );
   }

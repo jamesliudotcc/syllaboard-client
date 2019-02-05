@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { State } from '../../reducers';
 
-export const PrivateRoute = ({component: ComposedComponent, ...rest}: any) => {
+// TODO: This will check if user can check certain data. Nothing has been done yet
+
+export const AdminRoute = ({component: ComposedComponent, ...rest}: any) => {
 
   class Authentication extends React.Component<any, any> {
 
     // redirect if not authenticated; otherwise, return the component imputted into <PrivateRoute />
-    handleRender = (props: any) => {
+    handleRender = async (props: any) => {
       if (!this.props.authenticated) {
         return <Redirect to={{
           pathname: '/signin',
@@ -18,6 +20,7 @@ export const PrivateRoute = ({component: ComposedComponent, ...rest}: any) => {
           },
         }}/>;
       } else {
+        // TODO: ping server to check auth
         return <ComposedComponent {...props}/>;
       }
     }

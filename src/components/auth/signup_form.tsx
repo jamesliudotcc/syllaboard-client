@@ -1,9 +1,16 @@
 import * as React from 'react';
-import { Field, reduxForm } from 'redux-form';
-// import RaisedButton from 'material-ui/RaisedButton'
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { renderTextField } from './form_helpers';
 
-class SignupForm extends React.Component<any, any> {
+import { Credentials } from '../../Types';
+
+interface OwnProps {
+  errorMessage: string;
+}
+
+type Props = OwnProps & InjectedFormProps<Credentials, OwnProps>;
+
+class SignupForm extends React.Component<Props, {}> {
 
   renderAlert() {
     if (this.props.errorMessage) {
@@ -39,7 +46,6 @@ class SignupForm extends React.Component<any, any> {
             component={renderTextField}
             type="password"/>
 
-          {/* <RaisedButton type="submit" label="Sign Up" primary={true} labelColor={'#FFFFFF'}/> */}
           <button type="submit">Sign Up</button>
         </form>
       </div>
@@ -69,7 +75,7 @@ const validate = (values: any) => {
   return errors;
 };
 
-export default reduxForm({
+export default reduxForm<Credentials, OwnProps>({
   form: 'signup',
   validate,
 })(SignupForm);

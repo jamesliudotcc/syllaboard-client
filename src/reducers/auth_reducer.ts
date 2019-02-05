@@ -3,9 +3,16 @@ import { Action, Actions } from '../actions/types';
 export interface AuthState {
   authenticated: boolean;
   error: string;
+  message: string;
 }
 
-export function authReducer(state: AuthState = {authenticated: false, error: ''}, action: Action) {
+const blankState: AuthState = {
+  authenticated: false,
+  error: '',
+  message: '',
+};
+
+export function authReducer(state: AuthState = blankState, action: Action) {
   switch (action.type) {
     case Actions.AUTH_USER:
       return {...state, error: '', authenticated: true};

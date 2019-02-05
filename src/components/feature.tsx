@@ -1,9 +1,25 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
 import * as actions from '../actions';
+import { State } from '../reducers';
+import { connectedComponentHelper } from '../utils/connectedComponent';
 
-class Feature extends Component<any, any> {
+const mapStateToProps = (state: State) => ({
+  message: state.auth.message,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchMessage: () => actions.fetchMessage()(dispatch),
+});
+
+const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
+type ComponentProps = typeof propsGeneric;
+
+type Props = RouteComponentProps<any> & ComponentProps;
+
+class Feature extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
@@ -24,15 +40,8 @@ class Feature extends Component<any, any> {
           <Link to={'/signin'}>/signin</Link> | <Link to={'/signup'}>/signup</Link>
         </p>
       </div>
-
     );
   }
 }
 
-function mapStateToProps(state: any) {
-  return {
-    message: state.auth.message,
-  };
-}
-
-export default connect(mapStateToProps, actions)(Feature);
+export default connect(Feature);

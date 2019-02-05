@@ -1,20 +1,42 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
 import * as actions from '../../actions';
-import SignupForm from './signup_form';
+import * as AC from '../../actions/creators';
+import { State } from '../../reducers';
+import { Credentials } from '../../Types';
+import { connectedComponentHelper } from '../../utils/connectedComponent';
+import SignupForm from './Signup_form';
 
-class Signup extends React.Component<any, any> {
+const mapStateToProps = (state: State) => ({
+  authenticated: state.auth.authenticated,
+  errorMessage: state.auth.error,
+});
 
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  authError: (error: string) => dispatch(AC.authError(error)),
+  signupUser: (cred: Credentials) => actions.signupUser(cred)(dispatch),
+});
+
+const { propsGeneric, connect } = connectedComponentHelper<{}>()(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+type ComponentProps = typeof propsGeneric;
+
+type Props = RouteComponentProps<any> & ComponentProps;
+
+class Signup extends React.Component<Props, {}> {
   componentWillUnmount() {
     if (this.props.errorMessage) {
-      this.props.authError(null);
+      this.props.authError('');
     }
   }
 
-  handleSubmit = ({email, password, passwordConfirmation}: any): any => {
-    this.props.signupUser({email, password, passwordConfirmation});
-  }
+  handleSubmit = ({ email, password, passwordConfirmation }: any): any => {
+    this.props.signupUser({ email, password, passwordConfirmation });
+  };
 
   getRedirectPath() {
     const locationState = this.props.location.state;
@@ -26,26 +48,24 @@ class Signup extends React.Component<any, any> {
   }
 
   render() {
-    return (this.props.authenticated) ?
-      <Redirect to={{
-        pathname: this.getRedirectPath(), state: {
-          from: this.props.location,
-        },
-      }}/>
-      :
+    return this.props.authenticated ? (
+      <Redirect
+        to={{
+          pathname: this.getRedirectPath(),
+          state: {
+            from: this.props.location,
+          },
+        }}
+      />
+    ) : (
       <div>
-        {/*
-        // @ts-ignore */}
-        <SignupForm onSubmit={this.handleSubmit} errorMessage={this.props.errorMessage}/>
-      </div>;
+        <SignupForm
+          onSubmit={this.handleSubmit}
+          errorMessage={this.props.errorMessage}
+        />
+      </div>
+    );
   }
 }
 
-function mapStateToProps(state: any) {
-  return {
-    authenticated: state.auth.authenticated,
-    errorMessage: state.auth.error,
-  };
-}
-
-export default connect(mapStateToProps, actions)(Signup);
+export default connect(Signup);

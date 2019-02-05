@@ -1,9 +1,23 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
 import * as actions from '../../actions';
+import { State } from '../../reducers';
+import { connectedComponentHelper } from '../../utils/connectedComponent';
 
-class Signout extends React.Component<any, any> {
+const mapStateToProps = (state: State) => ({});
 
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  signoutUser: () => dispatch(actions.signoutUser()),
+});
+
+const { propsGeneric, connect } =
+  connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
+type ComponentProps = typeof propsGeneric;
+
+type Props = RouteComponentProps<any> & ComponentProps;
+
+class Signout extends React.Component<Props, {}> {
   componentWillMount() {
     this.props.signoutUser();
   }
@@ -13,4 +27,4 @@ class Signout extends React.Component<any, any> {
   }
 }
 
-export default connect(null, actions)(Signout);
+export default connect(Signout);

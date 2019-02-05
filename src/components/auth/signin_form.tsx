@@ -2,14 +2,15 @@ import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { renderTextField } from './form_helpers';
 
-// TODO: Fix types
+import { Credentials } from '../../Types';
+
 interface OwnProps {
   errorMessage: string;
 }
 
-type Props = OwnProps & InjectedFormProps;
+type Props = OwnProps & InjectedFormProps<Credentials, OwnProps>;
 
-class SigninForm extends React.Component<Props, any> {
+class SigninForm extends React.Component<Props, {}> {
 
   renderAlert() {
     if (this.props.errorMessage) {
@@ -46,6 +47,6 @@ class SigninForm extends React.Component<Props, any> {
   }
 }
 
-export default reduxForm({
+export default reduxForm<Credentials, OwnProps>({
   form: 'signin',
-})(SigninForm as any);
+})(SigninForm);
