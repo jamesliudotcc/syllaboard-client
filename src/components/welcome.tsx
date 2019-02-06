@@ -1,7 +1,14 @@
 import React from 'react';
 
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 export default () => {
   return (
-    <div>This is the landing page... sign in to access the secure page</div>
+    <div>
+      <div>This is the landing page... sign in to access the secure page</div>
+      <CircularProgress />
+    </div>
   );
 };

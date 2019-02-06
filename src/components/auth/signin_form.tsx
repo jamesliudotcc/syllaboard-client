@@ -2,6 +2,10 @@ import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { renderTextField } from '../helpers/form_helpers';
 
+import Button from '@material-ui/core/Button'
+import Input from '@material-ui/core/Input'
+
+
 import { Credentials } from '../../Types';
 
 interface OwnProps {
@@ -40,6 +44,9 @@ class SigninForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="password"/>
 
+          {/* <Button>
+            Sign In
+          </Button> */}
           <button type="submit">Sign In</button>
         </form>
       </div>

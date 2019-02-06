@@ -3,6 +3,8 @@ import * as React from 'react';
 import DatePicker from 'react-date-picker';
 import Select from 'react-select';
 
+import TextField from '@material-ui/core/TextField'
+
 // Define stateless component to render input and errors
 export const renderTextField = ({
   input,
@@ -12,9 +14,12 @@ export const renderTextField = ({
   ...custom
 }: any): any => (
   <div>
-    <label>{label}</label>
-    <input type={type} {...input} {...custom} />
-
+    <TextField
+      type={type}
+      label={label}
+      {...input}
+      {...custom}
+    />
     {touched && error && <span className="error">{error}</span>}
   </div>
 );

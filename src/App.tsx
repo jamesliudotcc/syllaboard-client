@@ -3,6 +3,14 @@ import {History} from 'history';
 import React from 'react';
 import routes from './routes';
 
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
+
 interface IAppProps {
   history: History;
 }
@@ -10,7 +18,9 @@ interface IAppProps {
 const App = ({ history }: IAppProps) => {
   return (
     <ConnectedRouter history={history}>
-      { routes }
+      <MuiThemeProvider theme={theme}>
+        { routes }
+      </MuiThemeProvider>
     </ConnectedRouter>
   );
 };
