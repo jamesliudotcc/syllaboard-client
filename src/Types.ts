@@ -1,3 +1,12 @@
+export interface Cohort {
+  name: string;
+  campus: string;
+  students?: []; // This may be trouble
+  instructors: [];
+  startDate: Date;
+  endDate: Date;
+}
+
 export interface Credentials {
   email: string;
   password: string;

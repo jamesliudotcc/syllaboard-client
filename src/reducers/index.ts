@@ -10,6 +10,7 @@ const rootReducer = (history: History) => combineReducers({
   router: connectRouter(history),
 });
 
+// Can this block be deleted?
 export interface IState {
   router: RouterState;
   error: string;

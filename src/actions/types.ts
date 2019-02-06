@@ -9,6 +9,7 @@ export type Action =
   | FetchMessage
   | OtherAction;
 
+
 export enum Actions {
   AUTH_USER = 'AUTH_USER',
   UNAUTH_USER = 'UNAUTH_USER',
@@ -38,6 +39,10 @@ export interface FetchMessage {
 export interface OtherAction {
   type: Actions.OTHER_ACTION;
 }
+
+
+
+
 
 /*
  * dispatch function types
