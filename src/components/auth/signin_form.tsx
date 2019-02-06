@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderTextField } from './form_helpers';
+import { renderTextField } from '../helpers/form_helpers';
 
 import { Credentials } from '../../Types';
 

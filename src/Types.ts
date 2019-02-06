@@ -11,3 +11,10 @@ export interface SignUpInfo {
   passwordConfirmation: string;
   cohortKey: string;
 }
+
+export interface NewCohortInfo {
+  name: string;
+  campus: string; // Campus ID
+  startDate: Date;
+  endDate: Date;
+}

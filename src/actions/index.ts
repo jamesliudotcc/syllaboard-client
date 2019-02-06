@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
-import { Credentials, SignUpInfo } from '../Types';
+import { Credentials, NewCohortInfo, SignUpInfo } from '../Types';
 import * as AC from './creators';
 import * as AT from './types';
 
@@ -72,6 +72,24 @@ export const fetchMessage = () => {
       })
       .then(response => {
         dispatch(AC.fetchMessage(response.data.message));
+      });
+  };
+};
+
+export const addNewCohort = (input: NewCohortInfo) => {
+  return (dispatch: Dispatch): void => {
+    axios
+      .post(
+        `${SERVER_URL}/cohort/new`,
+        { data: input },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then(response => {
+        // TODO: Add updated info to redux state
+        console.log(response);
+      })
+      .catch(({ response }) => {
+        dispatch(AC.authError(response.data));
       });
   };
 };

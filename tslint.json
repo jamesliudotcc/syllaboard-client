@@ -10,7 +10,7 @@
         "no-console": false,
         "member-access": [true, "no-public"],
         "interface-name": false,
-        "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+        "trailing-comma": [true, {"multiline": "always", "singleline": "never", "esSpecCompliant": true}],
         "object-literal-sort-keys": false
     },
     "rulesDirectory": []

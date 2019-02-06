@@ -11,6 +11,8 @@ import Feature from '../components/Feature';
 import Header from '../components/Header';
 import Welcome from '../components/Welcome';
 
+import AddCohort from '../components/admin/AddCohort';
+
 const routes = (
   <div>
     <Header/>
@@ -21,6 +23,8 @@ const routes = (
       <Route path="/signup" component={Signup} />
       <PrivateRoute path="/feature" component={() => (
         <Feature />)} />
+      <Route path="/add/cohort" component={() => (
+        <AddCohort />)} />
       <Route component={NoMatch} />
     </Switch>
   </div>
