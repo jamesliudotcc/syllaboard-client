@@ -20,6 +20,13 @@ class AddCohortForm extends React.Component<Props, {}> {
     }
   }
 
+  componentWillMount () {
+    this.props.initialize({
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+  }
+
   render() {
     const {handleSubmit} = this.props;
     // TODO: Pull in available campuses from DB

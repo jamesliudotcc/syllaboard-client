@@ -4,6 +4,8 @@ import { renderTextField } from '../helpers/form_helpers';
 
 import { SignUpInfo } from '../../Types';
 
+import Button from '@material-ui/core/Button';
+
 interface OwnProps {
   errorMessage: string;
 }
@@ -64,7 +66,9 @@ class SignupForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="text"/>
 
-          <button type="submit">Sign Up</button>
+          <Button type="submit" variant="contained" color="primary">
+            Sign In
+          </Button>
         </form>
       </div>
     );

@@ -1,9 +1,10 @@
-import moment from 'moment';
 import * as React from 'react';
-import DatePicker from 'react-date-picker';
 import Select from 'react-select';
 
 import TextField from '@material-ui/core/TextField'
+
+import { DatePicker } from 'material-ui-pickers';
+
 
 // Define stateless component to render input and errors
 export const renderTextField = ({
@@ -33,12 +34,11 @@ export const renderDatePicker = ({
   ...custom
 }: any): any => (
   <div>
-    <label>{label}</label>
     <DatePicker
+      label={label}
       {...input}
       {...custom}
       autoOk={true}
-      dateForm="MM/DD/YYYY"
       onBlur={() => {
         return;
       }}

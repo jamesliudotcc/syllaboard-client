@@ -9,6 +9,7 @@ export default () => {
     <div>
       <div>This is the landing page... sign in to access the secure page</div>
       <CircularProgress />
+      <Button>Hi</Button>
     </div>
   );
 };

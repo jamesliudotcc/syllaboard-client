@@ -3,13 +3,12 @@ import {History} from 'history';
 import React from 'react';
 import routes from './routes';
 
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import UiTheme from './style/theme'; 
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-  },
-});
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+
 
 interface IAppProps {
   history: History;
@@ -18,8 +17,10 @@ interface IAppProps {
 const App = ({ history }: IAppProps) => {
   return (
     <ConnectedRouter history={history}>
-      <MuiThemeProvider theme={theme}>
-        { routes }
+      <MuiThemeProvider theme={UiTheme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          { routes }
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     </ConnectedRouter>
   );

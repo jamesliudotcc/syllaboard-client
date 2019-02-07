@@ -3,16 +3,29 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { renderTextField } from '../helpers/form_helpers';
 
 import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
+import Typography from '@material-ui/core/Typography';
+
 
 
 import { Credentials } from '../../Types';
+
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
+
+import { label } from '../../style/generalStyles';
+
+const styles = (theme: Theme) => createStyles({
+  spaced: {
+    margin: '1rem',
+  },
+  label: label(theme),
+});
 
 interface OwnProps {
   errorMessage: string;
 }
 
-type Props = OwnProps & InjectedFormProps<Credentials, OwnProps>;
+type Props = OwnProps & InjectedFormProps<Credentials, OwnProps> & WithStyles<typeof styles>;
 
 class SigninForm extends React.Component<Props, {}> {
 
@@ -25,11 +38,13 @@ class SigninForm extends React.Component<Props, {}> {
   }
 
   render() {
-    const {handleSubmit} = this.props;
+    const {handleSubmit, classes} = this.props;
 
     return (
       <div>
         {this.renderAlert()}
+        <Typography variant="h1">Sign In</Typography>
+        <h2 className={classes.label}>Enter Info Here</h2> 
         <form onSubmit={handleSubmit}>
 
           <Field
@@ -44,10 +59,9 @@ class SigninForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="password"/>
 
-          {/* <Button>
+          <Button type="submit" variant="contained" color="primary" className={classes.spaced}>
             Sign In
-          </Button> */}
-          <button type="submit">Sign In</button>
+          </Button>
         </form>
       </div>
     );
@@ -56,4 +70,4 @@ class SigninForm extends React.Component<Props, {}> {
 
 export default reduxForm<Credentials, OwnProps>({
   form: 'signin',
-})(SigninForm);
+})(withStyles(styles)(SigninForm));
