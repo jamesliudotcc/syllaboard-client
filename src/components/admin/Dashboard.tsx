@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
+import * as adminActions from '../../actions/admin_dashboard';
+import { addNewCohort } from '../../actions/cohort';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
+import { NewCohortInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
+import AddCohortForm from './AddCohort_form';
 
-import * as adminActions from '../../actions/admin_dashboard';
-
-import AddCohort from './AddCohort';
+// TODO: create and import ShowAllCohorts, ShowAllInstructors, and ShowAllStudents (the edit and delete functionality for those will live in thos components)
 
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
+  errorMessage: state.auth.error,
   ...state.adminDashboard,
 });
 
@@ -19,6 +22,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
   toggleSendRegistration: () => dispatch(adminActions.toggleSendRegistration()),
   toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
+  // Cohort actions
+  addNewCohort: (cohortInfo: NewCohortInfo) =>
+    addNewCohort(cohortInfo)(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
@@ -32,10 +38,19 @@ class AdminDashboard extends React.Component<Props, {}> {
     this.props.fetchMessage();
   }
 
+  handleSubmit = (input: NewCohortInfo) => {
+    this.props.addNewCohort(input);
+  };
+
   render() {
     const addCohortPanel = this.props.showAddCohort
       ?
-        <div>Add Cohort From goes here</div>
+        <div>
+          <AddCohortForm
+            onSubmit={this.handleSubmit}
+            errorMessage={this.props.errorMessage}
+          />
+        </div>
       :
         <div></div>;                                     
 

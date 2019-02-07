@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
-import { Credentials, NewCohortInfo, SignUpInfo } from '../Types';
+import { Credentials, SignUpInfo } from '../Types';
 
 
 /*

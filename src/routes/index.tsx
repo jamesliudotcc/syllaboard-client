@@ -13,8 +13,6 @@ import Welcome from '../components/Welcome';
 
 import Dashboard from '../components/admin/Dashboard';
 
-import AddCohort from '../components/admin/AddCohort';
-
 
 const routes = (
   <div>
@@ -28,8 +26,6 @@ const routes = (
         <Feature />)} />
       <PrivateRoute path="/dashboard" component={() => (
         <Dashboard />)} />
-      <Route path="/add/cohort" component={() => (
-        <AddCohort />)} />
       <Route component={NoMatch} />
     </Switch>
   </div>
