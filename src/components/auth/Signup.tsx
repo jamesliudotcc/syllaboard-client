@@ -2,8 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import * as actions from '../../actions';
-import * as AC from '../../actions/creators';
+import { authError, signupUser } from '../../actions/auth';
 import { State } from '../../reducers';
 import { SignUpInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
@@ -15,8 +14,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  authError: (error: string) => dispatch(AC.authError(error)),
-  signupUser: (cred: SignUpInfo) => actions.signupUser(cred)(dispatch),
+  authError: (error: string) => dispatch(authError(error)),
+  signupUser: (cred: SignUpInfo) => signupUser(cred)(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(

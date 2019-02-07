@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import * as AC from './actions/creators';
+import { authUser } from './actions/auth';
 import configureStore, { history } from './configureStore';
 
 import App from './App';
@@ -10,7 +10,7 @@ const store = configureStore();
 
 const token = localStorage.getItem('token');
 if (token) {
-  store.dispatch(AC.authUser());
+  store.dispatch(authUser());
 }
 
 const render = () => {

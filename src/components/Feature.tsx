@@ -2,16 +2,16 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import * as actions from '../actions';
+import { fetchMessage } from '../actions/notifications';
 import { State } from '../reducers';
 import { connectedComponentHelper } from '../utils/connectedComponent';
 
 const mapStateToProps = (state: State) => ({
-  message: state.auth.message,
+  message: state.notifications.message,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchMessage: () => actions.fetchMessage()(dispatch),
+  fetchMessage: () => fetchMessage()(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);

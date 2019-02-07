@@ -1,18 +1,13 @@
-import * as React from 'react';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderTextField } from '../helpers/form_helpers';
-
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography';
-
-
-
-import { Credentials } from '../../Types';
-
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import { Theme } from '@material-ui/core';
-
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { label } from '../../style/generalStyles';
+import { Credentials } from '../../Types';
+import { renderTextField } from '../helpers/form_helpers';
+
 
 const styles = (theme: Theme) => createStyles({
   spaced: {

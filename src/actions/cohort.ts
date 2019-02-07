@@ -1,7 +1,12 @@
-import { Cohort } from '../Types';
+import axios from 'axios';
+import { AxiosResponse } from 'axios';
+import { Dispatch } from 'redux';
+import { SERVER_URL } from '../constants';
+import { Cohort, NewCohortInfo } from '../Types';
+import { fetchFailed, fetchSuccess } from './notifications';
 
 /*
- * action types for cohort
+ * action types
  */
 
 export type Action = CreateCohort | GetAllCohorts | UpdateCohort | DeleteCohort;
@@ -34,7 +39,9 @@ export interface OtherAction {
   type: Actions.OTHER_ACTION;
 }
 
-// Creators
+/*
+ * action creators
+ */
 
 export const createCohort = (payload: Cohort): CreateCohort => ({
   type: Actions.CREATE_COHORT,
@@ -54,5 +61,23 @@ export const deleteCohort = (payload: Cohort): DeleteCohort => ({
 });
 
 /*
- * dispatch function types
+ * dispatch functions (async)
  */
+
+export const addNewCohort = (input: NewCohortInfo) => {
+  return (dispatch: Dispatch): void => {
+    axios.post(
+        `${SERVER_URL}/cohort/new`,
+        { data: input },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        // TODO: Add updated info to redux state
+        console.log(response);
+        dispatch(fetchSuccess(response.statusText))
+      })
+      .catch(({ response }: { response: AxiosResponse }) => {
+        dispatch(fetchFailed(response.statusText));
+      });
+  };
+};

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import * as actions from '../../actions';
-import * as AC from '../../actions/creators';
+import { authError } from '../../actions/auth';
+import { addNewCohort } from '../../actions/cohort';
 import { State } from '../../reducers';
 import { NewCohortInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
@@ -15,9 +15,9 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  authError: (error: string) => dispatch(AC.authError(error)),
+  authError: (error: string) => dispatch(authError(error)),
   addNewCohort: (cohortInfo: NewCohortInfo) =>
-    actions.addNewCohort(cohortInfo)(dispatch),
+    addNewCohort(cohortInfo)(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(

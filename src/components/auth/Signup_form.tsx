@@ -1,10 +1,8 @@
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderTextField } from '../helpers/form_helpers';
-
 import { SignUpInfo } from '../../Types';
-
-import Button from '@material-ui/core/Button';
+import { renderTextField } from '../helpers/form_helpers';
 
 interface OwnProps {
   errorMessage: string;
@@ -23,7 +21,7 @@ class SignupForm extends React.Component<Props, {}> {
   }
 
   render() {
-    const {handleSubmit} = this.props;
+    const { handleSubmit } = this.props;
 
     return (
       <div>

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
-import * as actions from '../../actions';
+import { signoutUser } from '../../actions/auth';
 import { State } from '../../reducers';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 
 const mapStateToProps = (state: State) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  signoutUser: () => dispatch(actions.signoutUser()),
+  signoutUser: () => dispatch(signoutUser()),
 });
 
 const { propsGeneric, connect } =
