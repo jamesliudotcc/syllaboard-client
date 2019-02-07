@@ -1,4 +1,4 @@
-import { Cohort } from "../Types";
+import { Cohort } from '../Types';
 
 /*
  * action types for cohort
@@ -7,11 +7,11 @@ import { Cohort } from "../Types";
 export type Action = CreateCohort | GetAllCohorts | UpdateCohort | DeleteCohort;
 
 export enum Actions {
-  CREATE_COHORT = "CREATE_COHORT",
-  GET_ALL_COHORTS = "GET_ALL_COHORTS",
-  UPDATE_COHORT = "UPDATE_COHORT",
-  DELETE_COHORT = "DELETE_COHORT",
-  OTHER_ACTION = "__any_other_action__"
+  CREATE_COHORT = 'CREATE_COHORT',
+  GET_ALL_COHORTS = 'GET_ALL_COHORTS',
+  UPDATE_COHORT = 'UPDATE_COHORT',
+  DELETE_COHORT = 'DELETE_COHORT',
+  OTHER_ACTION = '__any_other_action__',
 }
 
 export interface CreateCohort {
@@ -38,19 +38,19 @@ export interface OtherAction {
 
 export const createCohort = (payload: Cohort): CreateCohort => ({
   type: Actions.CREATE_COHORT,
-  payload
+  payload,
 });
 export const getAllCohorts = (payload: Cohort[]): GetAllCohorts => ({
   type: Actions.GET_ALL_COHORTS,
-  payload
+  payload,
 });
 export const updateCohort = (payload: Cohort): UpdateCohort => ({
   type: Actions.UPDATE_COHORT,
-  payload
+  payload,
 });
 export const deleteCohort = (payload: Cohort): DeleteCohort => ({
   type: Actions.DELETE_COHORT,
-  payload
+  payload,
 });
 
 /*

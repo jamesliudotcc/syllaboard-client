@@ -1,10 +1,13 @@
 import * as React from 'react';
-import Select from 'react-select';
 
-import TextField from '@material-ui/core/TextField'
-
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@material-ui/core';
 import { DatePicker } from 'material-ui-pickers';
-
 
 // Define stateless component to render input and errors
 export const renderTextField = ({
@@ -15,12 +18,7 @@ export const renderTextField = ({
   ...custom
 }: any): any => (
   <div>
-    <TextField
-      type={type}
-      label={label}
-      {...input}
-      {...custom}
-    />
+    <TextField type={type} label={label} {...input} {...custom} />
     {touched && error && <span className="error">{error}</span>}
   </div>
 );
@@ -55,17 +53,32 @@ export const renderDropdown = ({
   label,
   meta: { touched, error },
   ...custom
-}: any): any => (
-  <div>
-    <label>{label}</label>
-    <Select
-      options={options}
-      {...input}
-      {...custom}
-      onBlur={() => {
-        return;
-      }}
-    />
-    {touched && error && <span>{error}</span>}
-  </div>
-);
+}: any): any => {
+  const menuItems = options.map((option: any, i: number) => (
+    <MenuItem key={i} value={option.value}>
+      {option.label}
+    </MenuItem>
+  ));
+
+  return (
+    <div>
+      <FormControl>
+        <InputLabel htmlFor={name}>{label}</InputLabel>
+        <Select
+          {...input}
+          {...custom}
+          inputProps={{
+            name,
+            id: name,
+          }}
+          onBlur={() => {
+            return;
+          }}
+        >
+          {menuItems}
+        </Select>
+        {touched && error && <span>{error}</span>}
+      </FormControl>
+    </div>
+  );
+};

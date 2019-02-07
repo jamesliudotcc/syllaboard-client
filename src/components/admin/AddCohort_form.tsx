@@ -32,11 +32,11 @@ class AddCohortForm extends React.Component<Props, {}> {
     // TODO: Pull in available campuses from DB
     const tempCampusOptions = [
       {
-        value: 'seattleIdGoesHere',
+        value: 'seattle',
         label: 'Seattle',
       },
       {
-        value: 'sanFransiscoIdGoesHere',
+        value: 'sanFransisco',
         label: 'San Fransisco',
       },
     ]
