@@ -16,6 +16,9 @@ class Header extends Component<any, any> {
         <li key={3} className="nav-item">
           <Link className="nav-link" to="/add/cohort">Add Cohort</Link>
         </li>,
+        <li key={4} className="nav-item">
+          <Link className="nav-link" to="/dashboard">Dashboard</Link>
+        </li>,
       ];
     } else {
       return [

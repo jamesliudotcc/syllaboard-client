@@ -11,7 +11,10 @@ import Feature from '../components/Feature';
 import Header from '../components/Header';
 import Welcome from '../components/Welcome';
 
+import Dashboard from '../components/admin/Dashboard';
+
 import AddCohort from '../components/admin/AddCohort';
+
 
 const routes = (
   <div>
@@ -23,6 +26,8 @@ const routes = (
       <Route path="/signup" component={Signup} />
       <PrivateRoute path="/feature" component={() => (
         <Feature />)} />
+      <PrivateRoute path="/dashboard" component={() => (
+        <Dashboard />)} />
       <Route path="/add/cohort" component={() => (
         <AddCohort />)} />
       <Route component={NoMatch} />

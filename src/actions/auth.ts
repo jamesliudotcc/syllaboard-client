@@ -112,6 +112,7 @@ export const signupUser = ({
         localStorage.setItem('token', response.data.token);
       })
       .catch(({ response }) => {
+        // TODO: format errors
         dispatch(authError(response.data));
       });
   };

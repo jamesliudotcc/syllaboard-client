@@ -33,7 +33,7 @@ class Signup extends React.Component<Props, {}> {
     }
   }
 
-  handleSubmit = (input: SignUpInfo): any => {
+  handleSubmit = (input: SignUpInfo): void => {
     this.props.signupUser(input);
   };
 
