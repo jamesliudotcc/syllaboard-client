@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Cohort } from '../../Types';
 import CohortCard from './CohortCard';
+import Grid from '@material-ui/core/Grid';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({
@@ -19,12 +20,17 @@ type Props = OwnProps & WithStyles<typeof styles>;
 class ShowAllCohorts extends React.Component<Props, {}> {
   
   render () {
-    const cohortCards = this.props.cohorts.map(cohort => (<CohortCard key={cohort.instructorKey} {...cohort} />));
-    
+    const cohortCards = this.props.cohorts.map(cohort => (
+    <Grid item xs={12} sm={6}>
+      <CohortCard  key={cohort.instructorKey} {...cohort} />
+    </Grid>
+    ));
+
     return (
-      <div>
+      <Grid container spacing={24} justify="space-around"
+      alignItems="flex-start">
         {cohortCards}
-      </div>
+      </Grid>
     );
   }
 }                                
