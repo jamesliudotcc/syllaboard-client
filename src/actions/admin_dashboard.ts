@@ -2,11 +2,10 @@ import axios, { AxiosResponse } from 'axios';
 import { SERVER_URL } from '../constants';
 
 import { Dispatch } from 'redux';
-import { Cohort, ID, NewCohortInfo } from '../Types';
+import { Cohort, ID, NewCohortInfo, NewUserInfo, User } from '../Types';
 
 import { fetchFailed } from './notifications';
 
-import {AdminDashboardState} from '../reducers/admin_dashboard_reducer';
 
 /*
  * action types
@@ -22,6 +21,12 @@ export type Action =
   | CohortAddToStore
   | CohortUpdateInStore
   | CohortRemoveFromStore
+  // Users
+  | UserRefreshStore
+  | UserUpdateInStore 
+  | UserAddToStore
+  | UserRemoveFromStore
+  // Default Case 
   | OtherAction;
 
 
@@ -35,6 +40,11 @@ export enum Actions {
   COHORT_ADD_TO_STORE = 'COHORT_ADD_TO_STORE',
   COHORT_UPDATE_IN_STORE = 'COHORT_UPDATE_IN_STORE',
   COHORT_REMOVE_FROM_STORE = 'COHORT_REMOVE_FROM_STORE',
+  // User
+  USER_REFRESH_STORE = 'USER_REFRESH_STORE',
+  USER_ADD_TO_STORE = 'USER_ADD_TO_STORE',
+  USER_UPDATE_IN_STORE = 'USER_UPDATE_IN_STORE',
+  USER_REMOVE_FROM_STORE = 'USER_REMOVE_FROM_STORE',
   OTHER_ACTION = '__any_other_action__',
 }
 
@@ -69,6 +79,27 @@ export interface CohortUpdateInStore {
 
 export interface CohortRemoveFromStore {
   type: Actions.COHORT_REMOVE_FROM_STORE;
+  payload: ID;
+}
+
+// User
+export interface UserRefreshStore {
+  type: Actions.USER_REFRESH_STORE;
+  payload: User[];
+}
+
+export interface UserAddToStore {
+  type: Actions.USER_ADD_TO_STORE;
+  payload: User;
+}
+
+export interface UserUpdateInStore {
+  type: Actions.USER_UPDATE_IN_STORE;
+  payload: User;
+}
+
+export interface UserRemoveFromStore {
+  type: Actions.USER_REMOVE_FROM_STORE;
   payload: ID;
 }
 
@@ -115,6 +146,27 @@ export const cohortUpdateInStore = (payload: Cohort) => ({
   payload,
 });
 
+// User
+
+export const userRefreshStore = (payload: User[]) => ({
+  type: Actions.USER_REFRESH_STORE,
+  payload,
+});
+
+export const userAddToStore = (payload: User) => ({
+  type: Actions.USER_ADD_TO_STORE,
+  payload,
+});
+
+export const userRemoveFromStore = (payload: ID) => ({
+  type: Actions.COHORT_REMOVE_FROM_STORE,
+  payload,
+});
+
+export const userUpdateInStore = (payload: User) => ({
+  type: Actions.USER_UPDATE_IN_STORE,
+  payload,
+});
 export const OtherAction = (): OtherAction => ({
   type: Actions.OTHER_ACTION,
 });
@@ -127,7 +179,7 @@ export const OtherAction = (): OtherAction => ({
 export const addNewCohort = (input: NewCohortInfo) => {
   return (dispatch: Dispatch): void => {
     axios.post(
-        `${SERVER_URL}/admin/cohort`,
+        `${SERVER_URL}/admin/cohorts`,
         { data: input },
         { headers: { authorization: localStorage.getItem('token') } },
       )
@@ -145,7 +197,7 @@ export const addNewCohort = (input: NewCohortInfo) => {
 export const updateCohort = (input: Cohort) => {
   return (dispatch: Dispatch): void => {
     axios.put(
-        `${SERVER_URL}/admin/cohorts/${input.id}`,
+        `${SERVER_URL}/admin/cohorts/${input._id}`,
         { data: input },
         { headers: { authorization: localStorage.getItem('token') } },
       )
@@ -163,7 +215,7 @@ export const updateCohort = (input: Cohort) => {
 export const removeCohort = (input: Cohort) => {
   return (dispatch: Dispatch): void => {
     axios.delete(
-        `${SERVER_URL}/admin/cohorts/${input.id}`,
+        `${SERVER_URL}/admin/cohorts/${input._id}`,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -185,6 +237,79 @@ export const getAllCohorts = () => {
       )
       .then((response: AxiosResponse) => {
         dispatch(cohortRefreshStore(response.data.cohorts));
+      })
+      .catch(({ response }: { response: AxiosResponse }) => {
+        dispatch(fetchFailed(response.statusText));
+      });
+  }
+
+};
+
+
+// User
+
+// Send new user data to add to DB then dispatch action to add to store
+export const addNewUsers = (input: NewUserInfo) => {
+  return (dispatch: Dispatch): void => {
+    axios.post(
+        `${SERVER_URL}/admin/users`,
+        { data: input },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        console.log(response);
+        dispatch(userAddToStore(response.data.user));
+      })
+      .catch(({ response }: { response: AxiosResponse }) => {
+        dispatch(fetchFailed(response.statusText));
+      });
+  };
+};
+
+// Send user with modified fields to be updated in DB and refresh store
+export const updateUser = (input: User) => {
+  return (dispatch: Dispatch): void => {
+    axios.put(
+        `${SERVER_URL}/admin/users/${input._id}`,
+        { data: input },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        console.log(response);
+        dispatch(userUpdateInStore(response.data.edited));
+      })
+      .catch(({ response }: { response: AxiosResponse }) => {
+        dispatch(fetchFailed(response.statusText));
+      });
+  };
+};
+
+// Send user with modified fields to be updated in DB and refresh store
+export const removeUser = (input: User) => {
+  return (dispatch: Dispatch): void => {
+    axios.delete(
+        `${SERVER_URL}/admin/users/${input._id}`,
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        console.log(response);
+        dispatch(userRemoveFromStore(response.data.deleted));
+      })
+      .catch(({ response }: { response: AxiosResponse }) => {
+        dispatch(fetchFailed(response.statusText));
+      });
+  };
+};
+
+// Request all Userss from server and dispatch action to completely refresh store
+export const getAllUsers = () => {
+  return (dispatch: Dispatch): void => {
+    axios.get(
+        `${SERVER_URL}/admin/users`,
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        dispatch(userRefreshStore(response.data.users));
       })
       .catch(({ response }: { response: AxiosResponse }) => {
         dispatch(fetchFailed(response.statusText));

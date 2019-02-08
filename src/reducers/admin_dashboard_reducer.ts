@@ -1,5 +1,5 @@
 import { Action, Actions } from '../actions/admin_dashboard';
-import { Cohort } from '../Types';
+import { Cohort, User } from '../Types';
 
 export type AdminDashboardState = AdminDashboardUI & AdminDashboardData;
 
@@ -11,6 +11,7 @@ interface AdminDashboardUI {
 
 interface AdminDashboardData {
   cohorts: Cohort[];
+  users: User[];
 }
 
 const blankState: AdminDashboardState = {
@@ -18,6 +19,7 @@ const blankState: AdminDashboardState = {
   showEditUser: false,
   showSendRegistration: false,
   cohorts: [],
+  users: [],
 };
 
 export function adminDashboardReducer(state: AdminDashboardState = blankState, action: Action): AdminDashboardState {
@@ -53,14 +55,39 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
       return {
         ...state,
         cohorts: state.cohorts.filter((cohort: Cohort) => (
-          cohort.id !== action.payload
+          cohort._id !== action.payload
         )),
       };
     case Actions.COHORT_UPDATE_IN_STORE:
       return {
         ...state,
         cohorts: state.cohorts.map((cohort: Cohort) => (
-          cohort.id === action.payload.id ? action.payload : cohort
+          cohort._id === action.payload._id ? action.payload : cohort
+        )),
+      };
+  // User
+    case Actions.USER_REFRESH_STORE:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case Actions.USER_ADD_TO_STORE:
+      return {
+        ...state,
+        users: state.users.concat(action.payload),
+      };
+    case Actions.USER_REMOVE_FROM_STORE:
+      return {
+        ...state,
+        users: state.users.filter((user: User) => (
+          user._id !== action.payload
+        )),
+      };
+    case Actions.USER_UPDATE_IN_STORE:
+      return {
+        ...state,
+        users: state.users.map((user: User) => (
+          user._id === action.payload._id ? action.payload : user
         )),
       };
     default:

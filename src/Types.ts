@@ -1,11 +1,21 @@
 export interface Cohort {
-  id: ID;
+  _id: ID;
   name: string;
   campus: string;
   students?: []; // This may be trouble
   instructors: [];
   startDate: Date;
   endDate: Date;
+}
+
+export interface User {
+  _id: ID;
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  role: Role,
+  deliverables: ID[],
 }
 
 export type ID = string;
@@ -31,4 +41,12 @@ export interface NewCohortInfo {
   campus: string; // Campus ID
   startDate: Date;
   endDate: Date;
+}
+
+export interface NewUserInfo {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  role: Role,
 }

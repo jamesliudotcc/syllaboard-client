@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const dummyCohorts: Cohort[] = [
   {
-    id: 'iasjlf9asljfl9ad',
+    _id: 'iasjlf9asljfl9ad',
     name: 'WDI-22',
     campus: 'Seattle',
     students: [],
@@ -45,7 +45,7 @@ const dummyCohorts: Cohort[] = [
     startDate: new Date('2018-11-26T22:06:00.000Z'),
     endDate: new Date('2019-03-01T22:06:00.000Z'),
   }, {
-    id: 'oiasdlfkjasiflds',
+    _id: 'oiasdlfkjasiflds',
     name: 'UXDI-27',
     campus: 'Seattle',
     students: [],
