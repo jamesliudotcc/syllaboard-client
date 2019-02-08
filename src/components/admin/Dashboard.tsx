@@ -5,7 +5,7 @@ import * as adminActions from '../../actions/admin_dashboard';
 import { addNewCohort } from '../../actions/cohort';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
-import { NewCohortInfo, Cohort } from '../../Types';
+import { Cohort, NewCohortInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Cohorts from './Cohorts';
 
@@ -37,20 +37,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const dummyCohorts: Cohort[] = [
   {
+    id: 'iasjlf9asljfl9ad',
     name: 'WDI-22',
     campus: 'Seattle',
     students: [],
     instructors: [],
     startDate: new Date('2018-11-26T22:06:00.000Z'),
-    endDate: new Date('2019-03-01T22:06:00.000Z')
+    endDate: new Date('2019-03-01T22:06:00.000Z'),
   }, {
+    id: 'oiasdlfkjasiflds',
     name: 'UXDI-27',
     campus: 'Seattle',
     students: [],
     instructors: [],
     startDate: new Date('2019-01-T22:06:00.000Z'),
-    endDate: new Date('2019-03-01T22:06:00.000Z')
-  }
+    endDate: new Date('2019-03-01T22:06:00.000Z'),
+  },
 ]
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);

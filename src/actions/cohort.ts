@@ -67,7 +67,7 @@ export const deleteCohort = (payload: Cohort): DeleteCohort => ({
 export const addNewCohort = (input: NewCohortInfo) => {
   return (dispatch: Dispatch): void => {
     axios.post(
-        `${SERVER_URL}/cohort/new`,
+        `${SERVER_URL}/admin/cohort`,
         { data: input },
         { headers: { authorization: localStorage.getItem('token') } },
       )

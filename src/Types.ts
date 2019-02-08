@@ -1,4 +1,5 @@
 export interface Cohort {
+  id: ID;
   name: string;
   campus: string;
   students?: []; // This may be trouble
@@ -6,6 +7,8 @@ export interface Cohort {
   startDate: Date;
   endDate: Date;
 }
+
+export type ID = string;
 
 export type Role = 'admin' | 'instructor' | 'student' | null
 
