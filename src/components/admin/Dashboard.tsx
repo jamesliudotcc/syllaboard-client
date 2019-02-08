@@ -5,9 +5,9 @@ import * as adminActions from '../../actions/admin_dashboard';
 import { addNewCohort } from '../../actions/cohort';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
-import { NewCohortInfo } from '../../Types';
+import { NewCohortInfo, Cohort } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
-import AddCohortForm from './AddCohort_form';
+import Cohorts from './Cohorts';
 
 // TODO: create and import ShowAllCohorts, ShowAllInstructors, and ShowAllStudents (the edit and delete functionality for those will live in thos components)
 
@@ -19,13 +19,39 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
-  toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
+  cohort: {
+    // Cohort actions
+    toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
+    addNewCohort: (cohortInfo: NewCohortInfo) =>
+      addNewCohort(cohortInfo)(dispatch),
+  },
+  instructors: {
+
+  },
+  students: {
+
+  },
   toggleSendRegistration: () => dispatch(adminActions.toggleSendRegistration()),
   toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
-  // Cohort actions
-  addNewCohort: (cohortInfo: NewCohortInfo) =>
-    addNewCohort(cohortInfo)(dispatch),
 });
+
+const dummyCohorts: Cohort[] = [
+  {
+    name: 'WDI-22',
+    campus: 'Seattle',
+    students: [],
+    instructors: [],
+    startDate: new Date('2018-11-26T22:06:00.000Z'),
+    endDate: new Date('2019-03-01T22:06:00.000Z')
+  }, {
+    name: 'UXDI-27',
+    campus: 'Seattle',
+    students: [],
+    instructors: [],
+    startDate: new Date('2019-01-T22:06:00.000Z'),
+    endDate: new Date('2019-03-01T22:06:00.000Z')
+  }
+]
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
 type ComponentProps = typeof propsGeneric;
@@ -38,35 +64,18 @@ class AdminDashboard extends React.Component<Props, {}> {
     this.props.fetchMessage();
   }
 
-  handleSubmit = (input: NewCohortInfo) => {
-    this.props.addNewCohort(input);
-  };
-
-  render() {
-    const addCohortPanel = this.props.showAddCohort
-      ?
-        <div>
-          <AddCohortForm
-            onSubmit={this.handleSubmit}
-            errorMessage={this.props.errorMessage}
-          />
-        </div>
-      :
-        <div></div>;                                     
+  render() {                                    
+    const cohortData = {
+      cohorts: dummyCohorts,
+      errorMessage: this.props.errorMessage,
+      showAddCohort: this.props.showAddCohort, 
+      ...this.props.cohort,
+    }
 
     return (
       <div>
         <p><strong>ADMIN DASHBOARD</strong></p>
-        <br/>
-        <button onClick={this.props.toggleAddCohort}>+</button>
-        {addCohortPanel}
-
-        <p>Here's a secret response from the server that your token returned:</p>
-        ____________________________________________________________
-        <p>{this.props.message}</p>
-        ____________________________________________________________
-        <br/>
-        <p>Notice that clicking these links redirect to the homepage, as you are already signed in:</p>
+        <Cohorts {...cohortData} />
       </div>
     );
   }
