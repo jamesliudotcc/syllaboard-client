@@ -13,7 +13,7 @@ import UiTheme from '../../style/theme';
 const styles = (theme: Theme) => createStyles({
   card: {
     display: 'flex',
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   details: {
     display: 'flex',
