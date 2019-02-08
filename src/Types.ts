@@ -6,6 +6,8 @@ export interface Cohort {
   instructors: [];
   startDate: Date;
   endDate: Date;
+  instructorKey: KEY;
+  studentKey: KEY;
 }
 
 export interface Assignment {
@@ -51,6 +53,8 @@ export interface User {
   role: Role,
   deliverables: ID[],
 }
+
+export type KEY = string;
 
 export type ID = string;
 

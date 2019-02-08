@@ -2,16 +2,23 @@ import * as React from 'react';
 import { NewCohortInfo, Cohort } from '../../Types';
 import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core';
 import AddCohortForm from './AddCohort_form';
-import AddCircle from '@material-ui/icons/AddCircle';
+import Add from '@material-ui/icons/AddCircleOutline';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Remove from '@material-ui/icons/RemoveCircleOutline';
 import ShowAllCohorts from './ShowAllCohorts';
 import Typography from '@material-ui/core/Typography';
 
 const styles = (theme: Theme) => createStyles({
   spaced: {
     margin: theme.spacing.unit,
+  },
+  add: {
+    color: '#0cb10c',
+  },
+  hide: {
+    color: theme.palette.secondary.dark
   }
 });
 
@@ -45,7 +52,9 @@ class Cohorts extends React.Component<Props, {}> {
           />
         </div>
       :
-        <div></div>;                                     
+        <div></div>; 
+    
+    const toggleBtn = !this.props.showAddCohort ? <Add /> : <Remove />;
 
     return (
       <div>
@@ -54,8 +63,8 @@ class Cohorts extends React.Component<Props, {}> {
             <Typography variant="h4">Cohorts</Typography>
           </Grid>
           <Grid item>
-            <IconButton aria-label="Add Cohort">
-              <AddCircle onClick={this.props.toggleAddCohort} />
+            <IconButton aria-label="Add Cohort" onClick={this.props.toggleAddCohort} className={this.props.showAddCohort ? this.props.classes.hide : this.props.classes.add} >
+              {toggleBtn}
             </IconButton>
           </Grid>
         </Grid>
