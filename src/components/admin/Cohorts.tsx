@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { NewCohortInfo, Cohort } from '../../Types';
-import AddCohortForm from './AddCohort_form';
-import ShowAllCohorts from './ShowAllCohorts';
 import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core';
+import AddCohortForm from './AddCohort_form';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import ShowAllCohorts from './ShowAllCohorts';
+import Typography from '@material-ui/core/Typography';
 
 const styles = (theme: Theme) => createStyles({
   spaced: {
@@ -44,9 +49,17 @@ class Cohorts extends React.Component<Props, {}> {
 
     return (
       <div>
-        <h1>Cohorts</h1>
-        <button onClick={this.props.toggleAddCohort}>+</button>
-        <hr/>
+        <Grid container direction="row" justify="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="h4">Cohorts</Typography>
+          </Grid>
+          <Grid item>
+            <IconButton aria-label="Add Cohort">
+              <AddCircle onClick={this.props.toggleAddCohort} />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Divider />
         {addCohortPanel}
         <ShowAllCohorts {...cohorts} />
       </div>

@@ -8,6 +8,7 @@ import { State } from '../../reducers';
 import { NewCohortInfo, Cohort } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Cohorts from './Cohorts';
+import Typography from '@material-ui/core/Typography';
 
 // TODO: create and import ShowAllCohorts, ShowAllInstructors, and ShowAllStudents (the edit and delete functionality for those will live in thos components)
 
@@ -74,7 +75,7 @@ class AdminDashboard extends React.Component<Props, {}> {
 
     return (
       <div>
-        <p><strong>ADMIN DASHBOARD</strong></p>
+        <Typography variant="h2" align="center">Admin Dashboard</Typography>
         <Cohorts {...cohortData} />
       </div>
     );

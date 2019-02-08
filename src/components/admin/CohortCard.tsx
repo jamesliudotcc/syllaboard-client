@@ -3,6 +3,7 @@ import { Cohort } from '../../Types';
 import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
@@ -28,10 +29,10 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing.unit,
   },
   edit: {
-    color: 'green'
+    color: '#0cb10c'
   },
   delete: {
-    color: 'red'
+    color: '#e40c0c'
   }
 });
 
@@ -51,6 +52,7 @@ class CohortCard extends React.Component<Props, {}> {
               {this.props.instructors}
             </Typography>
           </CardContent>
+          <Divider variant="middle" />
           <div className={this.props.classes.controls}>
           {/* TODO Colour the buttons! */}
           <IconButton className={this.props.classes.edit} aria-label="Edit">
