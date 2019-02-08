@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { SERVER_URL } from '../constants';
 
 import { Dispatch } from 'redux';
@@ -187,9 +187,7 @@ export const addNewCohort = (input: NewCohortInfo) => {
         console.log(response);
         dispatch(cohortAddToStore(response.data.cohort));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -205,9 +203,7 @@ export const updateCohort = (input: Cohort) => {
         console.log(response);
         dispatch(cohortUpdateInStore(response.data.edited));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -222,9 +218,7 @@ export const removeCohort = (input: Cohort) => {
         console.log(response);
         dispatch(cohortRemoveFromStore(response.data.deleted));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -238,9 +232,7 @@ export const getAllCohorts = () => {
       .then((response: AxiosResponse) => {
         dispatch(cohortRefreshStore(response.data.cohorts));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   }
 };
 
@@ -259,9 +251,7 @@ export const addNewUsers = (input: NewUserInfo) => {
         console.log(response);
         dispatch(userAddToStore(response.data.user));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -277,9 +267,7 @@ export const updateUser = (input: User) => {
         console.log(response);
         dispatch(userUpdateInStore(response.data.edited));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -294,9 +282,7 @@ export const removeUser = (input: User) => {
         console.log(response);
         dispatch(userRemoveFromStore(response.data.deleted));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -310,9 +296,17 @@ export const getAllUsers = () => {
       .then((response: AxiosResponse) => {
         dispatch(userRefreshStore(response.data.users));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   }
 
 };
+
+const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
+  if (error.response) {
+    dispatch(fetchFailed(error.response.data));
+  } else if (error.request) {
+    dispatch(fetchFailed(error.request));
+  } else {
+    dispatch(fetchFailed(error.message));
+  }
+}
