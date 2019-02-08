@@ -8,6 +8,9 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 const styles = (theme: Theme) => createStyles({
   card: {
     background: 'chartreuse',
+  },
+  spinner: {
+    marginTop: '.25em'
   }
 });
 
@@ -23,7 +26,7 @@ class ShowAllCohorts extends React.Component<Props, {}> {
   render () {
     const cohortCards = this.props.cohorts.length < 1 
     ? <Grid item>
-        <CircularProgress /> 
+        <CircularProgress className={this.props.classes.spinner} /> 
       </Grid>
     : this.props.cohorts.map(cohort => (
         <Grid item xs={12} sm={6}>
