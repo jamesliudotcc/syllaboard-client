@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
 import { Assignment, Cohort, Deliverable, ID, NewAssignmentInfo, NewDeliverableInfo } from '../Types';
@@ -192,9 +192,7 @@ export const getAllCohorts = () => {
       .then((response: AxiosResponse) => {
         dispatch(cohortRefreshStore(response.data.cohorts));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   }
 };
 
@@ -212,9 +210,7 @@ export const addNewAssignment = (input: NewAssignmentInfo) => {
         console.log(response);
         dispatch(assignmentAddToStore(response.data.assignment));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -230,9 +226,7 @@ export const updateAssignment = (input: Assignment) => {
         console.log(response);
         dispatch(assignmentUpdateInStore(response.data.edited));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -247,9 +241,7 @@ export const removeAssignment = (input: Assignment) => {
         console.log(response);
         dispatch(assignmentRemoveFromStore(response.data.deleted));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -263,9 +255,7 @@ export const getAllAssignments = () => {
       .then((response: AxiosResponse) => {
         dispatch(assignmentRefreshStore(response.data.assignments));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   }
 
 };
@@ -284,9 +274,7 @@ export const addNewDeliverable = (input: NewDeliverableInfo) => {
         console.log(response);
         dispatch(deliverableAddToStore(response.data.deliverable));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -302,9 +290,7 @@ export const updateDeliverable = (input: Deliverable) => {
         console.log(response);
         dispatch(deliverableUpdateInStore(response.data.edited));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -319,9 +305,7 @@ export const removeDeliverable = (input: Deliverable) => {
         console.log(response);
         dispatch(deliverableRemoveFromStore(response.data.deleted));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   };
 };
 
@@ -335,9 +319,18 @@ export const getAllDeliverables = () => {
       .then((response: AxiosResponse) => {
         dispatch(deliverableRefreshStore(response.data.deliverables));
       })
-      .catch(({ response }: { response: AxiosResponse }) => {
-        dispatch(fetchFailed(response.statusText));
-      });
+      .catch(handleError(dispatch));
   }
 
 };
+
+
+const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
+  if (error.response) {
+    dispatch(fetchFailed(error.response.data));
+  } else if (error.request) {
+    dispatch(fetchFailed(error.request));
+  } else {
+    dispatch(fetchFailed(error.message));
+  }
+}
