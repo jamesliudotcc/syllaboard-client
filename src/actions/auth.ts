@@ -93,6 +93,7 @@ export const signinUser = ({ email, password }: Credentials) => {
 
 export const signoutUser = (): UnAuthUser => {
   localStorage.removeItem('token');
+  localStorage.removeItem('role');
   return unAuthUser();
 };
 
