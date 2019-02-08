@@ -8,6 +8,40 @@ export interface Cohort {
   endDate: Date;
 }
 
+export interface Assignment {
+  _id: ID;
+  name: string;
+  version: number;
+  cohortType: string[]; // Refs cohort
+  cohortWeek: string; // When should this be assigned
+  instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
+  instructions: string; // this is the instructor’s notes on what should be accomplished.
+  resourcesUrls: string[]; // optional
+  topics: Topic[];
+}
+
+export interface Deliverable {
+  _id: ID;
+  name: string;
+  instructor: ID[];
+  student: ID[];
+  cohort: ID[];
+  instructions: string; // this is the instructor’s notes on what should be accomplished.
+  resourcesUrls: string[]; // optional
+  topics: Topic[];
+  deadline: Date;
+  turnedIn: Date | null; // Maybe just a Boolean?
+  completed: Date | null; // Date indicates acceptance of assignment
+  deliverable: string | null; // URL to deliverable, Google Doc, or whatever.
+  grade: number | null; // 1-3 usually around 2.1-2.6
+}
+
+export interface Topic {
+  question: string;
+  numOfAnswers: number;
+  answers: string[]; // user
+}
+
 export interface User {
   _id: ID;
   firstName: string,
@@ -49,4 +83,30 @@ export interface NewUserInfo {
   email: string,
   password: string,
   role: Role,
+}
+
+export interface NewAssignmentInfo {
+  name: string;
+  version: number;
+  cohortType: string[]; // Refs cohort
+  cohortWeek: string; // When should this be assigned
+  instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
+  instructions: string; // this is the instructor’s notes on what should be accomplished.
+  resourcesUrls: string[]; // optional
+  topics: Topic[];
+}
+
+export interface NewDeliverableInfo {
+  name: string;
+  instructor: ID[];
+  student: ID[];
+  cohort: ID[];
+  instructions: string; // this is the instructor’s notes on what should be accomplished.
+  resourcesUrls: string[]; // optional
+  topics: Topic[];
+  deadline: Date;
+  turnedIn: Date | null; // Maybe just a Boolean?
+  completed: Date | null; // Date indicates acceptance of assignment
+  deliverable: string | null; // URL to deliverable, Google Doc, or whatever.
+  grade: number | null; // 1-3 usually around 2.1-2.6
 }

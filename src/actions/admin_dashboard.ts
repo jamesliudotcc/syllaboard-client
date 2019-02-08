@@ -242,7 +242,6 @@ export const getAllCohorts = () => {
         dispatch(fetchFailed(response.statusText));
       });
   }
-
 };
 
 
