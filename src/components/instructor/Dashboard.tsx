@@ -57,8 +57,8 @@ class InstructorDashboard extends React.Component<Props, {}> {
         <button onClick={this.props.toggleAddAssignment}>+</button>
         {addAssignmentPanel}
 
-        <button onClick={this.props.toggleAddAssignment}>+</button>
-        {addAssignmentPanel}
+        <button onClick={this.props.toggleAddDeliverable}>+</button>
+        {addDeliverablePanel}
 
         <p>Here's a secret response from the server that your token returned:</p>
         ____________________________________________________________
