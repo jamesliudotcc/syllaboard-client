@@ -2,7 +2,6 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import * as adminActions from '../../actions/admin_dashboard';
-import { addNewCohort } from '../../actions/cohort';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import { Cohort, NewCohortInfo } from '../../Types';
@@ -25,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     // Cohort actions
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
     addNewCohort: (cohortInfo: NewCohortInfo) =>
-      addNewCohort(cohortInfo)(dispatch),
+      adminActions.addNewCohort(cohortInfo)(dispatch),
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
   },
   instructors: {

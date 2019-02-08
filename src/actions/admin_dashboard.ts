@@ -180,7 +180,8 @@ export const addNewCohort = (input: NewCohortInfo) => {
   return (dispatch: Dispatch): void => {
     axios.post(
         `${SERVER_URL}/admin/cohorts`,
-        { data: input },
+        // { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -196,7 +197,7 @@ export const updateCohort = (input: Cohort) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/admin/cohorts/${input._id}`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -244,7 +245,7 @@ export const addNewUsers = (input: NewUserInfo) => {
   return (dispatch: Dispatch): void => {
     axios.post(
         `${SERVER_URL}/admin/users`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -260,7 +261,7 @@ export const updateUser = (input: User) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/admin/users/${input._id}`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {

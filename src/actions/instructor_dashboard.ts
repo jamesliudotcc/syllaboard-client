@@ -203,7 +203,7 @@ export const addNewAssignment = (input: NewAssignmentInfo) => {
   return (dispatch: Dispatch):void => {
     axios.post(
         `${SERVER_URL}/instructor/assignments`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -219,7 +219,7 @@ export const updateAssignment = (input: Assignment) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/instructor/assignments/${input._id}`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -267,7 +267,7 @@ export const addNewDeliverable = (input: NewDeliverableInfo) => {
   return (dispatch: Dispatch):void => {
     axios.post(
         `${SERVER_URL}/instructor/deliverables`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
@@ -283,7 +283,7 @@ export const updateDeliverable = (input: Deliverable) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/instructor/deliverables/${input._id}`,
-        { data: input },
+        input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
