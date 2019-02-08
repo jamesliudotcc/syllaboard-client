@@ -19,7 +19,7 @@ type Props = OwnProps & WithStyles<typeof styles>;
 class ShowAllCohorts extends React.Component<Props, {}> {
   
   render () {
-    const cohortCards = this.props.cohorts.map(cohort => (<CohortCard {...cohort} />));
+    const cohortCards = this.props.cohorts.map(cohort => (<CohortCard key={cohort.instructorKey} {...cohort} />));
     
     return (
       <div>
