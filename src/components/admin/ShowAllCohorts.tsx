@@ -20,7 +20,7 @@ type Props = OwnProps & WithStyles<typeof styles>;
 class ShowAllCohorts extends React.Component<Props, {}> {
   
   render () {
-    const cohortCards = this.props.cohorts.map(cohort => (
+    const cohortCards = this.props.cohorts.length < 1 ? <p>LOADING</p> : this.props.cohorts.map(cohort => (
     <Grid item xs={12} sm={6}>
       <CohortCard  key={cohort.instructorKey} {...cohort} />
     </Grid>
