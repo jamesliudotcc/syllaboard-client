@@ -7,6 +7,8 @@ export interface Cohort {
   endDate: Date;
 }
 
+export type Role = 'admin' | 'instructor' | 'student' | null
+
 export interface Credentials {
   email: string;
   password: string;

@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { State } from '../../reducers';
 
-// TODO: This will check if user can check certain data. Nothing has been done yet
-
-export const AdminRoute = ({component: ComposedComponent, ...rest}: any) => {
+export const ProtectedRoute = ({component: ComposedComponent, role, ...rest}: any) => {
 
   class Authentication extends React.Component<any, any> {
 
     // redirect if not authenticated; otherwise, return the component imputted into <PrivateRoute />
-    handleRender = async (props: any) => {
+    handleRender = (props: any) => {
       if (!this.props.authenticated) {
         return <Redirect to={{
           pathname: '/signin',
@@ -19,10 +17,17 @@ export const AdminRoute = ({component: ComposedComponent, ...rest}: any) => {
             message: 'You need to sign in',
           },
         }}/>;
-      } else {
-        // TODO: ping server to check auth
-        return <ComposedComponent {...props}/>;
       }
+      if (this.props.role !== role) {
+        return <Redirect to={{
+          pathname: '/',
+          state: {
+            from: props.location,
+            message: 'You are not authorized',
+          },
+        }}/>;
+      }
+      return <ComposedComponent {...props}/>;
     }
 
     render() {
@@ -32,9 +37,10 @@ export const AdminRoute = ({component: ComposedComponent, ...rest}: any) => {
     }
   }
 
-  const mapStateToProps = (state: State) => {
-    return {authenticated: state.auth.authenticated};
-  };
+  const mapStateToProps = (state: State) => ({
+    authenticated: state.auth.authenticated,
+    role: state.auth.role,
+  });
 
   const AuthenticationContainer = connect(mapStateToProps)(Authentication);
   return <AuthenticationContainer/>;

@@ -1,19 +1,23 @@
 import { Action, Actions } from '../actions/auth';
+import { Role } from '../Types';
 
 export interface AuthState {
   authenticated: boolean;
   error: string;
+  role: Role;
 }
 
 const blankState: AuthState = {
   authenticated: false,
   error: '',
+  role: null,
 };
 
 export function authReducer(state: AuthState = blankState, action: Action) {
   switch (action.type) {
     case Actions.AUTH_USER:
-      return {...state, error: '', authenticated: true};
+      const role = action.payload;
+      return {...state, error: '', authenticated: true, role};
     case Actions.UNAUTH_USER:
       return {...state, authenticated: false};
     case Actions.AUTH_ERROR:

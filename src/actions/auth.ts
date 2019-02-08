@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
-import { Credentials, SignUpInfo } from '../Types';
+import { Credentials, Role, SignUpInfo } from '../Types';
 
 
 /*
@@ -24,6 +24,7 @@ export enum Actions {
 
 export interface AuthUser {
   type: Actions.AUTH_USER;
+  payload: Role;
 }
 
 export interface UnAuthUser {
@@ -43,8 +44,9 @@ export interface OtherAction {
  * action creators
  */
 
-export const authUser = (): AuthUser => ({
+export const authUser = (payload: Role): AuthUser => ({
   type: Actions.AUTH_USER,
+  payload,
 });
 
 export const unAuthUser = (): UnAuthUser => ({
@@ -73,10 +75,12 @@ export const signinUser = ({ email, password }: Credentials) => {
     })
       .then(response => {
         // -Save the JWT token
+        console.log(response);
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.role);
 
         // -if request is good, we need to update state to indicate user is authenticated
-        dispatch(authUser());
+        dispatch(authUser(response.data.role));
       })
 
       // If request is bad...
@@ -108,8 +112,10 @@ export const signupUser = ({
         cohortKey,
       })
       .then(response => {
-        dispatch(authUser());
+        console.log(response);
+        localStorage.setItem('role', response.data.role);
         localStorage.setItem('token', response.data.token);
+        dispatch(authUser(response.data.role));
       })
       .catch(({ response }) => {
         // TODO: format errors
