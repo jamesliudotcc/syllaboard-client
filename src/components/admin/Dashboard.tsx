@@ -16,6 +16,7 @@ const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
   ...state.adminDashboard,
+  cohorts: state.adminDashboard.cohorts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -25,6 +26,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
     addNewCohort: (cohortInfo: NewCohortInfo) =>
       addNewCohort(cohortInfo)(dispatch),
+    getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
   },
   instructors: {
 
@@ -36,26 +38,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
 });
 
-const dummyCohorts: Cohort[] = [
-  {
-    _id: 'iasjlf9asljfl9ad',
-    name: 'WDI-22',
-    campus: 'Seattle',
-    students: [],
-    instructors: [],
-    startDate: new Date('2018-11-26T22:06:00.000Z'),
-    endDate: new Date('2019-03-01T22:06:00.000Z'),
-  }, {
-    _id: 'oiasdlfkjasiflds',
-    name: 'UXDI-27',
-    campus: 'Seattle',
-    students: [],
-    instructors: [],
-    startDate: new Date('2019-01-T22:06:00.000Z'),
-    endDate: new Date('2019-03-01T22:06:00.000Z'),
-  },
-]
-
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
 type ComponentProps = typeof propsGeneric;
 
@@ -65,11 +47,12 @@ class AdminDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
+    this.props.cohort.getAllCohorts();
   }
 
   render() {                                    
     const cohortData = {
-      cohorts: dummyCohorts,
+      cohorts: this.props.cohorts,
       errorMessage: this.props.errorMessage,
       showAddCohort: this.props.showAddCohort, 
       ...this.props.cohort,

@@ -49,12 +49,11 @@ class CohortCard extends React.Component<Props, {}> {
               {this.props.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {this.props.instructors}
+              Taught By: {this.props.instructors}
             </Typography>
           </CardContent>
           <Divider variant="middle" />
           <div className={this.props.classes.controls}>
-          {/* TODO Colour the buttons! */}
           <IconButton className={this.props.classes.edit} aria-label="Edit">
             <EditIcon />
           </IconButton>
