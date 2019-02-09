@@ -25,6 +25,15 @@ const styles = (theme: Theme) =>
     hide: {
       color: theme.palette.secondary.dark,
     },
+    paper: {
+      margin: '25% auto',
+      width: theme.spacing.unit * 50,
+      height: theme.spacing.unit * 50,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing.unit * 4,
+      outline: 'none',
+    },
   });
 
 export interface OwnProps {
@@ -32,7 +41,7 @@ export interface OwnProps {
   errorMessage: string;
   showEditUser: boolean;
   selectedUser: User | null;
-  selectUser: (user: User) => void;
+  selectUser: (user: User | null) => void;
   toggleEditUser: () => void;
   removeUser: (input: User) => void;
   updateUser: (input: User) => void;
@@ -41,7 +50,8 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class Users extends React.Component<Props, {}> {
-  handleSubmit = (input: User) => {
+  handleEditSubmit = (input: User) => {
+    this.props.selectUser(null);
     this.props.updateUser(input);
   };
 
@@ -55,6 +65,7 @@ class Users extends React.Component<Props, {}> {
     const editUserPanel = (
       <Modal
         open={this.props.showEditUser}
+        // className={this.props.classes.paper}
         onClose={
           this.props.showEditUser
             ? this.props.toggleEditUser
@@ -63,9 +74,9 @@ class Users extends React.Component<Props, {}> {
               }
         }
       >
-        <div>
+        <div className={this.props.classes.paper}>
           <EditUserForm
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleEditSubmit}
             errorMessage={this.props.errorMessage}
             user={this.props.selectedUser as User}
           />

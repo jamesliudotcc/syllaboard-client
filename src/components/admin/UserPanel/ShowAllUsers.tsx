@@ -31,8 +31,8 @@ class ShowAllUsers extends React.Component<Props, {}> {
           <CircularProgress className={this.props.classes.spinner} />
         </Grid>
       ) : (
-        this.props.users.map((user: User) => (
-          <Grid item xs={12} sm={6}>
+        this.props.users.map((user: User, i: number) => (
+          <Grid key={i} item xs={12} sm={6}>
             <UserCard
               key={user._id}
               user={user}

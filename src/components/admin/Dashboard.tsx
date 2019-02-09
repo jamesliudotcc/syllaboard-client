@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
     removeUser: (user: User) => adminActions.removeUser(user)(dispatch),
     updateUser: (user: User) => adminActions.updateUser(user)(dispatch),
-    selectUser: (user: User) => dispatch(adminActions.userSelect(user)),
+    selectUser: (user: User | null) => dispatch(adminActions.userSelect(user)),
     getAllUsers: () => adminActions.getAllUsers()(dispatch),
   },
   instructor: {},

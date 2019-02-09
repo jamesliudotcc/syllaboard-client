@@ -107,7 +107,7 @@ export interface UserRemoveFromStore {
 
 export interface UserSelect {
   type: Actions.USER_SELECT;
-  payload: User;
+  payload: User | null;
 }
 
 export interface OtherAction {
@@ -175,7 +175,7 @@ export const userUpdateInStore = (payload: User) => ({
   payload,
 });
 
-export const userSelect = (payload: User) => ({
+export const userSelect = (payload: User | null) => ({
   type: Actions.USER_SELECT,
   payload,
 });

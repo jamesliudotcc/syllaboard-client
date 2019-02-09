@@ -30,8 +30,8 @@ class ShowAllCohorts extends React.Component<Props, {}> {
     ? <Grid item>
         <CircularProgress className={this.props.classes.spinner} /> 
       </Grid>
-    : this.props.cohorts.map(cohort => (
-        <Grid item xs={12} sm={6}>
+    : this.props.cohorts.map((cohort, i) => (
+        <Grid key={i} item xs={12} sm={6}>
           <CohortCard  key={cohort.instructorKey} {...cohort} removeCohort={this.props.removeCohort} />
         </Grid>
       ));
