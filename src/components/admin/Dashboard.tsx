@@ -16,7 +16,6 @@ const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
   ...state.adminDashboard,
-  cohorts: state.adminDashboard.cohorts,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

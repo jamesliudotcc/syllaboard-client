@@ -36,6 +36,7 @@ type Props = OwnProps & WithStyles<typeof styles>;
 
 class Cohorts extends React.Component<Props, {}> {
   handleSubmit = (input: NewCohortInfo) => {
+    this.props.toggleAddCohort();
     this.props.addNewCohort(input);
   };
 
