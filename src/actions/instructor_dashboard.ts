@@ -239,7 +239,7 @@ export const removeAssignment = (input: Assignment) => {
       )
       .then((response: AxiosResponse) => {
         console.log(response);
-        dispatch(assignmentRemoveFromStore(response.data.deleted));
+        dispatch(assignmentRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
   };
@@ -303,7 +303,7 @@ export const removeDeliverable = (input: Deliverable) => {
       )
       .then((response: AxiosResponse) => {
         console.log(response);
-        dispatch(deliverableRemoveFromStore(response.data.deleted));
+        dispatch(deliverableRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
   };

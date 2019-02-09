@@ -217,7 +217,7 @@ export const removeCohort = (input: Cohort) => {
       )
       .then((response: AxiosResponse) => {
         console.log(response);
-        dispatch(cohortRemoveFromStore(response.data.deleted));
+        dispatch(cohortRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
   };
@@ -281,7 +281,7 @@ export const removeUser = (input: User) => {
       )
       .then((response: AxiosResponse) => {
         console.log(response);
-        dispatch(userRemoveFromStore(response.data.deleted));
+        dispatch(userRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
   };
