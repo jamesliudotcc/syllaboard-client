@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import UiTheme from '../../../style/theme';
 import { Cohort } from '../../../Types';
 
 const styles = (theme: Theme) => createStyles({
@@ -39,14 +38,20 @@ const styles = (theme: Theme) => createStyles({
 });
 
 export interface OwnProps {
-  removeCohort: (input: Cohort) => void
+  removeCohort: (input: Cohort) => void;
+  selectCohort: (input: Cohort) => void;
+  cohort: Cohort;
 }
 
-type Props = Cohort & OwnProps & WithStyles<typeof styles>;
+type Props = OwnProps & WithStyles<typeof styles>;
 
 class CohortCard extends React.Component<Props, {}> {                
   handleDelete = () => {
-    this.props.removeCohort(this.props)
+    this.props.removeCohort(this.props.cohort)
+  }
+
+  handleEdit = () => {
+    this.props.selectCohort(this.props.cohort);
   }
  
   render() {
@@ -55,15 +60,19 @@ class CohortCard extends React.Component<Props, {}> {
         <div className={this.props.classes.details}>
           <CardContent className={this.props.classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.name}
+              {this.props.cohort.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Taught By: {this.props.instructors}
+              End-Date: 
             </Typography>
           </CardContent>
           <Divider variant="middle" />
           <div className={this.props.classes.controls}>
-            <IconButton className={this.props.classes.edit} aria-label="Edit">
+            <IconButton 
+              className={this.props.classes.edit} 
+              aria-label="Edit"
+              onClick={this.handleEdit}
+            >
               <EditIcon />
             </IconButton>
             <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>

@@ -24,20 +24,23 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cohort: {
     // Cohort actions
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
+    toggleEditCohort: () => dispatch(adminActions.toggleEditCohort()),
     toggleShowCohorts: () => dispatch(adminActions.toggleShowCohorts()),
     addNewCohort: (cohortInfo: NewCohortInfo) =>
       adminActions.addNewCohort(cohortInfo)(dispatch),
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
     removeCohort: (cohort: Cohort) =>
       adminActions.removeCohort(cohort)(dispatch),
+    updateCohort: (cohort: Cohort) => adminActions.updateCohort(cohort)(dispatch),
+    selectCohort: (cohort: Cohort | null) => dispatch(adminActions.cohortSelect(cohort)),
   },
   user: {
     toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
     toggleShowUsers: () => dispatch(adminActions.toggleShowUsers()),
+    getAllUsers: () => adminActions.getAllUsers()(dispatch),
     removeUser: (user: User) => adminActions.removeUser(user)(dispatch),
     updateUser: (user: User) => adminActions.updateUser(user)(dispatch),
     selectUser: (user: User | null) => dispatch(adminActions.userSelect(user)),
-    getAllUsers: () => adminActions.getAllUsers()(dispatch),
   },
   instructor: {},
   student: {},
@@ -62,8 +65,10 @@ class AdminDashboard extends React.Component<Props, {}> {
   render() {
     const cohortData = {
       cohorts: this.props.cohorts,
+      selectedCohort: this.props.selectedCohort,
       errorMessage: this.props.errorMessage,
       showAddCohort: this.props.showAddCohort,
+      showEditCohort: this.props.showEditCohort,
       showAllCohorts: this.props.showAllCohorts,
       ...this.props.cohort,
     };

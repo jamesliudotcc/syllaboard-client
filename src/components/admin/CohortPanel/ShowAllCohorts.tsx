@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Cohort } from '../../../Types';
-import CohortCard from './CohortCard';
+import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
-import { removeCohort } from '../../../actions/admin_dashboard';
+import { Cohort } from '../../../Types';
+import CohortCard from './CohortCard';
 
 const styles = (theme: Theme) => createStyles({
   card: {
@@ -16,12 +15,12 @@ const styles = (theme: Theme) => createStyles({
 });
 
 export interface OwnProps {
-  cohorts: Cohort[],
-  removeCohort: (input: Cohort) => void
+  cohorts: Cohort[];
+  selectCohort: (input: Cohort) => void;
+  removeCohort: (input: Cohort) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
-
 
 class ShowAllCohorts extends React.Component<Props, {}> {
   
@@ -32,7 +31,12 @@ class ShowAllCohorts extends React.Component<Props, {}> {
       </Grid>
     : this.props.cohorts.map((cohort, i) => (
         <Grid key={i} item xs={12} sm={6}>
-          <CohortCard  key={cohort.instructorKey} {...cohort} removeCohort={this.props.removeCohort} />
+          <CohortCard  
+            key={cohort._id} 
+            cohort={cohort}
+            selectCohort={this.props.selectCohort}
+            removeCohort={this.props.removeCohort} 
+          />
         </Grid>
       ));
 
