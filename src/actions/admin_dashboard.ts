@@ -14,6 +14,7 @@ import { fetchFailed } from './notifications';
 export type Action =
   // UI
   | ToggleAddCohort
+  | ToggleEditCohort
   | ToggleShowCohorts
   | ToggleShowUsers
   | ToggleSendRegistration
@@ -23,6 +24,7 @@ export type Action =
   | CohortAddToStore
   | CohortUpdateInStore
   | CohortRemoveFromStore
+  | CohortSelect
   // Users
   | UserRefreshStore
   | UserUpdateInStore 
@@ -36,6 +38,7 @@ export type Action =
 export enum Actions {
   // UI
   TOGGLE_ADD_COHORT = 'TOGGLE_ADD_COHORT',
+  TOGGLE_EDIT_COHORT = 'TOGGLE_EDIT_COHORT',
   TOGGLE_SHOW_COHORTS = 'TOGGLE_SHOW_COHORTS',
   TOGGLE_SHOW_USERS = 'TOGGLE_SHOW_USERS',
   TOGGLE_SEND_REGISTRATION = 'TOGGLE_SEND_REGISTRATION',
@@ -45,6 +48,7 @@ export enum Actions {
   COHORT_ADD_TO_STORE = 'COHORT_ADD_TO_STORE',
   COHORT_UPDATE_IN_STORE = 'COHORT_UPDATE_IN_STORE',
   COHORT_REMOVE_FROM_STORE = 'COHORT_REMOVE_FROM_STORE',
+  COHORT_SELECT = 'COHORT_SELECT',
   // User
   USER_REFRESH_STORE = 'USER_REFRESH_STORE',
   USER_ADD_TO_STORE = 'USER_ADD_TO_STORE',
@@ -57,6 +61,10 @@ export enum Actions {
 // UI
 export interface ToggleAddCohort {
   type: Actions.TOGGLE_ADD_COHORT;
+}
+
+export interface ToggleEditCohort {
+  type: Actions.TOGGLE_EDIT_COHORT;
 }
 
 export interface ToggleShowCohorts {
@@ -94,6 +102,11 @@ export interface CohortUpdateInStore {
 export interface CohortRemoveFromStore {
   type: Actions.COHORT_REMOVE_FROM_STORE;
   payload: ID;
+}
+
+export interface CohortSelect {
+  type: Actions.COHORT_SELECT;
+  payload: Cohort | null;
 }
 
 // User
@@ -135,6 +148,10 @@ export const toggleAddCohort = (): ToggleAddCohort  => ({
   type: Actions.TOGGLE_ADD_COHORT,
 });
 
+export const toggleEditCohort = (): ToggleEditCohort  => ({
+  type: Actions.TOGGLE_EDIT_COHORT,
+});
+
 export const toggleShowCohorts = (): ToggleShowCohorts  => ({
   type: Actions.TOGGLE_SHOW_COHORTS,
 });
@@ -170,6 +187,11 @@ export const cohortRemoveFromStore = (payload: ID) => ({
 
 export const cohortUpdateInStore = (payload: Cohort) => ({
   type: Actions.COHORT_UPDATE_IN_STORE,
+  payload,
+});
+
+export const cohortSelect = (payload: Cohort | null) => ({
+  type: Actions.COHORT_SELECT,
   payload,
 });
 

@@ -17,8 +17,8 @@ import ShowAllUsers from './ShowAllUsers';
 
 const styles = (theme: Theme) =>
   createStyles({
-    spaced: {
-      margin: theme.spacing.unit,
+    divider: {
+      marginBottom: '1.25em',
     },
     add: {
       color: '#0cb10c',
@@ -100,7 +100,7 @@ class Users extends React.Component<Props, {}> {
           </Grid>
           <Grid item />
         </Grid>
-        <Divider />
+        <Divider className={this.props.showAllUsers ? '' : this.props.classes.divider} />
         {editUserPanel}
         <Collapse in={this.props.showAllUsers} timeout="auto" unmountOnExit>
           <ShowAllUsers {...users} />
