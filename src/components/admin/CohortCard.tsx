@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Cohort } from '../../Types';
-import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import * as React from 'react';
 import UiTheme from '../../style/theme';
+import { Cohort } from '../../Types';
 
 const styles = (theme: Theme) => createStyles({
   card: {
@@ -29,11 +29,11 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing.unit,
   },
   edit: {
-    color: '#0cb10c'
+    color: '#0cb10c',
   },
   delete: {
-    color: '#e40c0c'
-  }
+    color: '#e40c0c',
+  },
 });
 
 export interface OwnProps {

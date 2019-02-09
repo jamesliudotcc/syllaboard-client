@@ -1,8 +1,8 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { SERVER_URL } from '../constants';
 
 import { Dispatch } from 'redux';
-import { Cohort, ID, NewCohortInfo, NewUserInfo, User } from '../Types';
+import { Cohort, ID, NewCohortInfo, NewUserInfo, User, EditUserInfo } from '../Types';
 
 import { fetchFailed } from './notifications';
 
@@ -26,6 +26,7 @@ export type Action =
   | UserUpdateInStore 
   | UserAddToStore
   | UserRemoveFromStore
+  | UserSelect
   // Default Case 
   | OtherAction;
 
@@ -45,6 +46,7 @@ export enum Actions {
   USER_ADD_TO_STORE = 'USER_ADD_TO_STORE',
   USER_UPDATE_IN_STORE = 'USER_UPDATE_IN_STORE',
   USER_REMOVE_FROM_STORE = 'USER_REMOVE_FROM_STORE',
+  USER_SELECT = 'USER_SELECT',
   OTHER_ACTION = '__any_other_action__',
 }
 
@@ -103,6 +105,11 @@ export interface UserRemoveFromStore {
   payload: ID;
 }
 
+export interface UserSelect {
+  type: Actions.USER_SELECT;
+  payload: User;
+}
+
 export interface OtherAction {
   type: Actions.OTHER_ACTION;
 }
@@ -159,7 +166,7 @@ export const userAddToStore = (payload: User) => ({
 });
 
 export const userRemoveFromStore = (payload: ID) => ({
-  type: Actions.COHORT_REMOVE_FROM_STORE,
+  type: Actions.USER_REMOVE_FROM_STORE,
   payload,
 });
 
@@ -167,6 +174,12 @@ export const userUpdateInStore = (payload: User) => ({
   type: Actions.USER_UPDATE_IN_STORE,
   payload,
 });
+
+export const userSelect = (payload: User) => ({
+  type: Actions.USER_SELECT,
+  payload,
+});
+
 export const OtherAction = (): OtherAction => ({
   type: Actions.OTHER_ACTION,
 });
@@ -257,7 +270,7 @@ export const addNewUsers = (input: NewUserInfo) => {
 };
 
 // Send user with modified fields to be updated in DB and refresh store
-export const updateUser = (input: User) => {
+export const updateUser = (input: EditUserInfo) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/admin/users/${input._id}`,

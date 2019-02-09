@@ -58,7 +58,22 @@ export type KEY = string;
 
 export type ID = string;
 
-export type Role = 'admin' | 'instructor' | 'student' | null
+export type Role = 'admin' | 'instructor' | 'student' | null;
+
+export const roleOptions: Array<{ value: Role; label: string }> = [
+  {
+    value: 'admin',
+    label: 'Admin',
+  },
+  {
+    value: 'instructor',
+    label: 'Instructor',
+  },
+  {
+    value: 'student',
+    label: 'Student',
+  },
+];
 
 export interface Credentials {
   email: string;
@@ -86,6 +101,11 @@ export interface NewUserInfo {
   lastName: string,
   email: string,
   password: string,
+  role: Role,
+}
+
+export interface EditUserInfo {
+  _id: ID,
   role: Role,
 }
 

@@ -7,6 +7,7 @@ interface AdminDashboardUI {
   showAddCohort: boolean;
   showSendRegistration: boolean;
   showEditUser: boolean;
+  selectedUser: User | null;
 }
 
 interface AdminDashboardData {
@@ -20,6 +21,7 @@ const blankState: AdminDashboardState = {
   showSendRegistration: false,
   cohorts: [],
   users: [],
+  selectedUser: null,
 };
 
 export function adminDashboardReducer(state: AdminDashboardState = blankState, action: Action): AdminDashboardState {
@@ -89,6 +91,12 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
         users: state.users.map((user: User) => (
           user._id === action.payload._id ? action.payload : user
         )),
+      };
+    case Actions.USER_SELECT:
+      return {
+        ...state,
+        selectedUser: action.payload,
+        showEditUser: !!action.payload,
       };
     default:
       return state;
