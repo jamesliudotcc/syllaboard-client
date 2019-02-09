@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     addNewCohort: (cohortInfo: NewCohortInfo) =>
       adminActions.addNewCohort(cohortInfo)(dispatch),
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
+    removeCohort: (cohort: Cohort) => adminActions.removeCohort(cohort)(dispatch)
   },
   instructors: {
 

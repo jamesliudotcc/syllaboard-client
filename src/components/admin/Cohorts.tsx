@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import ShowAllCohorts from './ShowAllCohorts';
 import Typography from '@material-ui/core/Typography';
+import { removeCohort } from '../../actions/admin_dashboard';
 
 const styles = (theme: Theme) => createStyles({
   spaced: {
@@ -27,7 +28,8 @@ export interface OwnProps {
   errorMessage: string,
   showAddCohort: boolean,
   toggleAddCohort: () => void,
-  addNewCohort: (input: NewCohortInfo) => void
+  addNewCohort: (input: NewCohortInfo) => void,
+  removeCohort: (input: Cohort) => void
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
@@ -40,7 +42,8 @@ class Cohorts extends React.Component<Props, {}> {
 
   render() {
     const cohorts = {
-      cohorts: this.props.cohorts
+      cohorts: this.props.cohorts,
+      removeCohort: this.props.removeCohort
     }
 
     const addCohortPanel = this.props.showAddCohort
