@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Cohort } from '../../Types';
+import { Cohort } from '../../../Types';
 import CohortCard from './CohortCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
-import { removeCohort } from '../../actions/admin_dashboard';
+import { removeCohort } from '../../../actions/admin_dashboard';
 
 const styles = (theme: Theme) => createStyles({
   card: {

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import * as React from 'react';
-import { Cohort, NewCohortInfo } from '../../Types';
+import { Cohort, NewCohortInfo } from '../../../Types';
 import AddCohortForm from './AddCohort_form';
 import ShowAllCohorts from './ShowAllCohorts';
 import Collapse from '@material-ui/core/Collapse';

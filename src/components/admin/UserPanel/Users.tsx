@@ -5,6 +5,7 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -40,9 +41,11 @@ export interface OwnProps {
   users: User[];
   errorMessage: string;
   showEditUser: boolean;
+  showAllUsers: boolean;
   selectedUser: User | null;
   selectUser: (user: User | null) => void;
   toggleEditUser: () => void;
+  toggleShowUsers: () => void;
   removeUser: (input: User) => void;
   updateUser: (input: User) => void;
 }
@@ -93,13 +96,15 @@ class Users extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4">Users</Typography>
+            <Typography variant="h4" onClick={this.props.toggleShowUsers} >Users</Typography>
           </Grid>
           <Grid item />
         </Grid>
         <Divider />
         {editUserPanel}
-        <ShowAllUsers {...users} />
+        <Collapse in={this.props.showAllUsers} timeout="auto" unmountOnExit>
+          <ShowAllUsers {...users} />
+        </Collapse>
       </div>
     );
   }
