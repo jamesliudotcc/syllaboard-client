@@ -47,6 +47,11 @@ class Signup extends React.Component<Props, {}> {
   }
 
   render() {
+
+    const getKey = () => (
+      this.props.match.params.cohortKey ? this.props.match.params.cohortKey : null
+    );
+
     return this.props.authenticated ? (
       <Redirect
         to={{
@@ -61,6 +66,7 @@ class Signup extends React.Component<Props, {}> {
         <SignupForm
           onSubmit={this.handleSubmit}
           errorMessage={this.props.errorMessage}
+          cohortKey={getKey()}
         />
       </div>
     );

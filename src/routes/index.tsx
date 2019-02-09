@@ -27,7 +27,8 @@ const routes = (
       {/* Auth */}
       <Route path="/signin" component={Signin} />
       <Route path="/signout" component={Signout} />
-      <Route path="/signup" component={Signup} />
+      <Route exact path="/signup" component={Signup} />
+      <Route path="/signup/:cohortKey" component={Signup} />
 
       {/* Testing Auth */}
       <PrivateRoute path="/feature" component={() => (

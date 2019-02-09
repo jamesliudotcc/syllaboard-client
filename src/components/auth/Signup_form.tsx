@@ -6,11 +6,18 @@ import { renderTextField } from '../helpers/form_helpers';
 
 interface OwnProps {
   errorMessage: string;
+  cohortKey: string;
 }
 
 type Props = OwnProps & InjectedFormProps<SignUpInfo, OwnProps>;
 
 class SignupForm extends React.Component<Props, {}> {
+
+  componentWillMount () {
+    this.props.initialize({
+      cohortKey: this.props.cohortKey,
+    });
+  }
 
   renderAlert() {
     if (this.props.errorMessage) {
