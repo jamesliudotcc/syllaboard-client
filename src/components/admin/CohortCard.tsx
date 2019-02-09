@@ -36,9 +36,16 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-type Props = Cohort & WithStyles<typeof styles>;
+export interface OwnProps {
+  removeCohort: (input: Cohort) => void
+}
 
-class CohortCard extends React.Component<Props, {}> {                  
+type Props = Cohort & OwnProps & WithStyles<typeof styles>;
+
+class CohortCard extends React.Component<Props, {}> {                
+  handleDelete = () => {
+    this.props.removeCohort(this.props)
+  }
  
   render() {
     return (
@@ -57,7 +64,7 @@ class CohortCard extends React.Component<Props, {}> {
           <IconButton className={this.props.classes.edit} aria-label="Edit">
             <EditIcon />
           </IconButton>
-          <IconButton className={this.props.classes.delete} aria-label="Delete">
+          <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
             <DeleteIcon />
           </IconButton>
           </div>
