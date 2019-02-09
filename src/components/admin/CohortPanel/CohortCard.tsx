@@ -7,13 +7,14 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import UiTheme from '../../style/theme';
-import { Cohort } from '../../Types';
+import UiTheme from '../../../style/theme';
+import { Cohort } from '../../../Types';
 
 const styles = (theme: Theme) => createStyles({
   card: {
     display: 'flex',
     margin: theme.spacing.unit,
+    maxWidth: '20em'
   },
   details: {
     display: 'flex',
@@ -25,6 +26,7 @@ const styles = (theme: Theme) => createStyles({
   controls: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between', 
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
@@ -61,12 +63,12 @@ class CohortCard extends React.Component<Props, {}> {
           </CardContent>
           <Divider variant="middle" />
           <div className={this.props.classes.controls}>
-          <IconButton className={this.props.classes.edit} aria-label="Edit">
-            <EditIcon />
-          </IconButton>
-          <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
-            <DeleteIcon />
-          </IconButton>
+            <IconButton className={this.props.classes.edit} aria-label="Edit">
+              <EditIcon />
+            </IconButton>
+            <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
+              <DeleteIcon />
+            </IconButton>
           </div>
         </div>
       </Card>

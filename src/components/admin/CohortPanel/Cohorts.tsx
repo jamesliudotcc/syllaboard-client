@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import * as React from 'react';
-import { Cohort, NewCohortInfo } from '../../Types';
+import { Cohort, NewCohortInfo } from '../../../Types';
 import AddCohortForm from './AddCohort_form';
 import ShowAllCohorts from './ShowAllCohorts';
+import Collapse from '@material-ui/core/Collapse';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -27,7 +28,9 @@ export interface OwnProps {
   cohorts: Cohort[];
   errorMessage: string;
   showAddCohort: boolean;
+  showAllCohorts: boolean;
   toggleAddCohort: () => void;
+  toggleShowCohorts: () => void;
   addNewCohort: (input: NewCohortInfo) => void;
   removeCohort: (input: Cohort) => void;
 }
@@ -67,7 +70,7 @@ class Cohorts extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4">Cohorts</Typography>
+            <Typography variant="h4" onClick={this.props.toggleShowCohorts} >Cohorts</Typography>
           </Grid>
           <Grid item>
             <IconButton
@@ -85,7 +88,9 @@ class Cohorts extends React.Component<Props, {}> {
         </Grid>
         <Divider />
         {addCohortPanel}
-        <ShowAllCohorts {...cohorts} />
+        <Collapse in={this.props.showAllCohorts} timeout="auto" unmountOnExit>
+          <ShowAllCohorts {...cohorts} />
+        </Collapse>
       </div>
     );
   }
