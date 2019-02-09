@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderDatePicker, renderDropdown, renderTextField } from '../helpers/form_helpers';
+import { renderDatePicker, renderDropdown, renderTextField } from '../../helpers/form_helpers';
 
-import { NewCohortInfo } from '../../Types';
+import { NewCohortInfo } from '../../../Types';
 
 interface OwnProps {
   errorMessage: string;

@@ -7,7 +7,7 @@ import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import { Cohort, NewCohortInfo, User } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
-import Cohorts from './Cohorts';
+import Cohorts from './CohortPanel/Cohorts';
 import Users from './UserPanel/Users';
 
 // TODO: create and import ShowAllCohorts, ShowAllInstructors, and ShowAllStudents (the edit and delete functionality for those will live in thos components)
@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cohort: {
     // Cohort actions
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
+    toggleShowCohorts: () => dispatch(adminActions.toggleShowCohorts()),
     addNewCohort: (cohortInfo: NewCohortInfo) =>
       adminActions.addNewCohort(cohortInfo)(dispatch),
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   user: {
     toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
+    toggleShowUsers: () => dispatch(adminActions.toggleShowUsers()),
     removeUser: (user: User) => adminActions.removeUser(user)(dispatch),
     updateUser: (user: User) => adminActions.updateUser(user)(dispatch),
     selectUser: (user: User | null) => dispatch(adminActions.userSelect(user)),
@@ -61,6 +63,7 @@ class AdminDashboard extends React.Component<Props, {}> {
       cohorts: this.props.cohorts,
       errorMessage: this.props.errorMessage,
       showAddCohort: this.props.showAddCohort,
+      showAllCohorts: this.props.showAllCohorts,
       ...this.props.cohort,
     };
 
@@ -69,6 +72,7 @@ class AdminDashboard extends React.Component<Props, {}> {
       selectedUser: this.props.selectedUser,
       errorMessage: this.props.errorMessage,
       showEditUser: this.props.showEditUser,
+      showAllUsers: this.props.showAllUsers,
       ...this.props.user,
     };
 

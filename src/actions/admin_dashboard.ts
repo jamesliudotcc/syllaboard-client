@@ -14,6 +14,8 @@ import { fetchFailed } from './notifications';
 export type Action =
   // UI
   | ToggleAddCohort
+  | ToggleShowCohorts
+  | ToggleShowUsers
   | ToggleSendRegistration
   | ToggleEditUser
   // Cohorts
@@ -34,6 +36,8 @@ export type Action =
 export enum Actions {
   // UI
   TOGGLE_ADD_COHORT = 'TOGGLE_ADD_COHORT',
+  TOGGLE_SHOW_COHORTS = 'TOGGLE_SHOW_COHORTS',
+  TOGGLE_SHOW_USERS = 'TOGGLE_SHOW_USERS',
   TOGGLE_SEND_REGISTRATION = 'TOGGLE_SEND_REGISTRATION',
   TOGGLE_EDIT_USER = 'TOGGLE_EDIT_USER',
   // Cohort
@@ -53,6 +57,14 @@ export enum Actions {
 // UI
 export interface ToggleAddCohort {
   type: Actions.TOGGLE_ADD_COHORT;
+}
+
+export interface ToggleShowCohorts {
+  type: Actions.TOGGLE_SHOW_COHORTS;
+}
+
+export interface ToggleShowUsers {
+  type: Actions.TOGGLE_SHOW_USERS;
 }
 
 export interface ToggleSendRegistration {
@@ -121,6 +133,14 @@ export interface OtherAction {
 // UI
 export const toggleAddCohort = (): ToggleAddCohort  => ({
   type: Actions.TOGGLE_ADD_COHORT,
+});
+
+export const toggleShowCohorts = (): ToggleShowCohorts  => ({
+  type: Actions.TOGGLE_SHOW_COHORTS,
+});
+
+export const toggleShowUsers = (): ToggleShowUsers  => ({
+  type: Actions.TOGGLE_SHOW_USERS,
 });
 
 export const toggleEditUser = (): ToggleEditUser  => ({
