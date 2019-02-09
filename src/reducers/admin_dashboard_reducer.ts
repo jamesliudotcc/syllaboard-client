@@ -5,6 +5,7 @@ export type AdminDashboardState = AdminDashboardUI & AdminDashboardData;
 
 interface AdminDashboardUI {
   showAddCohort: boolean;
+  showAllCohorts: boolean;
   showSendRegistration: boolean;
   showEditUser: boolean;
   selectedUser: User | null;
@@ -17,6 +18,7 @@ interface AdminDashboardData {
 
 const blankState: AdminDashboardState = {
   showAddCohort: false,
+  showAllCohorts: false,
   showEditUser: false,
   showSendRegistration: false,
   cohorts: [],
@@ -31,6 +33,11 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
       return {
         ...state,
         showAddCohort: !state.showAddCohort,
+      };
+    case Actions.TOGGLE_SHOW_COHORTS:
+      return {
+        ...state,
+        showAllCohorts: !state.showAllCohorts,
       };
     case Actions.TOGGLE_EDIT_USER:
       return {

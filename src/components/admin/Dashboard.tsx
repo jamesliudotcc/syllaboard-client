@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cohort: {
     // Cohort actions
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
+    toggleShowCohorts: () => dispatch(adminActions.toggleShowCohorts()),
     addNewCohort: (cohortInfo: NewCohortInfo) =>
       adminActions.addNewCohort(cohortInfo)(dispatch),
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
@@ -62,6 +63,7 @@ class AdminDashboard extends React.Component<Props, {}> {
       cohorts: this.props.cohorts,
       errorMessage: this.props.errorMessage,
       showAddCohort: this.props.showAddCohort,
+      showAllCohorts: this.props.showAllCohorts,
       ...this.props.cohort,
     };
 
