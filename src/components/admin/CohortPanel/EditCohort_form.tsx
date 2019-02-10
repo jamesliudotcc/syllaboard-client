@@ -2,13 +2,13 @@ import * as React from 'react';
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Cohort } from '../../../Types';
-import { renderDropdown, renderTextField, renderDatePicker } from '../../helpers/form_helpers';
+import { renderTextField, renderDatePicker } from '../../helpers/form_helpers';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
 const styles = (theme: Theme) => createStyles({
   button: {
-    margin: theme.spacing.unit,
+    marginTop: '2em',
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,

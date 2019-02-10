@@ -18,6 +18,10 @@ const styles = (theme: Theme) => createStyles({
   details: {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+  },
+  key: {
+    color: theme.palette.text.secondary,
   },
   content: {
     flex: '1 0 auto',
@@ -78,18 +82,22 @@ class CohortCard extends React.Component<Props, {}> {
             </Typography>
           </CardContent>
           <Divider variant="middle" />
-          <div className={this.props.classes.controls}>
-            <IconButton 
-              className={this.props.classes.edit} 
-              aria-label="Edit"
-              onClick={this.handleEdit}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-          </div>
+          <CardContent>
+            <Typography className={this.props.classes.key}><strong>Instructor Key:</strong> {this.props.cohort.instructorKey}</Typography>
+            <Typography className={this.props.classes.key}><strong>Student Key:</strong> {this.props.cohort.studentKey}</Typography>
+            <div className={this.props.classes.controls}>
+              <IconButton 
+                className={this.props.classes.edit} 
+                aria-label="Edit"
+                onClick={this.handleEdit}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </CardContent>
         </div>
       </Card>
     );
