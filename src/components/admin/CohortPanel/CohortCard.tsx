@@ -18,6 +18,10 @@ const styles = (theme: Theme) => createStyles({
   details: {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+  },
+  key: {
+    color: theme.palette.text.secondary,
   },
   content: {
     flex: '1 0 auto',
@@ -37,6 +41,7 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
+
 export interface OwnProps {
   removeCohort: (input: Cohort) => void;
   selectCohort: (input: Cohort) => void;
@@ -44,6 +49,15 @@ export interface OwnProps {
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
+
+const dateString = (date: Date) => {
+  
+  return new Date(date).toLocaleDateString('en-US', {  
+    day : 'numeric',
+    month : 'short',
+    year : 'numeric'
+  })
+}
 
 class CohortCard extends React.Component<Props, {}> {                
   handleDelete = () => {
@@ -55,6 +69,7 @@ class CohortCard extends React.Component<Props, {}> {
   }
  
   render() {
+
     return (
       <Card className={this.props.classes.card}>
         <div className={this.props.classes.details}>
@@ -63,22 +78,26 @@ class CohortCard extends React.Component<Props, {}> {
               {this.props.cohort.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date: 
+              End-Date: {dateString(this.props.cohort.endDate)}
             </Typography>
           </CardContent>
           <Divider variant="middle" />
-          <div className={this.props.classes.controls}>
-            <IconButton 
-              className={this.props.classes.edit} 
-              aria-label="Edit"
-              onClick={this.handleEdit}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-          </div>
+          <CardContent>
+            <Typography className={this.props.classes.key}><strong>Instructor Key:</strong> {this.props.cohort.instructorKey}</Typography>
+            <Typography className={this.props.classes.key}><strong>Student Key:</strong> {this.props.cohort.studentKey}</Typography>
+            <div className={this.props.classes.controls}>
+              <IconButton 
+                className={this.props.classes.edit} 
+                aria-label="Edit"
+                onClick={this.handleEdit}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </CardContent>
         </div>
       </Card>
     );

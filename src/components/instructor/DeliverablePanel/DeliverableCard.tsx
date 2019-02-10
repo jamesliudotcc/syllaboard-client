@@ -7,18 +7,18 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import { User } from '../../../Types';
+import { Assignment } from '../../../Types';
 
 const styles = (theme: Theme) =>
   createStyles({
     card: {
       display: 'flex',
       margin: theme.spacing.unit,
+      maxWidth: '20em',
     },
     details: {
       display: 'flex',
       flexDirection: 'column',
-      width: '100%',
     },
     content: {
       flex: '1 0 auto',
@@ -26,6 +26,7 @@ const styles = (theme: Theme) =>
     controls: {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingLeft: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,
     },
@@ -38,20 +39,20 @@ const styles = (theme: Theme) =>
   });
 
 export interface OwnProps {
-  removeUser: (input: User) => void;
-  selectUser: (input: User) => void;
-  user: User;
+  removeAssignment: (input: Assignment) => void;
+  selectAssignment: (input: Assignment) => void;
+  assignment: Assignment;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
-class UserCard extends React.Component<Props, {}> {
+class AssignmentCard extends React.Component<Props, {}> {
   handleDelete = () => {
-    this.props.removeUser(this.props.user);
+    this.props.removeAssignment(this.props.assignment);
   };
 
   handleEdit = () => {
-    this.props.selectUser(this.props.user);
+    this.props.selectAssignment(this.props.assignment);
   };
 
   render() {
@@ -60,10 +61,10 @@ class UserCard extends React.Component<Props, {}> {
         <div className={this.props.classes.details}>
           <CardContent className={this.props.classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.user.firstName}
+              {this.props.assignment.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Role: {this.props.user.role}
+              End-Date:
             </Typography>
           </CardContent>
           <Divider variant="middle" />
@@ -89,4 +90,4 @@ class UserCard extends React.Component<Props, {}> {
   }
 }
 
-export default withStyles(styles)(UserCard);
+export default withStyles(styles)(AssignmentCard);

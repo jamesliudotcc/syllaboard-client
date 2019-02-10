@@ -5,9 +5,16 @@ import { Dispatch } from 'redux';
 import * as instructorActions from '../../actions/instructor_dashboard';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
-import { Cohort, NewCohortInfo, User } from '../../Types';
+import {
+  Assignment,
+  Deliverable,
+  NewAssignmentInfo,
+  NewDeliverableInfo,
+} from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Assignments from './AssignmentPanel/Assignments';
+import Cohorts from './CohortPanel/Cohorts';
+// import Deliverables from "./DeliverablePanel/Deliverables";
 
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
@@ -17,13 +24,31 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
-  getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+  cohort: {
+    // Cohort actions
+    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch)
+  },
   assignment: {
-    toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
+    toggleAddAssignment: () =>
+      dispatch(instructorActions.toggleAddAssignment()),
+    addNewAssignment: (assignmentInfo: NewAssignmentInfo) =>
+      instructorActions.addNewAssignment(assignmentInfo)(dispatch),
+    updateAssignment: (assignment: Assignment) =>
+      instructorActions.updateAssignment(assignment)(dispatch),
+    removeAssignment: (assignment: Assignment) =>
+      instructorActions.removeAssignment(assignment)(dispatch),
+    getAllAssignments: () => instructorActions.getAllAssignments()(dispatch)
   },
   deliverable: {
     toggleAddDeliverable: () =>
       dispatch(instructorActions.toggleAddDeliverable()),
+    addNewDeliverable: (deliverableInfo: NewDeliverableInfo) =>
+      instructorActions.addNewDeliverable(deliverableInfo)(dispatch),
+    updateDeliverable: (deliverable: Deliverable) =>
+      instructorActions.updateDeliverable(deliverable)(dispatch),
+    removeDeliverable: (deliverable: Deliverable) =>
+      instructorActions.removeDeliverable(deliverable)(dispatch),
+    getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch)
   },
 });
 
@@ -38,83 +63,41 @@ type Props = RouteComponentProps<any> & ComponentProps;
 class InstructorDashboard extends React.Component<Props, {}> {
   componentWillMount() {
     this.props.fetchMessage();
-    this.props.getAllCohorts();
+    this.props.assignment.getAllAssignments();
+    this.props.cohort.getAllCohorts();
+    this.props.deliverable.getAllDeliverables();
   }
 
   render() {
-    const addAssignmentPanel = this.props.showAddAssignment ? (
-      <div>
-        {/* TODO: Add 'add assignment' component */}
-        Add Assignment Component Goes Here!
-      </div>
-    ) : (
-      <div />
-    );
 
-    const addDeliverablePanel = this.props.showAddDeliverable ? (
-      <div>
-        {/* TODO: Add 'add deliverable' component */}
-        Add Deliverable Component Goes Here!
-      </div>
-    ) : (
-      <div />
-    );
-
-    // TODO: remove this after testing  vvvvvvv
-    const flatten = (arr: any[]): any[] =>
-      arr.reduce(
-        (flat, toFlatten) =>
-          flat.concat(
-            Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten,
-          ),
-        [],
-      );
-
-    const cohort =
-      this.props.cohorts.length >= 1 ? (
-        flatten(
-          this.props.cohorts.map((c, i) =>
-            c.students.map((student: User) => (
-              <p key={student._id}>{student.firstName}</p>
-            )),
-          ),
-        )
-      ) : (
-        <div>Loading...</div>
-      );
-    // TODO: remove after testing ^^^^^^^
-
-
+    const cohortData = {
+      cohorts: this.props.cohorts,
+      errorMessage: this.props.errorMessage,
+      ...this.props.cohort,
+    };
     const assignmentData = {
-      assignments: this.props.assignments,
-      selectedAssignment: this.props.selectedAssignment,
+      assignments: this.props.assignment,
       errorMessage: this.props.errorMessage,
       showAddAssignment: this.props.showAddAssignment,
+      showAllAssignments: this.props.showAllAssignments,
       showEditAssignment: this.props.showEditAssignment,
-      showAllAssignment: this.props.showAllAssignments,
       ...this.props.assignment,
     };
-
+    const deliverableData = {
+      deliverables: this.props.deliverables,
+      showAddDeliverable: this.props.showAddDeliverable,
+      errorMessage: this.props.errorMessage,
+      ...this.props.deliverable,
+    };
 
     return (
       <div>
-        <p>
-          <strong>INSTRUCTOR DASHBOARD</strong>
-        </p>
-        <br />
-        <button onClick={this.props.assignment.toggleAddAssignment}>+</button>
-        {addAssignmentPanel}
-        <button onClick={this.props.deliverable.toggleAddDeliverable}>+</button>
-        {addDeliverablePanel}
-        ____________________________________________________________ Cohort:
-        {cohort}
-        ____________________________________________________________
-        <br />
-        {/* <Assignments {...assignmentData} /> */}
-        <p>
-          Notice that clicking these links redirect to the homepage, as you are
-          already signed in:
-        </p>
+        <Typography variant="h2" align="center">
+          Instructor Dashboard
+        </Typography>
+        {/* <Cohorts {...cohortData} /> */}
+        <Assignments {...assignmentData} />
+        {/* <Deliverable {...deliverableData} /> */}
       </div>
     );
   }

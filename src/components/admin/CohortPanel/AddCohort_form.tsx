@@ -1,11 +1,20 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderDatePicker, renderDropdown, renderTextField } from '../../helpers/form_helpers';
+import { renderDatePicker, renderTextField } from '../../helpers/form_helpers';
 
 import { NewCohortInfo } from '../../../Types';
 
 interface OwnProps {
   errorMessage: string;
+}
+
+const findThreeMonthsFrom = (today: Date) => {
+  return new Date(today.getFullYear(), today.getMonth()+3, 
+  today.getDate())
+}
+let initDate = {
+  today: new Date,
+  endDate: findThreeMonthsFrom(new Date)
 }
 
 type Props = OwnProps & InjectedFormProps<NewCohortInfo, OwnProps>;
@@ -22,24 +31,13 @@ class AddCohortForm extends React.Component<Props, {}> {
 
   componentWillMount () {
     this.props.initialize({
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: initDate.today,
+      endDate: initDate.endDate,
     });
   }
 
   render() {
     const {handleSubmit} = this.props;
-    // TODO: Pull in available campuses from DB
-    const tempCampusOptions = [
-      {
-        value: 'seattle',
-        label: 'Seattle',
-      },
-      {
-        value: 'sanFransisco',
-        label: 'San Fransisco',
-      },
-    ]
 
     return (
       <div>
@@ -54,10 +52,10 @@ class AddCohortForm extends React.Component<Props, {}> {
           />
 
           <Field
-            label="Campus"
+            label="Campus City"
             name="campus"
-            component={renderDropdown}
-            options={tempCampusOptions}
+            component={renderTextField}
+            type="text"
           />
 
           <Field

@@ -90,8 +90,8 @@ class Assignments extends React.Component<Props, {}> {
           this.props.showEditAssignment
             ? this.props.toggleEditAssignment
             : () => {
-              return;
-            }
+                return;
+              }
         }
       >
         <div className={this.props.classes.paper}>
@@ -112,8 +112,8 @@ class Assignments extends React.Component<Props, {}> {
         />
       </div>
     ) : (
-        <div />
-      );
+      <div />
+    );
 
     const toggleBtn = !this.props.showAddAssignment ? <Add /> : <Remove />;
 

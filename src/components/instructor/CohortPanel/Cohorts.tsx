@@ -6,6 +6,7 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
+
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -18,7 +19,8 @@ import * as React from 'react';
 import { Cohort, NewCohortInfo } from '../../../Types';
 
 // Forms
-import AddCohortForm from './AddCohort_form';
+// import AddCohortForm from './AddCohort_form';
+
 import EditCohortForm from './EditCohort_form';
 import ShowAllCohorts from './ShowAllCohorts';
 
@@ -86,9 +88,7 @@ class Cohorts extends React.Component<Props, {}> {
         onClose={
           this.props.showEditCohort
             ? this.props.toggleEditCohort
-            : () => {
-                return;
-              }
+            : () => { return; }
         }
       >
         <div className={this.props.classes.paper}>
@@ -101,16 +101,16 @@ class Cohorts extends React.Component<Props, {}> {
       </Modal>
     );
 
-    const addCohortPanel = this.props.showAddCohort ? (
-      <div>
-        <AddCohortForm
-          onSubmit={this.handleSubmit}
-          errorMessage={this.props.errorMessage}
-        />
-      </div>
-    ) : (
-      <div />
-    );
+    // const addCohortPanel = this.props.showAddCohort ? (
+    //   <div>
+    //     <AddCohortForm
+    //       onSubmit={this.handleSubmit}
+    //       errorMessage={this.props.errorMessage}
+    //     />
+    //   </div>
+    // ) : (
+    //     <div />
+    //   );
 
     const toggleBtn = !this.props.showAddCohort ? <Add /> : <Remove />;
 
@@ -141,12 +141,8 @@ class Cohorts extends React.Component<Props, {}> {
             </IconButton>
           </Grid>
         </Grid>
-        <Divider
-          className={
-            this.props.showAllCohorts ? '' : this.props.classes.divider
-          }
-        />
-        {addCohortPanel}
+        <Divider className={this.props.showAllCohorts ? '' : this.props.classes.divider} />
+        {/* {addCohortPanel} */}
         {editCohortPanel}
         <Collapse in={this.props.showAllCohorts} timeout="auto" unmountOnExit>
           <ShowAllCohorts {...cohorts} />
