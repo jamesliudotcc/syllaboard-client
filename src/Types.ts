@@ -2,7 +2,7 @@ export interface Cohort {
   _id: ID;
   name: string;
   campus: string;
-  students?: []; // This may be trouble
+  students: []; // This may be trouble
   instructors: [];
   startDate: Date;
   endDate: Date;

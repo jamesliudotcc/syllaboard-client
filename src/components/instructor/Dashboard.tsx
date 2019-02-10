@@ -5,6 +5,7 @@ import * as instructorActions from '../../actions/instructor_dashboard';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
+import { User } from '../../Types';
 
 
 const mapStateToProps = (state: State) => ({
@@ -17,6 +18,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
   toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
   toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
+  getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
@@ -28,6 +30,7 @@ class InstructorDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
+    this.props.getAllCohorts();
   }
 
   render() {
@@ -48,6 +51,25 @@ class InstructorDashboard extends React.Component<Props, {}> {
         </div>
       :
         <div></div>;                                     
+    
+    // TODO: remove this after testing  vvvvvvv
+    const flatten = (arr: any[]): any[] => (
+      arr.reduce((flat, toFlatten) => (
+        flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
+      ), [])
+    );
+    
+    const cohort = this.props.cohorts.length >= 1
+      ?
+        flatten(this.props.cohorts.map((c, i) => (
+          c.students.map((student: User) => (
+            <p key={student._id}>{student.firstName}</p>
+          )))))
+      :
+        <div>Loading...</div>;
+    // TODO: remove after testing ^^^^^^^
+    
+    
 
     return (
       <div>
@@ -60,9 +82,9 @@ class InstructorDashboard extends React.Component<Props, {}> {
         <button onClick={this.props.toggleAddDeliverable}>+</button>
         {addDeliverablePanel}
 
-        <p>Here's a secret response from the server that your token returned:</p>
         ____________________________________________________________
-        <p>{this.props.message}</p>
+        Cohort:
+        {cohort}
         ____________________________________________________________
         <br/>
         <p>Notice that clicking these links redirect to the homepage, as you are already signed in:</p>
