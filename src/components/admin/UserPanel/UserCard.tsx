@@ -26,6 +26,7 @@ const styles = (theme: Theme) =>
     controls: {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingLeft: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,
     },
@@ -60,7 +61,7 @@ class UserCard extends React.Component<Props, {}> {
         <div className={this.props.classes.details}>
           <CardContent className={this.props.classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.user.firstName}
+              {this.props.user.firstName} {this.props.user.lastName}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               Role: {this.props.user.role}
