@@ -14,7 +14,7 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import Collapse from '@material-ui/core/Collapse';
 // Types
-import { Cohort, NewCohortInfo, User } from '../../../Types';
+import { Cohort, NewCohortInfo } from '../../../Types';
 
 import ShowAllCohorts from './ShowAllCohorts';
 // Forms

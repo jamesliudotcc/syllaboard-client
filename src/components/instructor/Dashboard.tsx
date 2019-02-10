@@ -1,9 +1,11 @@
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import * as instructorActions from '../../actions/instructor_dashboard';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
+import { Cohort, NewCohortInfo, User } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 
 
@@ -15,8 +17,22 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
+  cohort: {
+    // Cohort actions
+    toggleAddNewAssignment: () => dispatch(instructorActions.addNewAssignment),
+    toggleEditCohort: () => dispatch(instructorActions.toggleEditCohort()),
+    toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
+    addNewCohort: (cohortInfo: NewCohortInfo) =>
+      instructorActions.addNewCohort(cohortInfo)(dispatch),
+    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+    removeCohort: (cohort: Cohort) =>
+      instructorActions.removeCohort(cohort)(dispatch),
+    updateCohort: (cohort: Cohort) => instructorActions.updateCohort(cohort)(dispatch),
+    selectCohort: (cohort: Cohort | null) => dispatch(instructorActions.cohortSelect(cohort)),
+  },
   toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
   toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
+  getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
@@ -28,6 +44,8 @@ class InstructorDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
+    this.props.cohort.getAllCohorts();
+    this.props.user.getAllUsers();
   }
 
   render() {
@@ -48,6 +66,25 @@ class InstructorDashboard extends React.Component<Props, {}> {
         </div>
       :
         <div></div>;                                     
+    
+    // TODO: remove this after testing  vvvvvvv
+    const flatten = (arr: any[]): any[] => (
+      arr.reduce((flat, toFlatten) => (
+        flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
+      ), [])
+    );
+    
+    const cohort = this.props.cohorts.length >= 1
+      ?
+        flatten(this.props.cohorts.map((c, i) => (
+          c.students.map((student: User) => (
+            <p key={student._id}>{student.firstName}</p>
+          )))))
+      :
+        <div>Loading...</div>;
+    // TODO: remove after testing ^^^^^^^
+    
+    
 
     return (
       <div>
@@ -60,9 +97,9 @@ class InstructorDashboard extends React.Component<Props, {}> {
         <button onClick={this.props.toggleAddDeliverable}>+</button>
         {addDeliverablePanel}
 
-        <p>Here's a secret response from the server that your token returned:</p>
         ____________________________________________________________
-        <p>{this.props.message}</p>
+        Cohort:
+        {cohort}
         ____________________________________________________________
         <br/>
         <p>Notice that clicking these links redirect to the homepage, as you are already signed in:</p>

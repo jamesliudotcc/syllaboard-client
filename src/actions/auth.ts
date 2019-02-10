@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
 import { Credentials, Role, SignUpInfo } from '../Types';
+import { fetchFailed } from './notifications';
 
 
 /*
@@ -118,9 +119,16 @@ export const signupUser = ({
         localStorage.setItem('token', response.data.token);
         dispatch(authUser(response.data.role));
       })
-      .catch(({ response }) => {
-        // TODO: format errors
-        dispatch(authError(response.data));
-      });
+      .catch(handleError(dispatch));
   };
 };
+
+const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
+  if (error.response) {
+    dispatch(fetchFailed(error.response.data));
+  } else if (error.request) {
+    dispatch(fetchFailed(error.request));
+  } else {
+    dispatch(fetchFailed(error.message));
+  }
+}

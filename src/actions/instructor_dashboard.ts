@@ -1,9 +1,15 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
-import { Assignment, Cohort, Deliverable, ID, NewAssignmentInfo, NewDeliverableInfo } from '../Types';
+import {
+  Assignment,
+  Cohort,
+  Deliverable,
+  ID,
+  NewAssignmentInfo,
+  NewDeliverableInfo,
+} from '../Types';
 import { fetchFailed } from './notifications';
-
 
 /*
  * action types
@@ -17,16 +23,15 @@ export type Action =
   | CohortRefreshStore
   // Assignment
   | AssignmentRefreshStore
-  | AssignmentUpdateInStore 
+  | AssignmentUpdateInStore
   | AssignmentAddToStore
   | AssignmentRemoveFromStore
   // Deliverable
   | DeliverableRefreshStore
-  | DeliverableUpdateInStore 
+  | DeliverableUpdateInStore
   | DeliverableAddToStore
   | DeliverableRemoveFromStore
   | OtherAction;
-
 
 export enum Actions {
   // UI
@@ -111,11 +116,11 @@ export interface DeliverableRemoveFromStore {
  * action creators
  */
 
-export const toggleAddAssignment = (): ToggleAddAssignment  => ({
+export const toggleAddAssignment = (): ToggleAddAssignment => ({
   type: Actions.TOGGLE_ADD_ASSIGNMENT,
 });
 
-export const toggleAddDeliverable = (): ToggleAddDeliverable  => ({
+export const toggleAddDeliverable = (): ToggleAddDeliverable => ({
   type: Actions.TOGGLE_ADD_DELIVERABLE,
 });
 
@@ -175,37 +180,61 @@ export const OtherAction = (): OtherAction => ({
   type: Actions.OTHER_ACTION,
 });
 
-
 /*
  * dispatch functions (async)
  */
 
 // Cohort
 
-// Request all Cohorts from server and dispatch action to completely refresh store
+// Request all Instructor's cohorts from server and dispatch action to completely refresh store
 export const getAllCohorts = () => {
   return (dispatch: Dispatch): void => {
-    axios.get(
-        `${SERVER_URL}/instructor/cohorts`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
-      .then((response: AxiosResponse) => {
-        dispatch(cohortRefreshStore(response.data.cohorts));
-      })
-      .catch(handleError(dispatch));
-  }
+    (async () => {
+      try {
+        const instructorCohorts = await axios.get(
+          `${SERVER_URL}/instructor/cohorts`,
+          { headers: { authorization: localStorage.getItem('token') } },
+        );
+
+        console.log(instructorCohorts);
+
+        if (!instructorCohorts.data.cohorts) {
+          return;
+        }
+
+        // Update store with basic info
+        dispatch(cohortRefreshStore(instructorCohorts.data.cohorts));
+
+        // Load the rest of the details and update store after
+        const cohortsWithDetails = instructorCohorts.data.cohorts.map(
+          (cohort: Cohort) =>
+            axios.get(`${SERVER_URL}/instructor/cohorts/${cohort._id}`, {
+              headers: { authorization: localStorage.getItem('token') },
+            }),
+        );
+
+        axios.all(cohortsWithDetails).then(
+          axios.spread((...responses: any[]) => {
+            const cohorts = responses.map(response => response.data.cohort);
+            return dispatch(cohortRefreshStore(cohorts));
+          }),
+        );
+      } catch (error) {
+        handleError(dispatch)(error);
+      }
+    })();
+  };
 };
 
 // Assignment
 
 // Send new assignment data to add to DB then dispatch action to add to store
 export const addNewAssignment = (input: NewAssignmentInfo) => {
-  return (dispatch: Dispatch):void => {
-    axios.post(
-        `${SERVER_URL}/instructor/assignments`,
-        input,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+  return (dispatch: Dispatch): void => {
+    axios
+      .post(`${SERVER_URL}/instructor/assignments`, input, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(assignmentAddToStore(response.data.assignment));
@@ -217,11 +246,10 @@ export const addNewAssignment = (input: NewAssignmentInfo) => {
 // Send assignment with modified fields to be updated in DB and refresh store
 export const updateAssignment = (input: Assignment) => {
   return (dispatch: Dispatch): void => {
-    axios.put(
-        `${SERVER_URL}/instructor/assignments/${input._id}`,
-        input,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .put(`${SERVER_URL}/instructor/assignments/${input._id}`, input, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(assignmentUpdateInStore(response.data.edited));
@@ -233,10 +261,10 @@ export const updateAssignment = (input: Assignment) => {
 // Send assignment with modified fields to be updated in DB and refresh store
 export const removeAssignment = (input: Assignment) => {
   return (dispatch: Dispatch): void => {
-    axios.delete(
-        `${SERVER_URL}/instructor/assignments/${input._id}`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .delete(`${SERVER_URL}/instructor/assignments/${input._id}`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(assignmentRemoveFromStore(response.data.deleted.value._id));
@@ -248,28 +276,26 @@ export const removeAssignment = (input: Assignment) => {
 // Request all Assignmentss from server and dispatch action to completely refresh store
 export const getAllAssignments = () => {
   return (dispatch: Dispatch): void => {
-    axios.get(
-        `${SERVER_URL}/instructor/assignments`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .get(`${SERVER_URL}/instructor/assignments`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         dispatch(assignmentRefreshStore(response.data.assignments));
       })
       .catch(handleError(dispatch));
-  }
-
+  };
 };
 
 // Deliverable
 
 // Send new deliverable data to add to DB then dispatch action to add to store
 export const addNewDeliverable = (input: NewDeliverableInfo) => {
-  return (dispatch: Dispatch):void => {
-    axios.post(
-        `${SERVER_URL}/instructor/deliverables`,
-        input,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+  return (dispatch: Dispatch): void => {
+    axios
+      .post(`${SERVER_URL}/instructor/deliverables`, input, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(deliverableAddToStore(response.data.deliverable));
@@ -281,11 +307,10 @@ export const addNewDeliverable = (input: NewDeliverableInfo) => {
 // Send deliverable with modified fields to be updated in DB and refresh store
 export const updateDeliverable = (input: Deliverable) => {
   return (dispatch: Dispatch): void => {
-    axios.put(
-        `${SERVER_URL}/instructor/deliverables/${input._id}`,
-        input,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .put(`${SERVER_URL}/instructor/deliverables/${input._id}`, input, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(deliverableUpdateInStore(response.data.edited));
@@ -297,10 +322,10 @@ export const updateDeliverable = (input: Deliverable) => {
 // Send deliverable with modified fields to be updated in DB and refresh store
 export const removeDeliverable = (input: Deliverable) => {
   return (dispatch: Dispatch): void => {
-    axios.delete(
-        `${SERVER_URL}/instructor/deliverables/${input._id}`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .delete(`${SERVER_URL}/instructor/deliverables/${input._id}`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(deliverableRemoveFromStore(response.data.deleted.value._id));
@@ -312,18 +337,16 @@ export const removeDeliverable = (input: Deliverable) => {
 // Request all Deliverabless from server and dispatch action to completely refresh store
 export const getAllDeliverables = () => {
   return (dispatch: Dispatch): void => {
-    axios.get(
-        `${SERVER_URL}/instructor/deliverables`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .get(`${SERVER_URL}/instructor/deliverables`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         dispatch(deliverableRefreshStore(response.data.deliverables));
       })
       .catch(handleError(dispatch));
-  }
-
+  };
 };
-
 
 const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   if (error.response) {
@@ -333,4 +356,4 @@ const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   } else {
     dispatch(fetchFailed(error.message));
   }
-}
+};
