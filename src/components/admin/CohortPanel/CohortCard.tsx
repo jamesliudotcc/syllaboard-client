@@ -13,7 +13,6 @@ const styles = (theme: Theme) => createStyles({
   card: {
     display: 'flex',
     margin: theme.spacing.unit,
-    maxWidth: '20em'
   },
   details: {
     display: 'flex',

@@ -4,13 +4,25 @@ import { renderDatePicker, renderTextField } from '../../helpers/form_helpers';
 
 import { NewCohortInfo } from '../../../Types';
 
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) => createStyles({
+  button: {
+    marginTop: '2em',
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+})
+
 interface OwnProps {
   errorMessage: string;
 }
 
 const findThreeMonthsFrom = (today: Date) => {
-  return new Date(today.getFullYear(), today.getMonth()+3, 
-  today.getDate())
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate()+84)
 }
 let initDate = {
   today: new Date,
