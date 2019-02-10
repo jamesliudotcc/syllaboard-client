@@ -4,8 +4,12 @@ import { Cohort, User } from '../Types';
 export type AdminDashboardState = AdminDashboardUI & AdminDashboardData;
 
 interface AdminDashboardUI {
-  showAddCohort: boolean;
+  // Cohorts
   showAllCohorts: boolean;
+  showAddCohort: boolean;
+  showEditCohort: boolean;
+  selectedCohort: Cohort | null;
+  // Users
   showAllUsers: boolean;
   showSendRegistration: boolean;
   showEditUser: boolean;
@@ -18,12 +22,16 @@ interface AdminDashboardData {
 }
 
 const blankState: AdminDashboardState = {
-  showAddCohort: false,
+  // Cohorts
   showAllCohorts: false,
+  showAddCohort: false,
+  showEditCohort: false,
+  cohorts: [],
+  selectedCohort: null,
+  // Users
   showAllUsers: false,
   showEditUser: false,
   showSendRegistration: false,
-  cohorts: [],
   users: [],
   selectedUser: null,
 };
@@ -35,6 +43,11 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
       return {
         ...state,
         showAddCohort: !state.showAddCohort,
+      };
+    case Actions.TOGGLE_EDIT_COHORT:
+      return {
+        ...state,
+        showEditCohort: !state.showEditCohort,
       };
     case Actions.TOGGLE_SHOW_COHORTS:
       return {
@@ -81,6 +94,12 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
           cohort._id === action.payload._id ? action.payload : cohort
         )),
       };
+    case Actions.COHORT_SELECT:
+      return {
+        ...state,
+        selectedCohort: action.payload,
+        showEditCohort: !!action.payload,
+    };
   // User
     case Actions.USER_REFRESH_STORE:
       return {
