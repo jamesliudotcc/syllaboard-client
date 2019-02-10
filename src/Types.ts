@@ -120,6 +120,12 @@ export interface NewAssignmentInfo {
   // topics: Topic[];
 }
 
+export interface TurnInDeliverable {
+  deliverableId: ID;
+  turnedIn: Date | null;
+  deliverable: string | null;
+}
+
 export interface NewDeliverableInfo {
   name: string;
   instructor: ID[];

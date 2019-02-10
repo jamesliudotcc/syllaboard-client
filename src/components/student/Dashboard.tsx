@@ -5,8 +5,10 @@ import { fetchMessage } from '../../actions/notifications';
 import * as studentActions from '../../actions/student_dashboard';
 import { State } from '../../reducers';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
+import Deliverables from './DeliverablePanel/Deliverables';
 
 
+// TODO: add all needed state/dispatch to props
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
