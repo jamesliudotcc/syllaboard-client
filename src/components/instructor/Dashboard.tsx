@@ -116,7 +116,7 @@ class InstructorDashboard extends React.Component<Props, {}> {
         </Typography>
         <Cohorts {...cohortData} />
         <Assignment {...assignmentData} />
-        <Users {...deliverableData} />
+        <Deliverable {...deliverableData} />
       </div>
     );
   }
