@@ -37,6 +37,7 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
+
 export interface OwnProps {
   removeCohort: (input: Cohort) => void;
   selectCohort: (input: Cohort) => void;
@@ -44,6 +45,15 @@ export interface OwnProps {
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
+
+const dateString = (date: Date) => {
+  
+  return new Date(date).toLocaleDateString('en-US', {  
+    day : 'numeric',
+    month : 'short',
+    year : 'numeric'
+  })
+}
 
 class CohortCard extends React.Component<Props, {}> {                
   handleDelete = () => {
@@ -55,6 +65,7 @@ class CohortCard extends React.Component<Props, {}> {
   }
  
   render() {
+
     return (
       <Card className={this.props.classes.card}>
         <div className={this.props.classes.details}>
@@ -63,7 +74,7 @@ class CohortCard extends React.Component<Props, {}> {
               {this.props.cohort.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date: 
+              End-Date: {dateString(this.props.cohort.endDate)}
             </Typography>
           </CardContent>
           <Divider variant="middle" />
