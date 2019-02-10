@@ -17,22 +17,18 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
-  cohort: {
-    // Cohort actions
-    toggleAddNewAssignment: () => dispatch(instructorActions.addNewAssignment),
-    toggleEditCohort: () => dispatch(instructorActions.toggleEditCohort()),
-    toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
-    addNewCohort: (cohortInfo: NewCohortInfo) =>
-      instructorActions.addNewCohort(cohortInfo)(dispatch),
-    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
-    removeCohort: (cohort: Cohort) =>
-      instructorActions.removeCohort(cohort)(dispatch),
-    updateCohort: (cohort: Cohort) => instructorActions.updateCohort(cohort)(dispatch),
-    selectCohort: (cohort: Cohort | null) => dispatch(instructorActions.cohortSelect(cohort)),
-  },
-  toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
-  toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
   getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+  // cohort: {
+  //   toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
+  //   updateCohort: (cohort: Cohort) => instructorActions.updateCohort(cohort)(dispatch),
+  //   selectCohort: (cohort: Cohort | null) => dispatch(instructorActions.cohortSelect(cohort)),
+  // },
+  assignment: {
+    toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
+  },
+  deliverable: {
+    toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
+  },
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
@@ -44,8 +40,7 @@ class InstructorDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
-    this.props.cohort.getAllCohorts();
-    this.props.user.getAllUsers();
+    this.props.getAllCohorts();
   }
 
   render() {
@@ -91,10 +86,10 @@ class InstructorDashboard extends React.Component<Props, {}> {
         <p><strong>INSTRUCTOR DASHBOARD</strong></p>
         <br/>
 
-        <button onClick={this.props.toggleAddAssignment}>+</button>
+        <button onClick={this.props.assignment.toggleAddAssignment}>+</button>
         {addAssignmentPanel}
 
-        <button onClick={this.props.toggleAddDeliverable}>+</button>
+        <button onClick={this.props.deliverable.toggleAddDeliverable}>+</button>
         {addDeliverablePanel}
 
         ____________________________________________________________
