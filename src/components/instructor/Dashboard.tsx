@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     removeDeliverable: (deliverable: Deliverable) =>
       instructorActions.removeDeliverable(deliverable)(dispatch),
     getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch)
-  }
+  },
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(
@@ -77,8 +77,10 @@ class InstructorDashboard extends React.Component<Props, {}> {
     };
     const assignmentData = {
       assignments: this.props.assignment,
-      showAddAssignment: this.props.showAddAssignment,
       errorMessage: this.props.errorMessage,
+      showAddAssignment: this.props.showAddAssignment,
+      showAllAssignments: this.props.showAllAssignments,
+      showEditAssignment: this.props.showEditAssignment,
       ...this.props.assignment,
     };
     const deliverableData = {
