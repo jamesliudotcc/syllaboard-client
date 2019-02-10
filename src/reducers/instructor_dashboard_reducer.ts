@@ -4,7 +4,12 @@ import { Assignment, Cohort, Deliverable } from '../Types';
 export type InstructorDashboardState = InstructorDashboardUI & InstructorDashboardData;
 
 interface InstructorDashboardUI {
+  // Assignment
   showAddAssignment: boolean;
+  showAllAssignments: boolean;
+  showEditAssignment: boolean;
+  selectedAssignment: Assignment | null;
+  // Deliverable
   showAddDeliverable: boolean;
 }
 
@@ -16,6 +21,9 @@ interface InstructorDashboardData {
 
 const blankState: InstructorDashboardState = {
   showAddAssignment: false,
+  showAllAssignments: false,
+  showEditAssignment: false,
+  selectedAssignment: null,
   showAddDeliverable: false,
   cohorts: [],
   assignments: [],

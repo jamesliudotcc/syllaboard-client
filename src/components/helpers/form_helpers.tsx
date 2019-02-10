@@ -82,3 +82,11 @@ export const renderDropdown = ({
     </div>
   );
 };
+
+// 'list,of, things in, a string, , ,hi' -> ['list','of','things in','a string','hi']
+export const commaListParser = (input: string) => (
+  input
+    .split(',')
+    .map(item=> item.trim())
+    .filter(item => !!item)
+);

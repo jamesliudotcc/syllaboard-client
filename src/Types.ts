@@ -111,13 +111,13 @@ export interface EditUserInfo {
 
 export interface NewAssignmentInfo {
   name: string;
-  version: number;
+  // version: number;
   cohortType: string[]; // Refs cohort
   cohortWeek: string; // When should this be assigned
-  instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
+  // instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
   instructions: string; // this is the instructor’s notes on what should be accomplished.
   resourcesUrls: string[]; // optional
-  topics: Topic[];
+  // topics: Topic[];
 }
 
 export interface NewDeliverableInfo {
