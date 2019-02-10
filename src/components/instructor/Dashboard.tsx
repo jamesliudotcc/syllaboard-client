@@ -1,11 +1,12 @@
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import * as instructorActions from '../../actions/instructor_dashboard';
 import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
+import { Cohort, NewCohortInfo, User } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
-import { User } from '../../Types';
 
 
 const mapStateToProps = (state: State) => ({
@@ -16,6 +17,19 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
+  cohort: {
+    // Cohort actions
+    toggleAddNewAssignment: () => dispatch(instructorActions.addNewAssignment),
+    toggleEditCohort: () => dispatch(instructorActions.toggleEditCohort()),
+    toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
+    addNewCohort: (cohortInfo: NewCohortInfo) =>
+      instructorActions.addNewCohort(cohortInfo)(dispatch),
+    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+    removeCohort: (cohort: Cohort) =>
+      instructorActions.removeCohort(cohort)(dispatch),
+    updateCohort: (cohort: Cohort) => instructorActions.updateCohort(cohort)(dispatch),
+    selectCohort: (cohort: Cohort | null) => dispatch(instructorActions.cohortSelect(cohort)),
+  },
   toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
   toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
   getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
@@ -30,7 +44,8 @@ class InstructorDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
-    this.props.getAllCohorts();
+    this.props.cohort.getAllCohorts();
+    this.props.user.getAllUsers();
   }
 
   render() {
