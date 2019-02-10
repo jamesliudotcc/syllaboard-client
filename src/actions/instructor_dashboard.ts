@@ -18,6 +18,8 @@ import { fetchFailed } from './notifications';
 export type Action =
   // UI
   | ToggleAddAssignment
+  | ToggleShowAssignments
+  | ToggleEditAssignment
   | ToggleAddDeliverable
   // Cohort
   | CohortRefreshStore
@@ -26,6 +28,7 @@ export type Action =
   | AssignmentUpdateInStore
   | AssignmentAddToStore
   | AssignmentRemoveFromStore
+  | AssignmentSelect
   // Deliverable
   | DeliverableRefreshStore
   | DeliverableUpdateInStore
@@ -36,6 +39,8 @@ export type Action =
 export enum Actions {
   // UI
   TOGGLE_ADD_ASSIGNMENT = 'TOGGLE_ADD_ASSIGNMENT',
+  TOGGLE_SHOW_ASSIGNMENTS = 'TOGGLE_SHOW_ASSIGNMENTS',
+  TOGGLE_EDIT_ASSIGNMENT = 'TOGGLE_EDIT_ASSIGNMENT',
   TOGGLE_ADD_DELIVERABLE = 'TOGGLE_ADD_DELIVERABLE',
   // Cohort
   COHORT_REFRESH_STORE = 'COHORT_REFRESH_STORE',
@@ -44,6 +49,7 @@ export enum Actions {
   ASSIGNMENT_ADD_TO_STORE = 'ASSIGNMENT_ADD_TO_STORE',
   ASSIGNMENT_UPDATE_IN_STORE = 'ASSIGNMENT_UPDATE_IN_STORE',
   ASSIGNMENT_REMOVE_FROM_STORE = 'ASSIGNMENT_REMOVE_FROM_STORE',
+  ASSIGNMENT_SELECT = 'ASSIGNMENT_SELECT',
   // Deliverable
   DELIVERABLE_REFRESH_STORE = 'DELIVERABLE_REFRESH_STORE',
   DELIVERABLE_ADD_TO_STORE = 'DELIVERABLE_ADD_TO_STORE',
@@ -54,6 +60,14 @@ export enum Actions {
 
 export interface ToggleAddAssignment {
   type: Actions.TOGGLE_ADD_ASSIGNMENT;
+}
+
+export interface ToggleShowAssignments {
+  type: Actions.TOGGLE_SHOW_ASSIGNMENTS;
+}
+
+export interface ToggleEditAssignment {
+  type: Actions.TOGGLE_EDIT_ASSIGNMENT;
 }
 
 export interface ToggleAddDeliverable {
@@ -91,6 +105,11 @@ export interface AssignmentRemoveFromStore {
   payload: ID;
 }
 
+export interface AssignmentSelect {
+  type: Actions.ASSIGNMENT_SELECT;
+  payload: Assignment | null;
+}
+
 // Deliverable
 export interface DeliverableRefreshStore {
   type: Actions.DELIVERABLE_REFRESH_STORE;
@@ -118,6 +137,14 @@ export interface DeliverableRemoveFromStore {
 
 export const toggleAddAssignment = (): ToggleAddAssignment => ({
   type: Actions.TOGGLE_ADD_ASSIGNMENT,
+});
+
+export const toggleShowAssignments = (): ToggleShowAssignments => ({
+  type: Actions.TOGGLE_SHOW_ASSIGNMENTS,
+});
+
+export const toggleEditAssignment = (): ToggleEditAssignment => ({
+  type: Actions.TOGGLE_EDIT_ASSIGNMENT,
 });
 
 export const toggleAddDeliverable = (): ToggleAddDeliverable => ({
@@ -149,6 +176,11 @@ export const assignmentRemoveFromStore = (payload: Assignment) => ({
 
 export const assignmentUpdateInStore = (payload: Assignment) => ({
   type: Actions.ASSIGNMENT_UPDATE_IN_STORE,
+  payload,
+});
+
+export const assignmentSelect = (payload: Assignment | null) => ({
+  type: Actions.ASSIGNMENT_SELECT,
   payload,
 });
 

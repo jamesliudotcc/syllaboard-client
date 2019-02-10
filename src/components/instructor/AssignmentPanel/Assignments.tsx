@@ -56,7 +56,7 @@ export interface OwnProps {
   selectAssignment: (assignment: Assignment | null) => void;
   toggleAddAssignment: () => void;
   toggleEditAssignment: () => void;
-  toggleShowAssignment: () => void;
+  toggleShowAssignments: () => void;
   addNewAssignment: (input: NewAssignmentInfo) => void;
   removeAssignment: (input: Assignment) => void;
   updateAssignment: (input: Assignment) => void;
@@ -126,7 +126,7 @@ class Assignments extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowAssignment}>
+            <Typography variant="h4" onClick={this.props.toggleShowAssignments}>
               Assignments
             </Typography>
           </Grid>

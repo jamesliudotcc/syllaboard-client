@@ -1,22 +1,29 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { commaListParser, renderDatePicker, renderDropdown, renderTextField } from '../../helpers/form_helpers';
+import {
+  commaListParser,
+  renderDatePicker,
+  renderDropdown,
+  renderTextField,
+} from '../../helpers/form_helpers';
 
-import { NewAssignmentInfo } from '../../../Types';
+import { NewDeliverableInfo } from '../../../Types';
 
 interface OwnProps {
   errorMessage: string;
 }
 
-type Props = OwnProps & InjectedFormProps<NewAssignmentInfo, OwnProps>;
+type Props = OwnProps & InjectedFormProps<NewDeliverableInfo, OwnProps>;
 
-class AddAssignmentForm extends React.Component<Props, {}> {
-
+class AddDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
     if (this.props.errorMessage) {
-      return <div className="alert alert-danger">
-        <strong>Oops: </strong>{this.props.errorMessage}
-      </div>;
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops: </strong>
+          {this.props.errorMessage}
+        </div>
+      );
     }
   }
 
@@ -26,34 +33,30 @@ class AddAssignmentForm extends React.Component<Props, {}> {
   // }
 
   render() {
-    const {handleSubmit} = this.props;
+    const { handleSubmit } = this.props;
 
     return (
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Name"
             name="name"
             component={renderTextField}
             type="text"
           />
-
           <Field
             label="Cohort Type"
             name="cohortType"
             component={renderTextField}
             type="text"
           />
-
           <Field
             label="Cohort Week"
             name="cohortWeek"
             component={renderTextField}
             type="number"
           />
-
           // TODO: Change to textarea
           <Field
             label="Instructions"
@@ -61,14 +64,12 @@ class AddAssignmentForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="text"
           />
-
           <Field
             label="Resources"
             name="resourceUrls"
             component={renderTextField}
             type="text"
           />
-
           <button type="submit">Add</button>
         </form>
       </div>
@@ -76,21 +77,21 @@ class AddAssignmentForm extends React.Component<Props, {}> {
   }
 }
 
-const validate = (values: NewAssignmentInfo) => {
+const validate = (values: NewDeliverableInfo) => {
   const errors: any = {};
 
   if (!values.name) {
-    errors.name = 'Please enter a name for the assignment';
+    errors.name = 'Please enter a name for the deliverable';
   }
 
-  // TODO: This is weird... 
-  if (commaListParser(values.cohortType.join('')).length > 0) {
-    errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  }
+  // // TODO: This is weird...
+  // if (commaListParser(values.cohortType.join('')).length > 0) {
+  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
+  // }
 
-  if (!values.cohortWeek) {
-    errors.cohortWeek = 'Please enter the estimated week for the assignment';
-  }
+  // if (!values.cohortWeek) {
+  //   errors.cohortWeek = 'Please enter the estimated week for the deliverable';
+  // }
 
   if (!values.instructions) {
     errors.instructions = 'Please enter some instructions';
@@ -103,7 +104,7 @@ const validate = (values: NewAssignmentInfo) => {
   return errors;
 };
 
-export default reduxForm<NewAssignmentInfo, OwnProps>({
-  form: 'addAssignment',
+export default reduxForm<NewDeliverableInfo, OwnProps>({
+  form: 'addDeliverable',
   validate,
-})(AddAssignmentForm);
+})(AddDeliverableForm);

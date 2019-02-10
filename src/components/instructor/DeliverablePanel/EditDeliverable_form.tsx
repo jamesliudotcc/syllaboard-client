@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { Assignment } from '../../../Types';
+import { Deliverable } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
 interface OwnProps {
   errorMessage: string;
-  assignment: Assignment;
+  deliverable: Deliverable;
 }
 
-type Props = OwnProps & InjectedFormProps<Assignment, OwnProps>;
+type Props = OwnProps & InjectedFormProps<Deliverable, OwnProps>;
 
-class EditAssignmentForm extends React.Component<Props, {}> {
+class EditDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
     if (this.props.errorMessage) {
       return (
@@ -24,7 +24,7 @@ class EditAssignmentForm extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.initialize({
-      ...this.props.assignment,
+      ...this.props.deliverable,
     });
   }
 
@@ -35,7 +35,6 @@ class EditAssignmentForm extends React.Component<Props, {}> {
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Name"
             name="name"
@@ -50,6 +49,6 @@ class EditAssignmentForm extends React.Component<Props, {}> {
   }
 }
 
-export default reduxForm<Assignment, OwnProps>({
-  form: 'editAssignment',
-})(EditAssignmentForm);
+export default reduxForm<Deliverable, OwnProps>({
+  form: 'editDeliverable',
+})(EditDeliverableForm);

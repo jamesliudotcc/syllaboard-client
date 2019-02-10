@@ -42,6 +42,11 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         ...state,
         showAddDeliverable: !state.showAddDeliverable,
       };
+    case Actions.TOGGLE_SHOW_ASSIGNMENTS:
+      return {
+        ...state,
+        showAllAssignments: !state.showAllAssignments,
+      };
   // Cohort
     case Actions.COHORT_REFRESH_STORE:
       return {
@@ -72,6 +77,12 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         assignments: state.assignments.map((assignment: Assignment) => (
           assignment._id === action.payload._id ? action.payload : assignment
         )),
+      };
+    case Actions.ASSIGNMENT_SELECT:
+      return {
+        ...state,
+        selectedAssignment: action.payload,
+        showEditAssignment: !!action.payload,
       };
   // Deliverable
     case Actions.DELIVERABLE_REFRESH_STORE:

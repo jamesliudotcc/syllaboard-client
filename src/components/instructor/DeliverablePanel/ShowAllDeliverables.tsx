@@ -2,8 +2,8 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import * as React from 'react';
-import { Assignment } from '../../../Types';
-import AssignmentCard from './AssignmentCard';
+import { Deliverable } from '../../../Types';
+import DeliverableCard from './DeliverableCard';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -16,28 +16,28 @@ const styles = (theme: Theme) =>
   });
 
 export interface OwnProps {
-  assignments: Assignment[];
-  selectAssignment: (input: Assignment) => void;
-  removeAssignment: (input: Assignment) => void;
+  deliverables: Deliverable[];
+  selectDeliverable: (input: Deliverable) => void;
+  removeDeliverable: (input: Deliverable) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
-class ShowAllAssignments extends React.Component<Props, {}> {
+class ShowAllDeliverables extends React.Component<Props, {}> {
   render() {
-    const assignmentCards =
-      this.props.assignments.length < 1 ? (
+    const deliverableCards =
+      this.props.deliverables.length < 1 ? (
         <Grid item>
           <CircularProgress className={this.props.classes.spinner} />
         </Grid>
       ) : (
-        this.props.assignments.map((assignment, i) => (
+        this.props.deliverables.map((deliverable, i) => (
           <Grid key={i} item xs={12} sm={6}>
-            <AssignmentCard
-              key={assignment._id}
-              assignment={assignment}
-              selectAssignment={this.props.selectAssignment}
-              removeAssignment={this.props.removeAssignment}
+            <DeliverableCard
+              key={deliverable._id}
+              deliverable={deliverable}
+              selectDeliverable={this.props.selectDeliverable}
+              removeDeliverable={this.props.removeDeliverable}
             />
           </Grid>
         ))
@@ -50,10 +50,10 @@ class ShowAllAssignments extends React.Component<Props, {}> {
         justify="space-around"
         alignItems="flex-start"
       >
-        {assignmentCards}
+        {deliverableCards}
       </Grid>
     );
   }
 }
 
-export default withStyles(styles)(ShowAllAssignments);
+export default withStyles(styles)(ShowAllDeliverables);

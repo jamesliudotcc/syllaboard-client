@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import { Assignment } from '../../../Types';
+import { Deliverable } from '../../../Types';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -39,20 +39,20 @@ const styles = (theme: Theme) =>
   });
 
 export interface OwnProps {
-  removeAssignment: (input: Assignment) => void;
-  selectAssignment: (input: Assignment) => void;
-  assignment: Assignment;
+  removeDeliverable: (input: Deliverable) => void;
+  selectDeliverable: (input: Deliverable) => void;
+  deliverable: Deliverable;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
-class AssignmentCard extends React.Component<Props, {}> {
+class DeliverableCard extends React.Component<Props, {}> {
   handleDelete = () => {
-    this.props.removeAssignment(this.props.assignment);
+    this.props.removeDeliverable(this.props.deliverable);
   };
 
   handleEdit = () => {
-    this.props.selectAssignment(this.props.assignment);
+    this.props.selectDeliverable(this.props.deliverable);
   };
 
   render() {
@@ -61,7 +61,7 @@ class AssignmentCard extends React.Component<Props, {}> {
         <div className={this.props.classes.details}>
           <CardContent className={this.props.classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.assignment.name}
+              {this.props.deliverable.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               End-Date:
@@ -90,4 +90,4 @@ class AssignmentCard extends React.Component<Props, {}> {
   }
 }
 
-export default withStyles(styles)(AssignmentCard);
+export default withStyles(styles)(DeliverableCard);

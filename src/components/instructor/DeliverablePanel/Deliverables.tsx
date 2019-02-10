@@ -17,12 +17,12 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 
 // Types
-import { Assignment, NewAssignmentInfo } from '../../../Types';
+import { Deliverable, NewDeliverableInfo } from '../../../Types';
 
 // Forms
-import AddAssignmentForm from './AddAssignment_form';
-import EditAssignmentForm from './EditAssignment_form';
-import ShowAllAssignments from './ShowAllAssignments';
+import AddDeliverableForm from './AddDeliverable_form';
+import EditDeliverableForm from './EditDeliverable_form';
+import ShowAllDeliverables from './ShowAllDeliverables';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -47,66 +47,66 @@ const styles = (theme: Theme) =>
   });
 
 export interface OwnProps {
-  assignments: Assignment[];
+  deliverables: Deliverable[];
   errorMessage: string;
-  showAddAssignment: boolean;
-  showAllAssignments: boolean;
-  showEditAssignment: boolean;
-  selectedAssignment: Assignment | null;
-  selectAssignment: (assignment: Assignment | null) => void;
-  toggleAddAssignment: () => void;
-  toggleEditAssignment: () => void;
-  toggleShowAssignment: () => void;
-  addNewAssignment: (input: NewAssignmentInfo) => void;
-  removeAssignment: (input: Assignment) => void;
-  updateAssignment: (input: Assignment) => void;
+  showAddDeliverable: boolean;
+  showAllDeliverables: boolean;
+  showEditDeliverable: boolean;
+  selectedDeliverable: Deliverable | null;
+  selectDeliverable: (deliverable: Deliverable | null) => void;
+  toggleAddDeliverable: () => void;
+  toggleEditDeliverable: () => void;
+  toggleShowDeliverable: () => void;
+  addNewDeliverable: (input: NewDeliverableInfo) => void;
+  removeDeliverable: (input: Deliverable) => void;
+  updateDeliverable: (input: Deliverable) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
-class Assignments extends React.Component<Props, {}> {
-  handleSubmit = (input: NewAssignmentInfo) => {
-    this.props.toggleAddAssignment();
-    this.props.addNewAssignment(input);
+class Deliverables extends React.Component<Props, {}> {
+  handleSubmit = (input: NewDeliverableInfo) => {
+    this.props.toggleAddDeliverable();
+    this.props.addNewDeliverable(input);
   };
 
-  handleEditSubmit = (input: Assignment) => {
-    this.props.selectAssignment(null);
-    this.props.updateAssignment(input);
+  handleEditSubmit = (input: Deliverable) => {
+    this.props.selectDeliverable(null);
+    this.props.updateDeliverable(input);
   };
 
   render() {
-    const assignments = {
-      assignments: this.props.assignments,
-      removeAssignment: this.props.removeAssignment,
-      updateAssignment: this.props.updateAssignment,
-      selectAssignment: this.props.selectAssignment,
+    const deliverables = {
+      deliverables: this.props.deliverables,
+      removeDeliverable: this.props.removeDeliverable,
+      updateDeliverable: this.props.updateDeliverable,
+      selectDeliverable: this.props.selectDeliverable,
     };
 
-    const editAssignmentPanel = (
+    const editDeliverablePanel = (
       <Modal
-        open={this.props.showEditAssignment}
+        open={this.props.showEditDeliverable}
         onClose={
-          this.props.showEditAssignment
-            ? this.props.toggleEditAssignment
+          this.props.showEditDeliverable
+            ? this.props.toggleEditDeliverable
             : () => {
                 return;
               }
         }
       >
         <div className={this.props.classes.paper}>
-          <EditAssignmentForm
+          <EditDeliverableForm
             onSubmit={this.handleEditSubmit}
             errorMessage={this.props.errorMessage}
-            assignment={this.props.selectedAssignment as Assignment}
+            deliverable={this.props.selectedDeliverable as Deliverable}
           />
         </div>
       </Modal>
     );
 
-    const addAssignmentPanel = this.props.showAddAssignment ? (
+    const addDeliverablePanel = this.props.showAddDeliverable ? (
       <div>
-        <AddAssignmentForm
+        <AddDeliverableForm
           onSubmit={this.handleSubmit}
           errorMessage={this.props.errorMessage}
         />
@@ -115,7 +115,7 @@ class Assignments extends React.Component<Props, {}> {
       <div />
     );
 
-    const toggleBtn = !this.props.showAddAssignment ? <Add /> : <Remove />;
+    const toggleBtn = !this.props.showAddDeliverable ? <Add /> : <Remove />;
 
     return (
       <div>
@@ -126,16 +126,16 @@ class Assignments extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowAssignment}>
-              Assignments
+            <Typography variant="h4" onClick={this.props.toggleShowDeliverable}>
+              Deliverables
             </Typography>
           </Grid>
           <Grid item>
             <IconButton
-              aria-label="Add Assignment"
-              onClick={this.props.toggleAddAssignment}
+              aria-label="Add Deliverable"
+              onClick={this.props.toggleAddDeliverable}
               className={
-                this.props.showAddAssignment
+                this.props.showAddDeliverable
                   ? this.props.classes.hide
                   : this.props.classes.add
               }
@@ -146,21 +146,21 @@ class Assignments extends React.Component<Props, {}> {
         </Grid>
         <Divider
           className={
-            this.props.showAllAssignments ? '' : this.props.classes.divider
+            this.props.showAllDeliverables ? '' : this.props.classes.divider
           }
         />
-        {addAssignmentPanel}
-        {editAssignmentPanel}
+        {addDeliverablePanel}
+        {editDeliverablePanel}
         <Collapse
-          in={this.props.showAllAssignments}
+          in={this.props.showAllDeliverables}
           timeout="auto"
           unmountOnExit
         >
-          <ShowAllAssignments {...assignments} />
+          <ShowAllDeliverables {...deliverables} />
         </Collapse>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Assignments);
+export default withStyles(styles)(Deliverables);

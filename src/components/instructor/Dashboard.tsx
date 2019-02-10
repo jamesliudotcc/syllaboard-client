@@ -24,20 +24,24 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
+  getAllAssignments: () => instructorActions.getAllAssignments()(dispatch),
   cohort: {
     // Cohort actions
     getAllCohorts: () => instructorActions.getAllCohorts()(dispatch)
   },
   assignment: {
+    selectAssignment: (assignment: Assignment | null) => dispatch(instructorActions.assignmentSelect(assignment)),
     toggleAddAssignment: () =>
       dispatch(instructorActions.toggleAddAssignment()),
+    toggleEditAssignment: () =>
+      dispatch(instructorActions.toggleEditAssignment()),
+    toggleShowAssignments: () => dispatch(instructorActions.toggleShowAssignments()),
     addNewAssignment: (assignmentInfo: NewAssignmentInfo) =>
       instructorActions.addNewAssignment(assignmentInfo)(dispatch),
     updateAssignment: (assignment: Assignment) =>
       instructorActions.updateAssignment(assignment)(dispatch),
     removeAssignment: (assignment: Assignment) =>
       instructorActions.removeAssignment(assignment)(dispatch),
-    getAllAssignments: () => instructorActions.getAllAssignments()(dispatch)
   },
   deliverable: {
     toggleAddDeliverable: () =>
@@ -63,7 +67,7 @@ type Props = RouteComponentProps<any> & ComponentProps;
 class InstructorDashboard extends React.Component<Props, {}> {
   componentWillMount() {
     this.props.fetchMessage();
-    this.props.assignment.getAllAssignments();
+    this.props.getAllAssignments();
     this.props.cohort.getAllCohorts();
     this.props.deliverable.getAllDeliverables();
   }
@@ -76,11 +80,12 @@ class InstructorDashboard extends React.Component<Props, {}> {
       ...this.props.cohort,
     };
     const assignmentData = {
-      assignments: this.props.assignment,
+      assignments: this.props.assignments,
       errorMessage: this.props.errorMessage,
       showAddAssignment: this.props.showAddAssignment,
       showAllAssignments: this.props.showAllAssignments,
       showEditAssignment: this.props.showEditAssignment,
+      selectedAssignment: this.props.selectedAssignment,
       ...this.props.assignment,
     };
     const deliverableData = {
