@@ -1,108 +1,122 @@
-import Typography from '@material-ui/core/Typography';
-import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { Dispatch } from 'redux';
-import * as instructorActions from '../../actions/instructor_dashboard';
-import { fetchMessage } from '../../actions/notifications';
-import { State } from '../../reducers';
-import { Cohort, NewCohortInfo, User } from '../../Types';
-import { connectedComponentHelper } from '../../utils/connectedComponent';
-
+import Typography from "@material-ui/core/Typography";
+import * as React from "react";
+import { RouteComponentProps } from "react-router";
+import { Dispatch } from "redux";
+import * as instructorActions from "../../actions/instructor_dashboard";
+import { fetchMessage } from "../../actions/notifications";
+import { State } from "../../reducers";
+import {
+  Assignment,
+  Cohort,
+  Deliverable,
+  NewAssignmentInfo,
+  NewCohortInfo,
+  NewDeliverableInfo,
+  User
+} from "../../Types";
+import { connectedComponentHelper } from "../../utils/connectedComponent";
+import Cohorts from "./CohortPanel/Cohorts";
+import Assignments from "./AssignmentPanel/Assignments";
+import Deliverables from "./DeliverablePanel/Deliverables";
 
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
-  ...state.instructorDashboard,
+  ...state.instructorDashboard
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
   cohort: {
     // Cohort actions
-    toggleAddNewAssignment: () => dispatch(instructorActions.addNewAssignment),
-    toggleEditCohort: () => dispatch(instructorActions.toggleEditCohort()),
-    toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
-    addNewCohort: (cohortInfo: NewCohortInfo) =>
-      instructorActions.addNewCohort(cohortInfo)(dispatch),
-    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
-    removeCohort: (cohort: Cohort) =>
-      instructorActions.removeCohort(cohort)(dispatch),
-    updateCohort: (cohort: Cohort) => instructorActions.updateCohort(cohort)(dispatch),
-    selectCohort: (cohort: Cohort | null) => dispatch(instructorActions.cohortSelect(cohort)),
+    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch)
   },
-  toggleAddAssignment: () => dispatch(instructorActions.toggleAddAssignment()),
-  toggleAddDeliverable: () => dispatch(instructorActions.toggleAddDeliverable()),
-  getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+  assignment: {
+    toggleAddAssignment: () =>
+      dispatch(instructorActions.toggleAddAssignment()),
+    addNewAssignment: (assignmentInfo: NewAssignmentInfo) =>
+      instructorActions.addNewAssignment(assignmentInfo)(dispatch),
+    updateAssignment: (assignment: Assignment) =>
+      instructorActions.updateAssignment(assignment)(dispatch),
+    removeAssignment: (assignment: Assignment) =>
+      instructorActions.removeAssignment(assignment)(dispatch),
+    getAllAssignments: () => instructorActions.getAllAssignments()(dispatch)
+  },
+  deliverable: {
+    toggleAddDeliverable: () =>
+      dispatch(instructorActions.toggleAddDeliverable()),
+    addNewDeliverable: (deliverableInfo: NewDeliverableInfo) =>
+      instructorActions.addNewDeliverable(deliverableInfo)(dispatch),
+    updateDeliverable: (deliverable: Deliverable) =>
+      instructorActions.updateDeliverable(deliverable)(dispatch),
+    removeDeliverable: (deliverable: Deliverable) =>
+      instructorActions.removeDeliverable(deliverable)(dispatch),
+    getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch)
+  }
 });
 
-const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
+const { propsGeneric, connect } = connectedComponentHelper<{}>()(
+  mapStateToProps,
+  mapDispatchToProps
+);
 type ComponentProps = typeof propsGeneric;
 
 type Props = RouteComponentProps<any> & ComponentProps;
 
 class InstructorDashboard extends React.Component<Props, {}> {
-
   componentWillMount() {
     this.props.fetchMessage();
+    this.props.assignment.getAllAssignments();
     this.props.cohort.getAllCohorts();
-    this.props.user.getAllUsers();
+    this.props.deliverable.getAllDeliverables();
   }
 
   render() {
-    const addAssignmentPanel = this.props.showAddAssignment
-      ?
-        <div>
-          {/* TODO: Add 'add assignment' component */}
-          Add Assignment Component Goes Here!
-        </div>
-      :
-        <div></div>;                                     
-
-    const addDeliverablePanel = this.props.showAddDeliverable
-      ?
-        <div>
-          {/* TODO: Add 'add deliverable' component */}
-          Add Deliverable Component Goes Here!
-        </div>
-      :
-        <div></div>;                                     
-    
-    // TODO: remove this after testing  vvvvvvv
-    const flatten = (arr: any[]): any[] => (
-      arr.reduce((flat, toFlatten) => (
-        flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
-      ), [])
+    const addAssignmentPanel = this.props.showAddAssignment ? (
+      <div>
+        {/* TODO: Add 'add assignment' component */}
+        Add Assignment Component Goes Here!
+      </div>
+    ) : (
+      <div />
     );
-    
-    const cohort = this.props.cohorts.length >= 1
-      ?
-        flatten(this.props.cohorts.map((c, i) => (
-          c.students.map((student: User) => (
-            <p key={student._id}>{student.firstName}</p>
-          )))))
-      :
-        <div>Loading...</div>;
+
+    const addDeliverablePanel = this.props.showAddDeliverable ? (
+      <div>
+        {/* TODO: Add 'add deliverable' component */}
+        Add Deliverable Component Goes Here!
+      </div>
+    ) : (
+      <div />
+    );
+    const cohortData = {
+      cohorts: this.props.cohorts,
+      errorMessage: this.props.errorMessage,
+      ...this.props.cohort
+    };
+    const assignmentData = {
+      assignments: this.props.assignment,
+      showAddAssignment: this.props.showAddAssignment,
+      errorMessage: this.props.errorMessage,
+      ...this.props.assignment
+    };
+    const deliverableData = {
+      deliverables: this.props.deliverables,
+      showAddDeliverable: this.props.showAddDeliverable,
+      errorMessage: this.props.errorMessage,
+      ...this.props.deliverable
+    };
+
     // TODO: remove after testing ^^^^^^^
-    
-    
 
     return (
       <div>
-        <p><strong>INSTRUCTOR DASHBOARD</strong></p>
-        <br/>
-
-        <button onClick={this.props.toggleAddAssignment}>+</button>
-        {addAssignmentPanel}
-
-        <button onClick={this.props.toggleAddDeliverable}>+</button>
-        {addDeliverablePanel}
-
-        ____________________________________________________________
-        Cohort:
-        {cohort}
-        ____________________________________________________________
-        <br/>
-        <p>Notice that clicking these links redirect to the homepage, as you are already signed in:</p>
+        <Typography variant="h2" align="center">
+          Instructor Dashboard
+        </Typography>
+        <Cohorts {...cohortData} />
+        <Assignment {...assignmentData} />
+        <Users {...deliverableData} />
       </div>
     );
   }
