@@ -18,6 +18,7 @@ const styles = (theme: Theme) =>
     details: {
       display: 'flex',
       flexDirection: 'column',
+      width: '100%',
     },
     content: {
       flex: '1 0 auto',
@@ -36,6 +37,14 @@ const styles = (theme: Theme) =>
       color: '#e40c0c',
     },
   });
+
+const dateString = (date: Date) => {
+  return new Date(date).toLocaleDateString('en-US', {  
+    day : 'numeric',
+    month : 'short',
+    year : 'numeric',
+  })
+}
 
 export interface OwnProps {
   selectDeliverable: (input: Deliverable) => void;
@@ -58,7 +67,7 @@ class DeliverableCard extends React.Component<Props, {}> {
               {this.props.deliverable.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date:
+              Due-Date: {dateString(this.props.deliverable.deadline)}
             </Typography>
           </CardContent>
           <Divider variant="middle" />
