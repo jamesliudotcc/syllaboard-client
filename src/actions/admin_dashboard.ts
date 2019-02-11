@@ -1,9 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { SERVER_URL } from '../constants';
-
 import { Dispatch } from 'redux';
-import { Cohort, ID, NewCohortInfo, NewUserInfo, User, EditUserInfo } from '../Types';
-
+import { SERVER_URL } from '../constants';
+import { Cohort, EditUserInfo, ID, NewCohortInfo, NewUserInfo, User } from '../Types';
 import { fetchFailed } from './notifications';
 
 

@@ -1,3 +1,4 @@
+import { SharedAction, SharedActions } from '../actions/sharedActions';
 import { Action, Actions } from '../actions/student_dashboard';
 import { Deliverable } from '../Types';
 
@@ -15,7 +16,7 @@ const blankState: StudentDashboardState = {
   deliverables: [],
 };
 
-export function studentDashboardReducer(state: StudentDashboardState = blankState, action: Action): StudentDashboardState {
+export function studentDashboardReducer(state: StudentDashboardState = blankState, action: Action | SharedAction): StudentDashboardState {
   switch (action.type) {
     case Actions.TOGGLE_TURN_IN_DELIVERABLE:
       return {
@@ -45,6 +46,8 @@ export function studentDashboardReducer(state: StudentDashboardState = blankStat
         selectedDeliverable: action.payload,
         showTurnInDeliverable: !!action.payload,
       };
+    case SharedActions.RESET:
+      return blankState;
     default:
       return state;
   }

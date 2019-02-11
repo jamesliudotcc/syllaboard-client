@@ -1,4 +1,5 @@
 import { Action, Actions } from '../actions/instructor_dashboard';
+import { SharedAction, SharedActions } from '../actions/sharedActions';
 import { Assignment, Cohort, Deliverable } from '../Types';
 
 export type InstructorDashboardState = InstructorDashboardUI & InstructorDashboardData;
@@ -41,7 +42,7 @@ const blankState: InstructorDashboardState = {
   deliverables: [],
 };
 
-export function instructorDashboardReducer(state: InstructorDashboardState = blankState, action: Action): InstructorDashboardState {
+export function instructorDashboardReducer(state: InstructorDashboardState = blankState, action: Action | SharedAction): InstructorDashboardState {
   switch (action.type) {
     case Actions.TOGGLE_ADD_ASSIGNMENT:
       return {
@@ -140,6 +141,9 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
           deliverable._id === action.payload._id ? action.payload : deliverable
         )),
       };
+  // Shared Actions
+    case SharedActions.RESET:
+      return blankState;
     default:
       return state;
   }
