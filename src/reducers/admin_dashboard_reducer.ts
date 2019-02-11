@@ -1,4 +1,5 @@
 import { Action, Actions } from '../actions/admin_dashboard';
+import { SharedAction, SharedActions } from '../actions/sharedActions';
 import { Cohort, User } from '../Types';
 
 export type AdminDashboardState = AdminDashboardUI & AdminDashboardData;
@@ -36,7 +37,7 @@ const blankState: AdminDashboardState = {
   selectedUser: null,
 };
 
-export function adminDashboardReducer(state: AdminDashboardState = blankState, action: Action): AdminDashboardState {
+export function adminDashboardReducer(state: AdminDashboardState = blankState, action: Action | SharedAction): AdminDashboardState {
   switch (action.type) {
   // UI
     case Actions.TOGGLE_ADD_COHORT:
@@ -131,6 +132,8 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
         selectedUser: action.payload,
         showEditUser: !!action.payload,
       };
+    case SharedActions.RESET:
+      return blankState;
     default:
       return state;
   }

@@ -19,7 +19,7 @@ export function authReducer(state: AuthState = blankState, action: Action) {
       const role = action.payload;
       return {...state, error: '', authenticated: true, role};
     case Actions.UNAUTH_USER:
-      return {...state, authenticated: false};
+      return blankState;
     case Actions.AUTH_ERROR:
       return {...state, error: action.payload};
     default:
