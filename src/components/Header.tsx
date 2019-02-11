@@ -69,20 +69,20 @@ class Header extends Component<Props, {}> {
       switch(role) {
         case 'admin':
           return (
-            <Button>
-              <Link key="dLink" className={this.props.classes.navLink} to="/dashboard/admin">Dashboard</Link>
+            <Button key="daLink">
+              <Link className={this.props.classes.navLink} to="/dashboard/admin">Dashboard</Link>
             </Button>
           );
         case 'student':
           return (
-            <Button>
-              <Link key="dLink" className={this.props.classes.navLink} to="/dashboard/student">Dashboard</Link>
+            <Button key="dsLink">
+              <Link className={this.props.classes.navLink} to="/dashboard/student">Dashboard</Link>
             </Button>
           );
         case 'instructor':
           return (
-            <Button>
-              <Link key="dLink" className={this.props.classes.navLink} to="/dashboard/instructor">Dashboard</Link>
+            <Button key="diLink">
+              <Link className={this.props.classes.navLink} to="/dashboard/instructor">Dashboard</Link>
             </Button>
           );
         default:
@@ -111,7 +111,6 @@ class Header extends Component<Props, {}> {
   }
 
   render() {
-    console.log(this.renderLinks());
     return (
       <div className={this.props.classes.root}>
         <AppBar position="static" className={this.props.classes.header}>

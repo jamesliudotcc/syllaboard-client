@@ -49,7 +49,7 @@ const styles = (theme: Theme) =>
 
 export interface OwnProps {
   assignments: Assignment[];
-  cohortInfo: Array<{ name: string, value: ID }>;
+  cohortInfo: Array<{ label: string, value: ID }>;
   errorMessage: string;
   showAddAssignment: boolean;
   showAllAssignments: boolean;
@@ -77,12 +77,14 @@ class Assignments extends React.Component<Props, {}> {
 
   handleEditSubmit = (input: Assignment) => {
     this.props.selectAssignment(null);
+    this.props.toggleEditAssignment();
     this.props.updateAssignment(input);
   };
 
   handleNewDeliverable = (input: NewDeliverableInfo) => {
     this.props.selectAssignment(null);
     this.props.toggleShowAssignments();
+    this.props.toggleAddDeliverable();
     this.props.addNewDeliverable(input);
   }
 
@@ -92,6 +94,8 @@ class Assignments extends React.Component<Props, {}> {
       removeAssignment: this.props.removeAssignment,
       updateAssignment: this.props.updateAssignment,
       selectAssignment: this.props.selectAssignment,
+      toggleEditAssignment: this.props.toggleEditAssignment,
+      toggleAddDeliverable: this.props.toggleAddDeliverable,
     };
 
     const editAssignmentPanel = (

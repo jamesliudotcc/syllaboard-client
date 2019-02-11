@@ -6,7 +6,7 @@ import { ID, NewDeliverableInfo } from '../../../Types';
 
 interface OwnProps {
   errorMessage: string;
-  cohorts: Array<{ name: string, value: ID }>;
+  cohorts: Array<{ label: string, value: ID }>;
   assignmentId: ID;
 }
 
@@ -25,6 +25,8 @@ class AddDeliverableForm extends React.Component<Props, {}> {
   componentWillMount () {
     this.props.initialize({
       assignmentId: this.props.assignmentId,
+      dueDate: new Date(),
+      cohortId: this.props.cohorts[0].value,
     });
   }
 
@@ -47,10 +49,10 @@ class AddDeliverableForm extends React.Component<Props, {}> {
             label="Cohort"
             name="cohortId"
             component={renderDropdown}
-            option={this.props.cohorts}
+            options={this.props.cohorts}
           />
 
-          <button type="submit">Add</button>
+          <button type="submit">Assign</button>
         </form>
       </div>
     );

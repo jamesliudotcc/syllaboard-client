@@ -113,7 +113,7 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
       return {
         ...state,
         selectedAssignment: action.payload,
-        showEditAssignment: !!action.payload,
+        // showEditAssignment: !!action.payload,
       };
   // Deliverable
     case Actions.DELIVERABLE_REFRESH_STORE:

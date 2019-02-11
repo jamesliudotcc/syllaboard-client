@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleIcon from '@material-ui/icons/AddCircleOutline'
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { Assignment } from '../../../Types';
@@ -41,6 +42,8 @@ const styles = (theme: Theme) =>
 export interface OwnProps {
   removeAssignment: (input: Assignment) => void;
   selectAssignment: (input: Assignment) => void;
+  toggleEditAssignment: () => void;
+  toggleAddDeliverable: () => void;
   assignment: Assignment;
 }
 
@@ -53,10 +56,12 @@ class AssignmentCard extends React.Component<Props, {}> {
 
   handleAssign = () => {
     this.props.selectAssignment(this.props.assignment);
+    this.props.toggleAddDeliverable();
   }
 
   handleEdit = () => {
     this.props.selectAssignment(this.props.assignment);
+    this.props.toggleEditAssignment();
   };
 
   render() {
@@ -85,7 +90,7 @@ class AssignmentCard extends React.Component<Props, {}> {
               aria-label="Assign"
               onClick={this.handleAssign}
             >
-              <DeleteIcon />
+              <AddCircleIcon />
             </IconButton>
             <IconButton
               className={this.props.classes.delete}

@@ -19,6 +19,8 @@ export interface OwnProps {
   assignments: Assignment[];
   selectAssignment: (input: Assignment) => void;
   removeAssignment: (input: Assignment) => void;
+  toggleEditAssignment: () => void;
+  toggleAddDeliverable: () => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
@@ -38,6 +40,8 @@ class ShowAllAssignments extends React.Component<Props, {}> {
               assignment={assignment}
               selectAssignment={this.props.selectAssignment}
               removeAssignment={this.props.removeAssignment}
+              toggleEditAssignment={this.props.toggleEditAssignment}
+              toggleAddDeliverable={this.props.toggleAddDeliverable}
             />
           </Grid>
         ))

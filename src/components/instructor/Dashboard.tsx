@@ -94,7 +94,7 @@ class InstructorDashboard extends React.Component<Props, {}> {
     };
     const assignmentData = {
       assignments: this.props.assignments,
-      cohortInfo: this.props.cohorts.map((cohort: Cohort) => ({name: cohort.name, value: cohort._id})),
+      cohortInfo: this.props.cohorts.map((cohort: Cohort) => ({label: cohort.name, value: cohort._id})),
       errorMessage: this.props.errorMessage,
       showAddAssignment: this.props.showAddAssignment,
       showAllAssignments: this.props.showAllAssignments,

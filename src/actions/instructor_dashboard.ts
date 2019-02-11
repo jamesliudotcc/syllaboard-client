@@ -367,7 +367,7 @@ export const getAllAssignments = () => {
 // Send new deliverable data to add to DB then dispatch action to add to store
 export const addNewDeliverable = (input: NewDeliverableInfo) => {
   return (dispatch: Dispatch): void => {
-    axios.post(`${SERVER_URL}/instructor/cohort/${input.cohortId}`,
+    axios.post(`${SERVER_URL}/instructor/cohorts/${input.cohortId}`,
       {
         assignmentId: input.assignmentId,
         dueDate: input.dueDate,
