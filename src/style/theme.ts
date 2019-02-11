@@ -8,9 +8,9 @@ const UiTheme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#ff2700',
+      main: '#FA4542',
       light: '#ff6737',
-      dark: '#c30000',
+      dark: '#A20101',
     },
     secondary: {
       main: '#85E8DA',
