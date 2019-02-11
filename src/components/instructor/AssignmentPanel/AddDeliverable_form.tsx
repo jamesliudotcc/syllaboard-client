@@ -118,6 +118,36 @@ export default reduxForm<NewAssignmentInfo, OwnProps>({
   form: 'addAssignment',
   validate,
 })(AddAssignmentForm);
+  const errors: any = {};
+
+  if (!values.name) {
+    errors.name = 'Please enter a name for the assignment';
+  }
+
+  // // TODO: This is weird... 
+  // if (commaListParser(values.cohortType.join('')).length > 0) {
+  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
+  // }
+
+  if (!values.cohortWeek) {
+    errors.cohortWeek = 'Please enter the estimated week for the assignment';
+  }
+
+  if (!values.instructions) {
+    errors.instructions = 'Please enter some instructions';
+  }
+
+  if (!values.resourcesUrls) {
+    errors.resourcesUrls = 'Please enter a password';
+  }
+
+  return errors;
+};
+
+export default reduxForm<NewAssignmentInfo, OwnProps>({
+  form: 'addAssignment',
+  validate,
+})(AddAssignmentForm);
 
 export default reduxForm<NewDeliverableInfo, OwnProps>({
   form: 'addDeliverable',

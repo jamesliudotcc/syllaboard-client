@@ -5,13 +5,7 @@ import { Dispatch } from 'redux';
 import { fetchMessage } from '../../actions/notifications';
 import * as studentActions from '../../actions/student_dashboard';
 import { State } from '../../reducers';
-import {
-  Assignment,
-  Cohort,
-  Deliverable,
-  NewAssignmentInfo,
-  NewDeliverableInfo,
-} from '../../Types';
+import { Deliverable } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Deliverables from './DeliverablePanel/Deliverables';
 
@@ -25,8 +19,11 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
-  toggleTurnInDeliverable: () => dispatch(studentActions.toggleTurnInDeliverable()),
-  getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
+  deliverable: {
+    getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
+    toggleShowDeliverables: () => dispatch(studentActions.toggleShowDeliverables()),
+    toggleTurnInDeliverable: () => dispatch(studentActions.toggleTurnInDeliverable()),
+  },
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(
@@ -49,7 +46,7 @@ class StudentDashboard extends React.Component<Props, {}> {
       errorMessage: this.props.errorMessage,
       deliverables: this.props.deliverables,
       selectedDeliverable: this.props.selectedDeliverable,
-      toggleTurnInDeliverable: this.props.toggleTurnInDeliverable,
+      ...this.props.deliverable,
     }                                   
 
     return (

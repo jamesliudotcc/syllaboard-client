@@ -46,13 +46,13 @@ const styles = (theme: Theme) =>
 export interface OwnProps {
   deliverables: Deliverable[];
   errorMessage: string;
-  showTurnInDeliverable: boolean;
-  showAllDeliverables: boolean;
-  selectedDeliverable: Deliverable | null;
-  selectDeliverable: (deliverable: Deliverable | null) => void;
+  // showTurnInDeliverable: boolean;
+  // showAllDeliverables: boolean;
+  // selectedDeliverable: Deliverable | null;
+  // selectDeliverable: (deliverable: Deliverable | null) => void;
   toggleTurnInDeliverable: () => void;
   toggleShowDeliverables: () => void;
-  updateDeliverable: (input: TurnInDeliverable) => void;
+  // updateDeliverable: (input: TurnInDeliverable) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
