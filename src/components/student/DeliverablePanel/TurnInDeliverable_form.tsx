@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { Deliverable, TurnInDeliverable } from '../../../Types';
+import { Deliverable, TurnInDeliverableInfo } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
 interface OwnProps {
@@ -8,7 +8,7 @@ interface OwnProps {
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & InjectedFormProps<TurnInDeliverable, OwnProps>;
+type Props = OwnProps & InjectedFormProps<TurnInDeliverableInfo, OwnProps>;
 
 class TurnInDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -50,7 +50,7 @@ class TurnInDeliverableForm extends React.Component<Props, {}> {
   }
 }
 
-const validate = (values: TurnInDeliverable) => {
+const validate = (values: TurnInDeliverableInfo) => {
   const errors: any = {};
 
   if (!values.deliverable) {
@@ -60,7 +60,7 @@ const validate = (values: TurnInDeliverable) => {
   return errors;
 };
 
-export default reduxForm<TurnInDeliverable, OwnProps>({
+export default reduxForm<TurnInDeliverableInfo, OwnProps>({
   form: 'turnInDeliverable',
   validate,
 })(TurnInDeliverableForm);

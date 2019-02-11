@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { commaListParser, renderDatePicker, renderDropdown, renderTextField } from '../../helpers/form_helpers';
 
-import { NewDeliverableInfo } from '../../../Types';
+import { ID, NewDeliverableInfo } from '../../../Types';
 
 interface OwnProps {
   errorMessage: string;
+  cohorts: Array<{ name: string, value: ID }>;
+  assignmentId: ID;
 }
 
 type Props = OwnProps & InjectedFormProps<NewDeliverableInfo, OwnProps>;
@@ -20,10 +22,11 @@ class AddDeliverableForm extends React.Component<Props, {}> {
     }
   }
 
-  // componentWillMount () {
-  //   this.props.initialize({
-  //   });
-  // }
+  componentWillMount () {
+    this.props.initialize({
+      assignmentId: this.props.assignmentId,
+    });
+  }
 
   render() {
     const {handleSubmit} = this.props;
@@ -35,10 +38,16 @@ class AddDeliverableForm extends React.Component<Props, {}> {
 
 
           <Field
-            label="Resources"
-            name="resourceUrls"
-            component={renderTextField}
-            type="text"
+            label="Due Date"
+            name="dueDate"
+            component={renderDatePicker}
+          />
+
+          <Field
+            label="Cohort"
+            name="cohortId"
+            component={renderDropdown}
+            option={this.props.cohorts}
           />
 
           <button type="submit">Add</button>
@@ -57,97 +66,6 @@ const validate = (values: NewDeliverableInfo) => {
 
   return errors;
 };
-
-  const errors: any = {};
-
-  if (!values.name) {
-    errors.name = 'Please enter a name for the assignment';
-  }
-
-  // // TODO: This is weird... 
-  // if (commaListParser(values.cohortType.join('')).length > 0) {
-  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  // }
-
-  if (!values.cohortWeek) {
-    errors.cohortWeek = 'Please enter the estimated week for the assignment';
-  }
-
-  if (!values.instructions) {
-    errors.instructions = 'Please enter some instructions';
-  }
-
-  if (!values.resourcesUrls) {
-    errors.resourcesUrls = 'Please enter a password';
-  }
-
-  return errors;
-};
-
-export default reduxForm<NewAssignmentInfo, OwnProps>({
-  form: 'addAssignment',
-  validate,
-})(AddAssignmentForm);
-  const errors: any = {};
-
-  if (!values.name) {
-    errors.name = 'Please enter a name for the assignment';
-  }
-
-  // // TODO: This is weird... 
-  // if (commaListParser(values.cohortType.join('')).length > 0) {
-  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  // }
-
-  if (!values.cohortWeek) {
-    errors.cohortWeek = 'Please enter the estimated week for the assignment';
-  }
-
-  if (!values.instructions) {
-    errors.instructions = 'Please enter some instructions';
-  }
-
-  if (!values.resourcesUrls) {
-    errors.resourcesUrls = 'Please enter a password';
-  }
-
-  return errors;
-};
-
-export default reduxForm<NewAssignmentInfo, OwnProps>({
-  form: 'addAssignment',
-  validate,
-})(AddAssignmentForm);
-  const errors: any = {};
-
-  if (!values.name) {
-    errors.name = 'Please enter a name for the assignment';
-  }
-
-  // // TODO: This is weird... 
-  // if (commaListParser(values.cohortType.join('')).length > 0) {
-  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  // }
-
-  if (!values.cohortWeek) {
-    errors.cohortWeek = 'Please enter the estimated week for the assignment';
-  }
-
-  if (!values.instructions) {
-    errors.instructions = 'Please enter some instructions';
-  }
-
-  if (!values.resourcesUrls) {
-    errors.resourcesUrls = 'Please enter a password';
-  }
-
-  return errors;
-};
-
-export default reduxForm<NewAssignmentInfo, OwnProps>({
-  form: 'addAssignment',
-  validate,
-})(AddAssignmentForm);
 
 export default reduxForm<NewDeliverableInfo, OwnProps>({
   form: 'addDeliverable',

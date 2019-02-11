@@ -15,7 +15,7 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import * as React from 'react';
 // Types
-import { Deliverable, TurnInDeliverable } from '../../../Types';
+import { Deliverable, TurnInDeliverableInfo } from '../../../Types';
 
 // Forms
 import ShowAllDeliverables from './ShowAllDeliverables';
@@ -46,19 +46,19 @@ const styles = (theme: Theme) =>
 export interface OwnProps {
   deliverables: Deliverable[];
   errorMessage: string;
-  // showTurnInDeliverable: boolean;
-  // showAllDeliverables: boolean;
-  // selectedDeliverable: Deliverable | null;
-  // selectDeliverable: (deliverable: Deliverable | null) => void;
+  showTurnInDeliverable: boolean;
+  showAllDeliverables: boolean;
+  selectedDeliverable: Deliverable | null;
+  selectDeliverable: (deliverable: Deliverable | null) => void;
   toggleTurnInDeliverable: () => void;
   toggleShowDeliverables: () => void;
-  // updateDeliverable: (input: TurnInDeliverable) => void;
+  updateDeliverable: (input: TurnInDeliverableInfo) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class Deliverables extends React.Component<Props, {}> {
-  handleEditSubmit = (input: TurnInDeliverable) => {
+  handleEditSubmit = (input: TurnInDeliverableInfo) => {
     this.props.selectDeliverable(null);
     this.props.updateDeliverable(input);
   };

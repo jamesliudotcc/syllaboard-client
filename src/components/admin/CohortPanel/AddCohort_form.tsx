@@ -27,7 +27,7 @@ const findThreeMonthsFrom = (today: Date) => {
 
 const initDate = {
   today: new Date,
-  endDate: findThreeMonthsFrom(new Date)
+  endDate: findThreeMonthsFrom(new Date),
 }
 
 type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<NewCohortInfo, OwnProps>;

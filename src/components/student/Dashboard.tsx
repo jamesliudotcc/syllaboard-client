@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { fetchMessage } from '../../actions/notifications';
 import * as studentActions from '../../actions/student_dashboard';
 import { State } from '../../reducers';
-import { Deliverable } from '../../Types';
+import { Deliverable, TurnInDeliverableInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Deliverables from './DeliverablePanel/Deliverables';
 
@@ -20,9 +20,11 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
   deliverable: {
-    getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
-    toggleShowDeliverables: () => dispatch(studentActions.toggleShowDeliverables()),
     toggleTurnInDeliverable: () => dispatch(studentActions.toggleTurnInDeliverable()),
+    toggleShowDeliverables: () => dispatch(studentActions.toggleShowDeliverables()),
+    getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
+    updateDeliverable: (deliverable: TurnInDeliverableInfo) => studentActions.updateDeliverable(deliverable)(dispatch),
+    selectDeliverable: (deliverable: Deliverable | null) => dispatch(studentActions.deliverableSelect(deliverable)),
   },
 });
 
@@ -38,14 +40,16 @@ class StudentDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
-    this.props.getAllDeliverables();
+    this.props.deliverable.getAllDeliverables();
   }
 
   render() {
     const deliverableData = {
-      errorMessage: this.props.errorMessage,
       deliverables: this.props.deliverables,
       selectedDeliverable: this.props.selectedDeliverable,
+      errorMessage: this.props.errorMessage,
+      showTurnInDeliverable: this.props.showTurnInDeliverable,
+      showAllDeliverables: this.props.showAllDeliverables,
       ...this.props.deliverable,
     }                                   
 

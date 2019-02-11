@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { SERVER_URL } from '../constants';
-import { Deliverable, TurnInDeliverable } from '../Types';
+import { Deliverable, TurnInDeliverableInfo } from '../Types';
 import { fetchFailed } from './notifications';
 
 /*
@@ -77,7 +77,7 @@ export const deliverableUpdateInStore = (payload: Deliverable): DeliverableUpdat
   payload,
 });
 
-export const DeliverableSelect = (payload: Deliverable | null): DeliverableSelect => ({
+export const deliverableSelect = (payload: Deliverable | null): DeliverableSelect => ({
   type: Actions.DELIVERABLE_SELECT,
   payload,
 });
@@ -107,7 +107,7 @@ export const getAllDeliverables = () => {
 };
 
 // Turn in deliverable
-export const updateDeliverable = (input: TurnInDeliverable) => {
+export const updateDeliverable = (input: TurnInDeliverableInfo) => {
   return (dispatch: Dispatch): void => {
     axios.put(
         `${SERVER_URL}/student/deliverables/${input.deliverableId}`,

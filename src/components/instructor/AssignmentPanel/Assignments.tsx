@@ -17,7 +17,7 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 
 // Types
-import { Assignment, NewAssignmentInfo, NewDeliverableInfo, ID } from '../../../Types';
+import { Assignment, ID, NewAssignmentInfo, NewDeliverableInfo } from '../../../Types';
 
 // Forms
 import AddAssignmentForm from './AddAssignment_form';
@@ -115,6 +115,9 @@ class Assignments extends React.Component<Props, {}> {
       </Modal>
     );
 
+    // TODO: fix this hack
+    const assignmentId = this.props.selectedAssignment ? this.props.selectedAssignment._id : '0';
+
     const newDeliverablePanel = (
       <Modal
         open={this.props.showAddDeliverable}
@@ -130,7 +133,7 @@ class Assignments extends React.Component<Props, {}> {
           <AddDeliverableForm
             onSubmit={this.handleNewDeliverable}
             errorMessage={this.props.errorMessage}
-            assignmentId={(this.props.selectedAssignment as Assignment)._id}
+            assignmentId={assignmentId}
             cohorts={this.props.cohortInfo}
           />
         </div>
@@ -184,6 +187,7 @@ class Assignments extends React.Component<Props, {}> {
         />
         {addAssignmentPanel}
         {editAssignmentPanel}
+        {newDeliverablePanel}
         <Collapse
           in={this.props.showAllAssignments}
           timeout="auto"

@@ -51,6 +51,10 @@ class AssignmentCard extends React.Component<Props, {}> {
     this.props.removeAssignment(this.props.assignment);
   };
 
+  handleAssign = () => {
+    this.props.selectAssignment(this.props.assignment);
+  }
+
   handleEdit = () => {
     this.props.selectAssignment(this.props.assignment);
   };
@@ -75,6 +79,13 @@ class AssignmentCard extends React.Component<Props, {}> {
               onClick={this.handleEdit}
             >
               <EditIcon />
+            </IconButton>
+            <IconButton
+              className={this.props.classes.delete}
+              aria-label="Assign"
+              onClick={this.handleAssign}
+            >
+              <DeleteIcon />
             </IconButton>
             <IconButton
               className={this.props.classes.delete}
