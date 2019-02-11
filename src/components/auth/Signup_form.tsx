@@ -72,7 +72,7 @@ class SignupForm extends React.Component<Props, {}> {
             type="text"/>
 
           <Button type="submit" variant="contained" color="primary">
-            Sign In
+            Sign Up
           </Button>
         </form>
       </div>

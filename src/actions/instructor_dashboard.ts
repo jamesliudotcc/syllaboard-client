@@ -21,6 +21,9 @@ export type Action =
   | ToggleShowAssignments
   | ToggleEditAssignment
   | ToggleAddDeliverable
+  | ToggleEditDeliverable
+  | ToggleShowDeliverables
+  | ToggleShowCohorts
   // Cohort
   | CohortRefreshStore
   // Assignment
@@ -34,6 +37,7 @@ export type Action =
   | DeliverableUpdateInStore
   | DeliverableAddToStore
   | DeliverableRemoveFromStore
+  | DeliverableSelect
   | OtherAction;
 
 export enum Actions {
@@ -42,6 +46,9 @@ export enum Actions {
   TOGGLE_SHOW_ASSIGNMENTS = 'TOGGLE_SHOW_ASSIGNMENTS',
   TOGGLE_EDIT_ASSIGNMENT = 'TOGGLE_EDIT_ASSIGNMENT',
   TOGGLE_ADD_DELIVERABLE = 'TOGGLE_ADD_DELIVERABLE',
+  TOGGLE_EDIT_DELIVERABLE = 'TOGGLE_EDIT_DELIVERABLE',
+  TOGGLE_SHOW_DELIVERABLES = 'TOGGLE_SHOW_DELIVERABLES',
+  TOGGLE_SHOW_COHORTS = 'TOGGLE_SHOW_COHORTS',
   // Cohort
   COHORT_REFRESH_STORE = 'COHORT_REFRESH_STORE',
   // Assignment
@@ -55,6 +62,7 @@ export enum Actions {
   DELIVERABLE_ADD_TO_STORE = 'DELIVERABLE_ADD_TO_STORE',
   DELIVERABLE_UPDATE_IN_STORE = 'DELIVERABLE_UPDATE_IN_STORE',
   DELIVERABLE_REMOVE_FROM_STORE = 'DELIVERABLE_REMOVE_FROM_STORE',
+  DELIVERABLE_SELECT = 'DELIVERABLE_SELECT',
   OTHER_ACTION = '__any_other_action__',
 }
 
@@ -72,6 +80,18 @@ export interface ToggleEditAssignment {
 
 export interface ToggleAddDeliverable {
   type: Actions.TOGGLE_ADD_DELIVERABLE;
+}
+
+export interface ToggleEditDeliverable {
+  type: Actions.TOGGLE_EDIT_DELIVERABLE;
+}
+
+export interface ToggleShowDeliverables {
+  type: Actions.TOGGLE_SHOW_DELIVERABLES;
+}
+
+export interface ToggleShowCohorts {
+  type: Actions.TOGGLE_SHOW_COHORTS;
 }
 
 export interface OtherAction {
@@ -131,6 +151,11 @@ export interface DeliverableRemoveFromStore {
   payload: ID;
 }
 
+export interface DeliverableSelect {
+  type: Actions.DELIVERABLE_SELECT;
+  payload: Deliverable | null;
+}
+
 /*
  * action creators
  */
@@ -149,6 +174,18 @@ export const toggleEditAssignment = (): ToggleEditAssignment => ({
 
 export const toggleAddDeliverable = (): ToggleAddDeliverable => ({
   type: Actions.TOGGLE_ADD_DELIVERABLE,
+});
+
+export const toggleEditDeliverable = (): ToggleEditDeliverable => ({
+  type: Actions.TOGGLE_EDIT_DELIVERABLE,
+});
+
+export const toggleShowDeliverables = (): ToggleShowDeliverables => ({
+  type: Actions.TOGGLE_SHOW_DELIVERABLES,
+});
+
+export const toggleShowCohorts = (): ToggleShowCohorts => ({
+  type: Actions.TOGGLE_SHOW_COHORTS,
 });
 
 // Cohort
@@ -203,6 +240,11 @@ export const deliverableRemoveFromStore = (payload: Deliverable) => ({
 
 export const deliverableUpdateInStore = (payload: Deliverable) => ({
   type: Actions.DELIVERABLE_UPDATE_IN_STORE,
+  payload,
+});
+
+export const deliverableSelect = (payload: Deliverable | null) => ({
+  type: Actions.DELIVERABLE_SELECT,
   payload,
 });
 
@@ -313,6 +355,7 @@ export const getAllAssignments = () => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
+        console.log(response);
         dispatch(assignmentRefreshStore(response.data.assignments));
       })
       .catch(handleError(dispatch));
@@ -324,13 +367,15 @@ export const getAllAssignments = () => {
 // Send new deliverable data to add to DB then dispatch action to add to store
 export const addNewDeliverable = (input: NewDeliverableInfo) => {
   return (dispatch: Dispatch): void => {
-    axios
-      .post(`${SERVER_URL}/instructor/deliverables`, input, {
-        headers: { authorization: localStorage.getItem('token') },
-      })
+    axios.post(`${SERVER_URL}/instructor/cohort/${input.cohortId}`,
+      {
+        assignmentId: input.assignmentId,
+        dueDate: input.dueDate,
+      },
+      { headers: { authorization: localStorage.getItem('token') } })
       .then((response: AxiosResponse) => {
         console.log(response);
-        dispatch(deliverableAddToStore(response.data.deliverable));
+        getAllDeliverables()(dispatch);
       })
       .catch(handleError(dispatch));
   };
@@ -374,6 +419,7 @@ export const getAllDeliverables = () => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
+        console.log(response);
         dispatch(deliverableRefreshStore(response.data.deliverables));
       })
       .catch(handleError(dispatch));

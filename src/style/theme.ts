@@ -8,15 +8,15 @@ const UiTheme = createMuiTheme({
     primary: {
       main: '#ff2700',
       light: '#ff6737',
-      dark: '#c30000'
+      dark: '#c30000',
     },
     secondary: {
-      main: '#f9eb1f',
-      light: '#ffff60',
-      dark: '#c2b900'
+      main: '#66B4DB',
+      light: '#8FC8E4',
+      dark: '#41738C',
     },
     error: {
-      main: '#fa4542'
+      main: '#fa4542',
     },
   },
 });

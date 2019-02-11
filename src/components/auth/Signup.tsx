@@ -10,6 +10,7 @@ import SignupForm from './Signup_form';
 
 const mapStateToProps = (state: State) => ({
   authenticated: state.auth.authenticated,
+  role: state.auth.role,
   errorMessage: state.auth.error,
 });
 
@@ -42,7 +43,7 @@ class Signup extends React.Component<Props, {}> {
     if (locationState && locationState.from.pathname) {
       return locationState.from.pathname;
     } else {
-      return '/';
+      return this.props.role ? `/dashboard/${this.props.role}` : '/';
     }
   }
 

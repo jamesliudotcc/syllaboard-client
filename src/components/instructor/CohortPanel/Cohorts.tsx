@@ -18,10 +18,6 @@ import * as React from 'react';
 // Types
 import { Cohort, NewCohortInfo } from '../../../Types';
 
-// Forms
-// import AddCohortForm from './AddCohort_form';
-
-import EditCohortForm from './EditCohort_form';
 import ShowAllCohorts from './ShowAllCohorts';
 
 const styles = (theme: Theme) =>
@@ -49,57 +45,35 @@ const styles = (theme: Theme) =>
 export interface OwnProps {
   cohorts: Cohort[];
   errorMessage: string;
-  showAddCohort: boolean;
-  showEditCohort: boolean;
   showAllCohorts: boolean;
-  selectedCohort: Cohort | null;
-  selectCohort: (cohort: Cohort | null) => void;
-  toggleAddCohort: () => void;
-  toggleEditCohort: () => void;
   toggleShowCohorts: () => void;
-  addNewCohort: (input: NewCohortInfo) => void;
-  removeCohort: (input: Cohort) => void;
-  updateCohort: (input: Cohort) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class Cohorts extends React.Component<Props, {}> {
-  handleSubmit = (input: NewCohortInfo) => {
-    this.props.toggleAddCohort();
-    this.props.addNewCohort(input);
-  };
-
-  handleEditSubmit = (input: Cohort) => {
-    this.props.selectCohort(null);
-    this.props.updateCohort(input);
-  };
-
   render() {
     const cohorts = {
       cohorts: this.props.cohorts,
-      removeCohort: this.props.removeCohort,
-      updateCohort: this.props.updateCohort,
-      selectCohort: this.props.selectCohort,
     };
-    const editCohortPanel = (
-      <Modal
-        open={this.props.showEditCohort}
-        onClose={
-          this.props.showEditCohort
-            ? this.props.toggleEditCohort
-            : () => { return; }
-        }
-      >
-        <div className={this.props.classes.paper}>
-          <EditCohortForm
-            onSubmit={this.handleEditSubmit}
-            errorMessage={this.props.errorMessage}
-            cohort={this.props.selectedCohort as Cohort}
-          />
-        </div>
-      </Modal>
-    );
+    // const editCohortPanel = (
+    //   <Modal
+    //     open={this.props.showEditCohort}
+    //     onClose={
+    //       this.props.showEditCohort
+    //         ? this.props.toggleEditCohort
+    //         : () => { return; }
+    //     }
+    //   >
+    //     <div className={this.props.classes.paper}>
+    //       <EditCohortForm
+    //         onSubmit={this.handleEditSubmit}
+    //         errorMessage={this.props.errorMessage}
+    //         cohort={this.props.selectedCohort as Cohort}
+    //       />
+    //     </div>
+    //   </Modal>
+    // );
 
     // const addCohortPanel = this.props.showAddCohort ? (
     //   <div>
@@ -112,7 +86,7 @@ class Cohorts extends React.Component<Props, {}> {
     //     <div />
     //   );
 
-    const toggleBtn = !this.props.showAddCohort ? <Add /> : <Remove />;
+    // const toggleBtn = !this.props.showAddCohort ? <Add /> : <Remove />;
 
     return (
       <div>
@@ -128,22 +102,9 @@ class Cohorts extends React.Component<Props, {}> {
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton
-              aria-label="Add Cohort"
-              onClick={this.props.toggleAddCohort}
-              className={
-                this.props.showAddCohort
-                  ? this.props.classes.hide
-                  : this.props.classes.add
-              }
-            >
-              {toggleBtn}
-            </IconButton>
           </Grid>
         </Grid>
         <Divider className={this.props.showAllCohorts ? '' : this.props.classes.divider} />
-        {/* {addCohortPanel} */}
-        {editCohortPanel}
         <Collapse in={this.props.showAllCohorts} timeout="auto" unmountOnExit>
           <ShowAllCohorts {...cohorts} />
         </Collapse>

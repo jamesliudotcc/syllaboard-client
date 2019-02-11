@@ -24,12 +24,13 @@ interface OwnProps {
 const findThreeMonthsFrom = (today: Date) => {
   return new Date(today.getFullYear(), today.getMonth(), today.getDate()+84)
 }
-let initDate = {
+
+const initDate = {
   today: new Date,
   endDate: findThreeMonthsFrom(new Date)
 }
 
-type Props = OwnProps & InjectedFormProps<NewCohortInfo, OwnProps>;
+type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<NewCohortInfo, OwnProps>;
 
 class AddCohortForm extends React.Component<Props, {}> {
 
@@ -82,7 +83,15 @@ class AddCohortForm extends React.Component<Props, {}> {
             component={renderDatePicker}
           />
 
-          <button type="submit">Add</button>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            className={this.props.classes.button} 
+            type="submit" 
+          >
+            Add
+            <Icon className={this.props.classes.rightIcon}>send</Icon>
+          </Button>
         </form>
       </div>
     );
@@ -91,4 +100,4 @@ class AddCohortForm extends React.Component<Props, {}> {
 
 export default reduxForm<NewCohortInfo, OwnProps>({
   form: 'addCohort',
-})(AddCohortForm);
+})(withStyles(styles)(AddCohortForm));

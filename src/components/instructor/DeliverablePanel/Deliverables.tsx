@@ -20,7 +20,6 @@ import Remove from '@material-ui/icons/RemoveCircleOutline';
 import { Deliverable, NewDeliverableInfo } from '../../../Types';
 
 // Forms
-import AddDeliverableForm from './AddDeliverable_form';
 import EditDeliverableForm from './EditDeliverable_form';
 import ShowAllDeliverables from './ShowAllDeliverables';
 
@@ -56,7 +55,7 @@ export interface OwnProps {
   selectDeliverable: (deliverable: Deliverable | null) => void;
   toggleAddDeliverable: () => void;
   toggleEditDeliverable: () => void;
-  toggleShowDeliverable: () => void;
+  toggleShowDeliverables: () => void;
   addNewDeliverable: (input: NewDeliverableInfo) => void;
   removeDeliverable: (input: Deliverable) => void;
   updateDeliverable: (input: Deliverable) => void;
@@ -106,10 +105,6 @@ class Deliverables extends React.Component<Props, {}> {
 
     const addDeliverablePanel = this.props.showAddDeliverable ? (
       <div>
-        <AddDeliverableForm
-          onSubmit={this.handleSubmit}
-          errorMessage={this.props.errorMessage}
-        />
       </div>
     ) : (
       <div />
@@ -126,7 +121,7 @@ class Deliverables extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowDeliverable}>
+            <Typography variant="h4" onClick={this.props.toggleShowDeliverables}>
               Deliverables
             </Typography>
           </Grid>

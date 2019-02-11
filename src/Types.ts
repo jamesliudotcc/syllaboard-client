@@ -126,17 +126,24 @@ export interface TurnInDeliverable {
   deliverable: string | null;
 }
 
+
 export interface NewDeliverableInfo {
-  name: string;
-  instructor: ID[];
-  student: ID[];
-  cohort: ID[];
-  instructions: string; // this is the instructor’s notes on what should be accomplished.
-  resourcesUrls: string[]; // optional
-  topics: Topic[];
-  deadline: Date;
-  turnedIn: Date | null; // Maybe just a Boolean?
-  completed: Date | null; // Date indicates acceptance of assignment
-  deliverable: string | null; // URL to deliverable, Google Doc, or whatever.
-  grade: number | null; // 1-3 usually around 2.1-2.6
+  assignmentId: ID;
+  cohortId: ID;
+  dueDate: Date;
 }
+
+// export interface NewDeliverableInfo {
+//   name: string;
+//   instructor: ID[];
+//   student: ID[];
+//   cohort: ID[];
+//   instructions: string; // this is the instructor’s notes on what should be accomplished.
+//   resourcesUrls: string[]; // optional
+//   topics: Topic[];
+//   deadline: Date;
+//   turnedIn: Date | null; // Maybe just a Boolean?
+//   completed: Date | null; // Date indicates acceptance of assignment
+//   deliverable: string | null; // URL to deliverable, Google Doc, or whatever.
+//   grade: number | null; // 1-3 usually around 2.1-2.6
+// }

@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { Cohort } from '../../../Types';
 import { renderTextField, renderDatePicker } from '../../helpers/form_helpers';
+
+import { Cohort } from '../../../Types';
+
+// Material UI
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 

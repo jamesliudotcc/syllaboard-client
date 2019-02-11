@@ -11,6 +11,11 @@ interface InstructorDashboardUI {
   selectedAssignment: Assignment | null;
   // Deliverable
   showAddDeliverable: boolean;
+  showEditDeliverable: boolean;
+  selectedDeliverable: Deliverable | null;
+
+  showAllCohorts: boolean;
+  showAllDeliverables: boolean;
 }
 
 interface InstructorDashboardData {
@@ -20,11 +25,17 @@ interface InstructorDashboardData {
 }
 
 const blankState: InstructorDashboardState = {
+  // Assignment
   showAddAssignment: false,
   showAllAssignments: false,
   showEditAssignment: false,
   selectedAssignment: null,
+  // Deliverable
   showAddDeliverable: false,
+  showEditDeliverable: false,
+  selectedDeliverable: null,
+  showAllCohorts: false,
+  showAllDeliverables: false,
   cohorts: [],
   assignments: [],
   deliverables: [],
@@ -37,15 +48,35 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         ...state,
         showAddAssignment: !state.showAddAssignment,
       };
+    case Actions.TOGGLE_EDIT_ASSIGNMENT:
+      return {
+        ...state,
+        showEditAssignment: !state.showEditAssignment,
+      };
     case Actions.TOGGLE_ADD_DELIVERABLE:
       return {
         ...state,
         showAddDeliverable: !state.showAddDeliverable,
       };
+    case Actions.TOGGLE_EDIT_DELIVERABLE:
+      return {
+        ...state,
+        showEditDeliverable: !state.showEditDeliverable,
+      };
     case Actions.TOGGLE_SHOW_ASSIGNMENTS:
       return {
         ...state,
         showAllAssignments: !state.showAllAssignments,
+      };
+    case Actions.TOGGLE_SHOW_COHORTS:
+      return {
+        ...state,
+        showAllCohorts: !state.showAllCohorts,
+      };
+    case Actions.TOGGLE_SHOW_DELIVERABLES:
+      return {
+        ...state,
+        showAllDeliverables: !state.showAllDeliverables,
       };
   // Cohort
     case Actions.COHORT_REFRESH_STORE:

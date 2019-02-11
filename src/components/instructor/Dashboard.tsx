@@ -7,6 +7,7 @@ import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import {
   Assignment,
+  Cohort,
   Deliverable,
   NewAssignmentInfo,
   NewDeliverableInfo,
@@ -14,7 +15,7 @@ import {
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Assignments from './AssignmentPanel/Assignments';
 import Cohorts from './CohortPanel/Cohorts';
-// import Deliverables from "./DeliverablePanel/Deliverables";
+import Deliverables from './DeliverablePanel/Deliverables';
 
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
@@ -25,17 +26,20 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
   getAllAssignments: () => instructorActions.getAllAssignments()(dispatch),
+  getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
+  getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch),
   cohort: {
-    // Cohort actions
-    getAllCohorts: () => instructorActions.getAllCohorts()(dispatch)
+    toggleShowCohorts: () => dispatch(instructorActions.toggleShowCohorts()),
   },
   assignment: {
-    selectAssignment: (assignment: Assignment | null) => dispatch(instructorActions.assignmentSelect(assignment)),
+    selectAssignment: (assignment: Assignment | null) =>
+      dispatch(instructorActions.assignmentSelect(assignment)),
     toggleAddAssignment: () =>
       dispatch(instructorActions.toggleAddAssignment()),
     toggleEditAssignment: () =>
       dispatch(instructorActions.toggleEditAssignment()),
-    toggleShowAssignments: () => dispatch(instructorActions.toggleShowAssignments()),
+    toggleShowAssignments: () =>
+      dispatch(instructorActions.toggleShowAssignments()),
     addNewAssignment: (assignmentInfo: NewAssignmentInfo) =>
       instructorActions.addNewAssignment(assignmentInfo)(dispatch),
     updateAssignment: (assignment: Assignment) =>
@@ -44,15 +48,20 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       instructorActions.removeAssignment(assignment)(dispatch),
   },
   deliverable: {
+    selectDeliverable: (deliverable: Deliverable | null) =>
+      dispatch(instructorActions.deliverableSelect(deliverable)),
     toggleAddDeliverable: () =>
       dispatch(instructorActions.toggleAddDeliverable()),
+    toggleEditDeliverable: () =>
+      dispatch(instructorActions.toggleEditDeliverable()),
+    toggleShowDeliverables: () =>
+      dispatch(instructorActions.toggleShowDeliverables()),
     addNewDeliverable: (deliverableInfo: NewDeliverableInfo) =>
       instructorActions.addNewDeliverable(deliverableInfo)(dispatch),
     updateDeliverable: (deliverable: Deliverable) =>
       instructorActions.updateDeliverable(deliverable)(dispatch),
     removeDeliverable: (deliverable: Deliverable) =>
       instructorActions.removeDeliverable(deliverable)(dispatch),
-    getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch)
   },
 });
 
@@ -68,15 +77,15 @@ class InstructorDashboard extends React.Component<Props, {}> {
   componentWillMount() {
     this.props.fetchMessage();
     this.props.getAllAssignments();
-    this.props.cohort.getAllCohorts();
-    this.props.deliverable.getAllDeliverables();
+    this.props.getAllCohorts();
+    this.props.getAllDeliverables();
   }
 
   render() {
-
     const cohortData = {
       cohorts: this.props.cohorts,
       errorMessage: this.props.errorMessage,
+      showAllCohorts: this.props.showAllCohorts,
       ...this.props.cohort,
     };
     const assignmentData = {
@@ -90,8 +99,11 @@ class InstructorDashboard extends React.Component<Props, {}> {
     };
     const deliverableData = {
       deliverables: this.props.deliverables,
-      showAddDeliverable: this.props.showAddDeliverable,
       errorMessage: this.props.errorMessage,
+      showAddDeliverable: this.props.showAddDeliverable,
+      showAllDeliverables: this.props.showAllDeliverables,
+      showEditDeliverable: this.props.showEditDeliverable,
+      selectedDeliverable: this.props.selectedDeliverable,
       ...this.props.deliverable,
     };
 
@@ -100,9 +112,9 @@ class InstructorDashboard extends React.Component<Props, {}> {
         <Typography variant="h2" align="center">
           Instructor Dashboard
         </Typography>
-        {/* <Cohorts {...cohortData} /> */}
+        <Cohorts {...cohortData} />
         <Assignments {...assignmentData} />
-        {/* <Deliverable {...deliverableData} /> */}
+        <Deliverables {...deliverableData} />
       </div>
     );
   }

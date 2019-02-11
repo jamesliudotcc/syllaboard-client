@@ -54,7 +54,7 @@ class AddAssignmentForm extends React.Component<Props, {}> {
             type="number"
           />
 
-          // TODO: Change to textarea
+          {/* // TODO: Change to textarea */}
           <Field
             label="Instructions"
             name="instructions"
@@ -83,10 +83,10 @@ const validate = (values: NewAssignmentInfo) => {
     errors.name = 'Please enter a name for the assignment';
   }
 
-  // TODO: This is weird... 
-  if (commaListParser(values.cohortType.join('')).length > 0) {
-    errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  }
+  // // TODO: This is weird... 
+  // if (commaListParser(values.cohortType.join('')).length > 0) {
+  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
+  // }
 
   if (!values.cohortWeek) {
     errors.cohortWeek = 'Please enter the estimated week for the assignment';
