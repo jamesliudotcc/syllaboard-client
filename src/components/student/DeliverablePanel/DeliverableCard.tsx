@@ -38,6 +38,14 @@ const styles = (theme: Theme) =>
     },
   });
 
+const dateString = (date: Date) => {
+  return new Date(date).toLocaleDateString('en-US', {  
+    day : 'numeric',
+    month : 'short',
+    year : 'numeric',
+  })
+}
+
 export interface OwnProps {
   selectDeliverable: (input: Deliverable) => void;
   deliverable: Deliverable;
@@ -59,7 +67,7 @@ class DeliverableCard extends React.Component<Props, {}> {
               {this.props.deliverable.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date:
+              Due-Date: {dateString(this.props.deliverable.deadline)}
             </Typography>
           </CardContent>
           <Divider variant="middle" />

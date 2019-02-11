@@ -3,12 +3,26 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Deliverable, TurnInDeliverableInfo } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
+// Material UI
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) => createStyles({
+  button: {
+    margin: '1em auto',
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  }
+})
+
 interface OwnProps {
   errorMessage: string;
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & InjectedFormProps<TurnInDeliverableInfo, OwnProps>;
+type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<TurnInDeliverableInfo, OwnProps>;
 
 class TurnInDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -43,7 +57,15 @@ class TurnInDeliverableForm extends React.Component<Props, {}> {
             type="text"
           />
 
-          <button type="submit">Turn In</button>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            className={this.props.classes.button} 
+            type="submit" 
+          >
+            Turn In
+            <Icon className={this.props.classes.rightIcon}>send</Icon>
+          </Button>
         </form>
       </div>
     );
@@ -63,4 +85,4 @@ const validate = (values: TurnInDeliverableInfo) => {
 export default reduxForm<TurnInDeliverableInfo, OwnProps>({
   form: 'turnInDeliverable',
   validate,
-})(TurnInDeliverableForm);
+})(withStyles(styles)(TurnInDeliverableForm));
