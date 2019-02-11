@@ -17,10 +17,11 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 
 // Types
-import { Assignment, NewAssignmentInfo } from '../../../Types';
+import { Assignment, NewAssignmentInfo, NewDeliverableInfo, ID } from '../../../Types';
 
 // Forms
 import AddAssignmentForm from './AddAssignment_form';
+import AddDeliverableForm from './AddDeliverable_form';
 import EditAssignmentForm from './EditAssignment_form';
 import ShowAllAssignments from './ShowAllAssignments';
 
@@ -48,11 +49,13 @@ const styles = (theme: Theme) =>
 
 export interface OwnProps {
   assignments: Assignment[];
+  cohortInfo: Array<{ name: string, value: ID }>;
   errorMessage: string;
   showAddAssignment: boolean;
   showAllAssignments: boolean;
   showEditAssignment: boolean;
   selectedAssignment: Assignment | null;
+  showAddDeliverable: boolean;
   selectAssignment: (assignment: Assignment | null) => void;
   toggleAddAssignment: () => void;
   toggleEditAssignment: () => void;
@@ -60,6 +63,8 @@ export interface OwnProps {
   addNewAssignment: (input: NewAssignmentInfo) => void;
   removeAssignment: (input: Assignment) => void;
   updateAssignment: (input: Assignment) => void;
+  addNewDeliverable: (input: NewDeliverableInfo) => void;
+  toggleAddDeliverable: () => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
@@ -74,6 +79,12 @@ class Assignments extends React.Component<Props, {}> {
     this.props.selectAssignment(null);
     this.props.updateAssignment(input);
   };
+
+  handleNewDeliverable = (input: NewDeliverableInfo) => {
+    this.props.selectAssignment(null);
+    this.props.toggleShowAssignments();
+    this.props.addNewDeliverable(input);
+  }
 
   render() {
     const assignments = {
@@ -99,6 +110,28 @@ class Assignments extends React.Component<Props, {}> {
             onSubmit={this.handleEditSubmit}
             errorMessage={this.props.errorMessage}
             assignment={this.props.selectedAssignment as Assignment}
+          />
+        </div>
+      </Modal>
+    );
+
+    const newDeliverablePanel = (
+      <Modal
+        open={this.props.showAddDeliverable}
+        onClose={
+          this.props.showAddDeliverable
+            ? this.props.toggleAddDeliverable
+            : () => {
+              return;
+            }
+        }
+      >
+        <div className={this.props.classes.paper}>
+          <AddDeliverableForm
+            onSubmit={this.handleNewDeliverable}
+            errorMessage={this.props.errorMessage}
+            assignmentId={(this.props.selectedAssignment as Assignment)._id}
+            cohorts={this.props.cohortInfo}
           />
         </div>
       </Modal>

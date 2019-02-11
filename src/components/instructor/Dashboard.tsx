@@ -46,6 +46,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       instructorActions.updateAssignment(assignment)(dispatch),
     removeAssignment: (assignment: Assignment) =>
       instructorActions.removeAssignment(assignment)(dispatch),
+    addNewDeliverable: (deliverableInfo: NewDeliverableInfo) =>
+      instructorActions.addNewDeliverable(deliverableInfo)(dispatch),
+    toggleAddDeliverable: () =>
+      dispatch(instructorActions.toggleAddDeliverable()),
   },
   deliverable: {
     selectDeliverable: (deliverable: Deliverable | null) =>
@@ -90,11 +94,13 @@ class InstructorDashboard extends React.Component<Props, {}> {
     };
     const assignmentData = {
       assignments: this.props.assignments,
+      cohortInfo: this.props.cohorts.map((cohort: Cohort) => ({name: cohort.name, value: cohort._id})),
       errorMessage: this.props.errorMessage,
       showAddAssignment: this.props.showAddAssignment,
       showAllAssignments: this.props.showAllAssignments,
       showEditAssignment: this.props.showEditAssignment,
       selectedAssignment: this.props.selectedAssignment,
+      showAddDeliverable: this.props.showAddDeliverable,
       ...this.props.assignment,
     };
     const deliverableData = {

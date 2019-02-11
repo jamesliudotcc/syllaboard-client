@@ -1,7 +1,7 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
-import { Deliverable, TurnInDeliverable } from '../Types';
 import { SERVER_URL } from '../constants';
+import { Deliverable, TurnInDeliverable } from '../Types';
 import { fetchFailed } from './notifications';
 
 /*
@@ -9,11 +9,14 @@ import { fetchFailed } from './notifications';
  */
 
 export type Action =
+  // UI
   | ToggleTurnInDeliverable
   | ToggleShowDeliverables
+  // Deliverable
   | DeliverableRefreshStore
   | DeliverableUpdateInStore
   | DeliverableSelect
+  // Default Case
   | OtherAction;
 
 export enum Actions {

@@ -1,9 +1,17 @@
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import { fetchMessage } from '../../actions/notifications';
 import * as studentActions from '../../actions/student_dashboard';
 import { State } from '../../reducers';
+import {
+  Assignment,
+  Cohort,
+  Deliverable,
+  NewAssignmentInfo,
+  NewDeliverableInfo,
+} from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Deliverables from './DeliverablePanel/Deliverables';
 
@@ -18,9 +26,13 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMessage: () => fetchMessage()(dispatch),
   toggleTurnInDeliverable: () => dispatch(studentActions.toggleTurnInDeliverable()),
+  getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
 });
 
-const { propsGeneric, connect } = connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
+const { propsGeneric, connect } = connectedComponentHelper<{}>()(
+  mapStateToProps, 
+  mapDispatchToProps,
+);
 type ComponentProps = typeof propsGeneric;
 
 type Props = RouteComponentProps<any> & ComponentProps;
@@ -29,33 +41,23 @@ class StudentDashboard extends React.Component<Props, {}> {
 
   componentWillMount() {
     this.props.fetchMessage();
+    this.props.getAllDeliverables();
   }
 
   render() {
-    const turnInDeliverablePanel = this.props.showTurnInDeliverable
-      ?
-        <div>
-          {/* TODO: Add turn in deliverable component */}
-          Turn in Deliverable Component goes here!
-        </div>
-      :
-        <div></div>;                                     
+    const deliverableData = {
+      errorMessage: this.props.errorMessage,
+      deliverables: this.props.deliverables,
+      selectedDeliverable: this.props.selectedDeliverable,
+      toggleTurnInDeliverable: this.props.toggleTurnInDeliverable,
+    }                                   
 
     return (
       <div>
-        <p><strong>STUDENT DASHBOARD</strong></p>
-        <br/>
-
-        <button onClick={this.props.toggleTurnInDeliverable}>+</button>
-        {turnInDeliverablePanel}
-
-
-        <p>Here's a secret response from the server that your token returned:</p>
-        ____________________________________________________________
-        <p>{this.props.message}</p>
-        ____________________________________________________________
-        <br/>
-        <p>Notice that clicking these links redirect to the homepage, as you are already signed in:</p>
+        <Typography variant="h2" align="center">
+          Student Dashboard
+        </Typography>
+        <Deliverables {...deliverableData} />
       </div>
     );
   }
