@@ -19,6 +19,25 @@ const UiTheme = createMuiTheme({
       main: '#fa4542',
     },
   },
+  overrides: {
+    MuiBackdrop: {
+      root: {
+        backgroundColor: '#1f364294',
+      }
+    },
+    MuiFormControl: {
+      root: {
+        width: '100%',
+      }
+    },
+    MuiCardContent: {
+      root: {
+        textAlign: 'center',
+      }
+    }
+  },
+  
 });
 
 export default UiTheme;
+// MuiBackdrop

@@ -11,8 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/AddCircleOutline';
-import Remove from '@material-ui/icons/RemoveCircleOutline';
 import * as React from 'react';
 // Types
 import { Deliverable, TurnInDeliverableInfo } from '../../../Types';
@@ -33,11 +31,22 @@ const styles = (theme: Theme) =>
       color: theme.palette.secondary.dark,
     },
     paper: {
-      margin: '25% auto',
-      width: theme.spacing.unit * 50,
-      height: theme.spacing.unit * 50,
+      [theme.breakpoints.down('xs')]: {
+        position: 'absolute',
+        top: '25%',
+        width: '100%',
+        height: theme.spacing.unit * 20,
+      },
+      [theme.breakpoints.up('sm')]: {
+        position: 'absolute',
+        top: '25%',
+        left: '35vw',
+        borderRadius: '1em',
+        width: theme.spacing.unit * 30,
+        height: theme.spacing.unit * 20,
+      },
       backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
+      boxShadow: theme.shadows[10],
       padding: theme.spacing.unit * 4,
       outline: 'none',
     },
