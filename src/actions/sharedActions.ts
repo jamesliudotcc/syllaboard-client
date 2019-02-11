@@ -10,7 +10,7 @@ export interface Reset {
 
 // test.enum.ts
 export enum SharedActions {
-  RESET = 'RESET',
+  RESET = 'SHARED_RESET',
 }
 
 export const resetAll = (): Reset => ({
