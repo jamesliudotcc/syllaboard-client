@@ -414,17 +414,48 @@ export const removeDeliverable = (input: Deliverable) => {
 // Request all Deliverabless from server and dispatch action to completely refresh store
 export const getAllDeliverables = () => {
   return (dispatch: Dispatch): void => {
-    axios
-      .get(`${SERVER_URL}/instructor/deliverables`, {
-        headers: { authorization: localStorage.getItem('token') },
-      })
-      .then((response: AxiosResponse) => {
-        console.log(response);
-        dispatch(deliverableRefreshStore(response.data.deliverables));
-      })
-      .catch(handleError(dispatch));
+    (async () => {
+      try {
+        const instructorDeliverables = await axios.get(
+          `${SERVER_URL}/instructor/deliverables`,
+          { headers: { authorization: localStorage.getItem('token') } },
+        );
+
+        console.log(instructorDeliverables);
+
+        if (!instructorDeliverables.data.deliverables) {
+          return;
+        }
+
+        // Update store with basic info
+        dispatch(deliverableRefreshStore(instructorDeliverables.data.deliverables));
+
+        // Load the rest of the details and update store after
+        const deliverablesWithDetails = instructorDeliverables.data.deliverables.map(
+          (deliverable: Deliverable) =>
+            axios.get(`${SERVER_URL}/instructor/deliverables/${deliverable._id}`, {
+              headers: { authorization: localStorage.getItem('token') },
+            }),
+        );
+
+        axios.all(deliverablesWithDetails).then(
+          axios.spread((...responses: any[]) => {
+            const deliverables = responses.map(response => ({
+              ...response.data.deliverable,
+              student: [response.data.student],
+            }));
+            return dispatch(deliverableRefreshStore(deliverables));
+          }),
+        );
+      } catch (error) {
+        handleError(dispatch)(error);
+      }
+    })();
+
   };
 };
+
+
 
 const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   if (error.response) {
