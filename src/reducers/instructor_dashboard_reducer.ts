@@ -12,11 +12,11 @@ interface InstructorDashboardUI {
   selectedAssignment: Assignment | null;
   // Deliverable
   showAddDeliverable: boolean;
-  showEditDeliverable: boolean;
+  showGradeDeliverable: boolean;
   selectedDeliverable: Deliverable | null;
-
-  showAllCohorts: boolean;
   showAllDeliverables: boolean;
+  // Cohort
+  showAllCohorts: boolean;
 }
 
 interface InstructorDashboardData {
@@ -27,19 +27,20 @@ interface InstructorDashboardData {
 
 const blankState: InstructorDashboardState = {
   // Assignment
+  assignments: [],
   showAddAssignment: false,
   showAllAssignments: false,
   showEditAssignment: false,
   selectedAssignment: null,
   // Deliverable
-  showAddDeliverable: false,
-  showEditDeliverable: false,
-  selectedDeliverable: null,
-  showAllCohorts: false,
-  showAllDeliverables: false,
-  cohorts: [],
-  assignments: [],
   deliverables: [],
+  showAddDeliverable: false,
+  showGradeDeliverable: false,
+  selectedDeliverable: null,
+  showAllDeliverables: false,
+  // Cohort
+  cohorts: [],
+  showAllCohorts: false,
 };
 
 export function instructorDashboardReducer(state: InstructorDashboardState = blankState, action: Action | SharedAction): InstructorDashboardState {
@@ -59,10 +60,10 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         ...state,
         showAddDeliverable: !state.showAddDeliverable,
       };
-    case Actions.TOGGLE_EDIT_DELIVERABLE:
+    case Actions.TOGGLE_GRADE_DELIVERABLE:
       return {
         ...state,
-        showEditDeliverable: !state.showEditDeliverable,
+        showGradeDeliverable: !state.showGradeDeliverable,
       };
     case Actions.TOGGLE_SHOW_ASSIGNMENTS:
       return {
@@ -140,6 +141,12 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         deliverables: state.deliverables.map((deliverable: Deliverable) => (
           deliverable._id === action.payload._id ? action.payload : deliverable
         )),
+      };
+    case Actions.DELIVERABLE_SELECT:
+      return {
+        ...state,
+        selectedDeliverable: action.payload,
+        showGradeDeliverable: !!action.payload,
       };
   // Shared Actions
     case SharedActions.RESET:

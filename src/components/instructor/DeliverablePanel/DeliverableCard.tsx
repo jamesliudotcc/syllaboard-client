@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import { Deliverable } from '../../../Types';
+import { LoadingIndicator } from 'react-select/lib/components/indicators';
+import { Deliverable, User } from '../../../Types';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -48,36 +49,79 @@ type Props = OwnProps & WithStyles<typeof styles>;
 
 class DeliverableCard extends React.Component<Props, {}> {
   handleDelete = () => {
-    this.props.removeDeliverable(this.props.deliverable);
+    // TODO: implement delete
+    // this.props.removeDeliverable(this.props.deliverable);
+    return;
   };
 
-  handleEdit = () => {
+  handleGrade = () => {
     this.props.selectDeliverable(this.props.deliverable);
   };
 
   render() {
+    const { classes, deliverable } = this.props;
+    const now = new Date();
+    const deadline = new Date(deliverable.deadline);
+
+    const getStudentName = () =>
+      (deliverable.student as User).firstName
+        ? `${(deliverable.student as User).firstName} ${
+            (deliverable.student as User).lastName
+          }`
+        : null;
+
+    const getTurnedInInfo = () =>
+      deliverable.turnedIn ? (
+        <div>
+          <Typography variant="subtitle1" color="textSecondary">
+            {`Turned in: ${deliverable.turnedIn}`}
+          </Typography>
+          {getGrade()}
+        </div>
+      ) : now > deadline ? (
+        <Typography variant="subtitle1" color="error">
+          Overdue
+        </Typography>
+      ) : (
+        <Typography variant="subtitle1" color="textSecondary">
+          Not turned in
+        </Typography>
+      );
+
+    const getGrade = () =>
+      deliverable.grade ? (
+        <Typography variant="subtitle1" color="textSecondary">
+          {`Grade: ${deliverable.grade}`}
+        </Typography>
+      ) : (
+        <Typography variant="subtitle1" color="error">
+          Needs Graded
+        </Typography>
+      );
+
     return (
-      <Card className={this.props.classes.card}>
-        <div className={this.props.classes.details}>
-          <CardContent className={this.props.classes.content}>
+      <Card className={classes.card}>
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.deliverable.name}
+              {deliverable.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date:
+              {getStudentName() || 'Loading...'}
             </Typography>
+            {getTurnedInInfo()}
           </CardContent>
           <Divider variant="middle" />
-          <div className={this.props.classes.controls}>
+          <div className={classes.controls}>
             <IconButton
-              className={this.props.classes.edit}
-              aria-label="Edit"
-              onClick={this.handleEdit}
+              className={classes.edit}
+              aria-label="Grade"
+              onClick={this.handleGrade}
             >
               <EditIcon />
             </IconButton>
             <IconButton
-              className={this.props.classes.delete}
+              className={classes.delete}
               aria-label="Delete"
               onClick={this.handleDelete}
             >

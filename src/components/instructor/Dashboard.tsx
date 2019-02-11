@@ -11,6 +11,7 @@ import {
   Deliverable,
   NewAssignmentInfo,
   NewDeliverableInfo,
+  GradeDeliverableInfo,
 } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Assignments from './AssignmentPanel/Assignments';
@@ -56,14 +57,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       dispatch(instructorActions.deliverableSelect(deliverable)),
     toggleAddDeliverable: () =>
       dispatch(instructorActions.toggleAddDeliverable()),
-    toggleEditDeliverable: () =>
-      dispatch(instructorActions.toggleEditDeliverable()),
+    toggleGradeDeliverable: () =>
+      dispatch(instructorActions.toggleGradeDeliverable()),
     toggleShowDeliverables: () =>
       dispatch(instructorActions.toggleShowDeliverables()),
     addNewDeliverable: (deliverableInfo: NewDeliverableInfo) =>
       instructorActions.addNewDeliverable(deliverableInfo)(dispatch),
-    updateDeliverable: (deliverable: Deliverable) =>
-      instructorActions.updateDeliverable(deliverable)(dispatch),
+    gradeDeliverable: (deliverable: GradeDeliverableInfo) =>
+      instructorActions.gradeDeliverable(deliverable)(dispatch),
     removeDeliverable: (deliverable: Deliverable) =>
       instructorActions.removeDeliverable(deliverable)(dispatch),
   },
@@ -106,9 +107,8 @@ class InstructorDashboard extends React.Component<Props, {}> {
     const deliverableData = {
       deliverables: this.props.deliverables,
       errorMessage: this.props.errorMessage,
-      showAddDeliverable: this.props.showAddDeliverable,
       showAllDeliverables: this.props.showAllDeliverables,
-      showEditDeliverable: this.props.showEditDeliverable,
+      showGradeDeliverable: this.props.showGradeDeliverable,
       selectedDeliverable: this.props.selectedDeliverable,
       ...this.props.deliverable,
     };

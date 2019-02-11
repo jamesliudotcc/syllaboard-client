@@ -17,10 +17,10 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 
 // Types
-import { Deliverable, NewDeliverableInfo } from '../../../Types';
+import { Deliverable, GradeDeliverableInfo, NewDeliverableInfo } from '../../../Types';
 
 // Forms
-import EditDeliverableForm from './EditDeliverable_form';
+import GradeDeliverableForm from './GradeDeliverable_form';
 import ShowAllDeliverables from './ShowAllDeliverables';
 
 const styles = (theme: Theme) =>
@@ -48,54 +48,47 @@ const styles = (theme: Theme) =>
 export interface OwnProps {
   deliverables: Deliverable[];
   errorMessage: string;
-  showAddDeliverable: boolean;
   showAllDeliverables: boolean;
-  showEditDeliverable: boolean;
+  showGradeDeliverable: boolean;
   selectedDeliverable: Deliverable | null;
   selectDeliverable: (deliverable: Deliverable | null) => void;
-  toggleAddDeliverable: () => void;
-  toggleEditDeliverable: () => void;
+  toggleGradeDeliverable: () => void;
   toggleShowDeliverables: () => void;
-  addNewDeliverable: (input: NewDeliverableInfo) => void;
   removeDeliverable: (input: Deliverable) => void;
-  updateDeliverable: (input: Deliverable) => void;
+  gradeDeliverable: (input: GradeDeliverableInfo) => void;
 }
 
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class Deliverables extends React.Component<Props, {}> {
-  handleSubmit = (input: NewDeliverableInfo) => {
-    this.props.toggleAddDeliverable();
-    this.props.addNewDeliverable(input);
-  };
 
-  handleEditSubmit = (input: Deliverable) => {
+  handleGradeSubmit = (input: GradeDeliverableInfo) => {
     this.props.selectDeliverable(null);
-    this.props.updateDeliverable(input);
+    this.props.gradeDeliverable(input);
   };
 
   render() {
     const deliverables = {
       deliverables: this.props.deliverables,
       removeDeliverable: this.props.removeDeliverable,
-      updateDeliverable: this.props.updateDeliverable,
+      gradeDeliverable: this.props.gradeDeliverable,
       selectDeliverable: this.props.selectDeliverable,
     };
 
-    const editDeliverablePanel = (
+    const gradeDeliverablePanel = (
       <Modal
-        open={this.props.showEditDeliverable}
+        open={this.props.showGradeDeliverable}
         onClose={
-          this.props.showEditDeliverable
-            ? this.props.toggleEditDeliverable
+          this.props.showGradeDeliverable
+            ? this.props.toggleGradeDeliverable
             : () => {
                 return;
               }
         }
       >
         <div className={this.props.classes.paper}>
-          <EditDeliverableForm
-            onSubmit={this.handleEditSubmit}
+          <GradeDeliverableForm
+            onSubmit={this.handleGradeSubmit}
             errorMessage={this.props.errorMessage}
             deliverable={this.props.selectedDeliverable as Deliverable}
           />
@@ -103,14 +96,6 @@ class Deliverables extends React.Component<Props, {}> {
       </Modal>
     );
 
-    const addDeliverablePanel = this.props.showAddDeliverable ? (
-      <div>
-      </div>
-    ) : (
-      <div />
-    );
-
-    const toggleBtn = !this.props.showAddDeliverable ? <Add /> : <Remove />;
 
     return (
       <div>
@@ -126,17 +111,6 @@ class Deliverables extends React.Component<Props, {}> {
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton
-              aria-label="Add Deliverable"
-              onClick={this.props.toggleAddDeliverable}
-              className={
-                this.props.showAddDeliverable
-                  ? this.props.classes.hide
-                  : this.props.classes.add
-              }
-            >
-              {toggleBtn}
-            </IconButton>
           </Grid>
         </Grid>
         <Divider
@@ -144,8 +118,7 @@ class Deliverables extends React.Component<Props, {}> {
             this.props.showAllDeliverables ? '' : this.props.classes.divider
           }
         />
-        {addDeliverablePanel}
-        {editDeliverablePanel}
+        {gradeDeliverablePanel}
         <Collapse
           in={this.props.showAllDeliverables}
           timeout="auto"

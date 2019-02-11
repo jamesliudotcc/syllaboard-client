@@ -5,6 +5,7 @@ import {
   Assignment,
   Cohort,
   Deliverable,
+  GradeDeliverableInfo,
   ID,
   NewAssignmentInfo,
   NewDeliverableInfo,
@@ -21,7 +22,7 @@ export type Action =
   | ToggleShowAssignments
   | ToggleEditAssignment
   | ToggleAddDeliverable
-  | ToggleEditDeliverable
+  | ToggleGradeDeliverable
   | ToggleShowDeliverables
   | ToggleShowCohorts
   // Cohort
@@ -46,7 +47,7 @@ export enum Actions {
   TOGGLE_SHOW_ASSIGNMENTS = 'TOGGLE_SHOW_ASSIGNMENTS',
   TOGGLE_EDIT_ASSIGNMENT = 'TOGGLE_EDIT_ASSIGNMENT',
   TOGGLE_ADD_DELIVERABLE = 'TOGGLE_ADD_DELIVERABLE',
-  TOGGLE_EDIT_DELIVERABLE = 'TOGGLE_EDIT_DELIVERABLE',
+  TOGGLE_GRADE_DELIVERABLE = 'TOGGLE_GRADE_DELIVERABLE',
   TOGGLE_SHOW_DELIVERABLES = 'TOGGLE_SHOW_DELIVERABLES',
   TOGGLE_SHOW_COHORTS = 'TOGGLE_SHOW_COHORTS',
   // Cohort
@@ -82,8 +83,8 @@ export interface ToggleAddDeliverable {
   type: Actions.TOGGLE_ADD_DELIVERABLE;
 }
 
-export interface ToggleEditDeliverable {
-  type: Actions.TOGGLE_EDIT_DELIVERABLE;
+export interface ToggleGradeDeliverable {
+  type: Actions.TOGGLE_GRADE_DELIVERABLE;
 }
 
 export interface ToggleShowDeliverables {
@@ -176,8 +177,8 @@ export const toggleAddDeliverable = (): ToggleAddDeliverable => ({
   type: Actions.TOGGLE_ADD_DELIVERABLE,
 });
 
-export const toggleEditDeliverable = (): ToggleEditDeliverable => ({
-  type: Actions.TOGGLE_EDIT_DELIVERABLE,
+export const toggleGradeDeliverable = (): ToggleGradeDeliverable => ({
+  type: Actions.TOGGLE_GRADE_DELIVERABLE,
 });
 
 export const toggleShowDeliverables = (): ToggleShowDeliverables => ({
@@ -367,12 +368,15 @@ export const getAllAssignments = () => {
 // Send new deliverable data to add to DB then dispatch action to add to store
 export const addNewDeliverable = (input: NewDeliverableInfo) => {
   return (dispatch: Dispatch): void => {
-    axios.post(`${SERVER_URL}/instructor/cohorts/${input.cohortId}`,
-      {
-        assignmentId: input.assignmentId,
-        dueDate: input.dueDate,
-      },
-      { headers: { authorization: localStorage.getItem('token') } })
+    axios
+      .post(
+        `${SERVER_URL}/instructor/cohorts/${input.cohortId}`,
+        {
+          assignmentId: input.assignmentId,
+          dueDate: input.dueDate,
+        },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
       .then((response: AxiosResponse) => {
         console.log(response);
         getAllDeliverables()(dispatch);
@@ -396,7 +400,28 @@ export const updateDeliverable = (input: Deliverable) => {
   };
 };
 
-// Send deliverable with modified fields to be updated in DB and refresh store
+// Send in grade and mark completed in DB
+export const gradeDeliverable = (input: GradeDeliverableInfo) => {
+  return (dispatch: Dispatch): void => {
+    axios
+      .put(
+        `${SERVER_URL}/instructor/deliverables/${input.deliverableId}`,
+        {
+          grade: input.grade,
+          completed: new Date(),
+        },
+        { headers: { authorization: localStorage.getItem('token') } },
+      )
+      .then((response: AxiosResponse) => {
+        console.log(response);
+        dispatch(deliverableUpdateInStore(response.data.editedDeliverable));
+      })
+      .catch(handleError(dispatch));
+  };
+};
+
+// TODO: implement and test
+// Remove deliverable from DB
 export const removeDeliverable = (input: Deliverable) => {
   return (dispatch: Dispatch): void => {
     axios
@@ -428,21 +453,26 @@ export const getAllDeliverables = () => {
         }
 
         // Update store with basic info
-        dispatch(deliverableRefreshStore(instructorDeliverables.data.deliverables));
+        dispatch(
+          deliverableRefreshStore(instructorDeliverables.data.deliverables),
+        );
 
         // Load the rest of the details and update store after
         const deliverablesWithDetails = instructorDeliverables.data.deliverables.map(
           (deliverable: Deliverable) =>
-            axios.get(`${SERVER_URL}/instructor/deliverables/${deliverable._id}`, {
-              headers: { authorization: localStorage.getItem('token') },
-            }),
+            axios.get(
+              `${SERVER_URL}/instructor/deliverables/${deliverable._id}`,
+              {
+                headers: { authorization: localStorage.getItem('token') },
+              },
+            ),
         );
 
         axios.all(deliverablesWithDetails).then(
           axios.spread((...responses: any[]) => {
             const deliverables = responses.map(response => ({
               ...response.data.deliverable,
-              student: [response.data.student],
+              student: response.data.student,
             }));
             return dispatch(deliverableRefreshStore(deliverables));
           }),
@@ -451,11 +481,8 @@ export const getAllDeliverables = () => {
         handleError(dispatch)(error);
       }
     })();
-
   };
 };
-
-
 
 const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   if (error.response) {
