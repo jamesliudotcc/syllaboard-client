@@ -9,9 +9,9 @@ import {
   Assignment,
   Cohort,
   Deliverable,
+  GradeDeliverableInfo,
   NewAssignmentInfo,
   NewDeliverableInfo,
-  GradeDeliverableInfo,
 } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Assignments from './AssignmentPanel/Assignments';

@@ -139,7 +139,13 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
       return {
         ...state,
         deliverables: state.deliverables.map((deliverable: Deliverable) => (
-          deliverable._id === action.payload._id ? action.payload : deliverable
+          deliverable._id === action.payload._id
+            ?
+            {
+              ...action.payload,
+              student: deliverable.student,
+            }
+            : deliverable
         )),
       };
     case Actions.DELIVERABLE_SELECT:
