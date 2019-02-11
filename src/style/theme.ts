@@ -25,6 +25,11 @@ const UiTheme = createMuiTheme({
     }
   },
   overrides: {
+    MuiPaper: {
+      root: {
+        height: 'auto'
+      }
+    },
     MuiBackdrop: {
       root: {
         backgroundColor: '#1f364294',
