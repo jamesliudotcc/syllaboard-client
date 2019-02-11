@@ -50,7 +50,6 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 const dateString = (date: Date) => {
-  
   return new Date(date).toLocaleDateString('en-US', {  
     day : 'numeric',
     month : 'short',
