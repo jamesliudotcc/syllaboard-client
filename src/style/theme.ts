@@ -1,5 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
+const defaultTheme = createMuiTheme();
+
 const UiTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -18,6 +20,9 @@ const UiTheme = createMuiTheme({
     error: {
       main: '#fa4542',
     },
+    background: {
+      default: '#F6F6F6'
+    }
   },
   overrides: {
     MuiBackdrop: {
@@ -33,6 +38,14 @@ const UiTheme = createMuiTheme({
     MuiCardContent: {
       root: {
         textAlign: 'center',
+      }
+    },
+    MuiCard: {
+      root: {
+        boxShadow: defaultTheme.shadows[5],
+        '&:hover': {
+          boxShadow: defaultTheme.shadows[8],
+        }
       }
     }
   },

@@ -10,7 +10,6 @@ import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Cohorts from './CohortPanel/Cohorts';
 import Users from './UserPanel/Users';
 
-
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
