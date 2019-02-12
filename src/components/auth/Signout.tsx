@@ -13,8 +13,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetAll: () => dispatch(resetAll()),
 });
 
-const { propsGeneric, connect } =
-  connectedComponentHelper<{}>()(mapStateToProps, mapDispatchToProps);
+const { propsGeneric, connect } = connectedComponentHelper<{}>()(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 type ComponentProps = typeof propsGeneric;
 
 type Props = RouteComponentProps<any> & ComponentProps;

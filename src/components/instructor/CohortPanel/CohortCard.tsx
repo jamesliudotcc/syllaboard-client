@@ -2,10 +2,7 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { Cohort, User } from '../../../Types';
 
@@ -60,7 +57,6 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class CohortCard extends React.Component<Props, {}> {
-
   render() {
     const { cohort } = this.props;
     const students = cohort.students.map((student: User) => (
@@ -68,11 +64,13 @@ class CohortCard extends React.Component<Props, {}> {
         <ListItemText primary={`${student.firstName} ${student.lastName}`} />
       </ListItem>
     ));
-    const instructors = cohort.instructors.map((instructor: User) => (
-      instructor ?
-      <ListItem key={instructor._id}>{instructor.firstName} {instructor.lastName}</ListItem>
-      : null
-    ));
+    const instructors = cohort.instructors.map((instructor: User) =>
+      instructor ? (
+        <ListItem key={instructor._id}>
+          {instructor.firstName} {instructor.lastName}
+        </ListItem>
+      ) : null,
+    );
 
     return (
       <Card className={this.props.classes.card}>
@@ -84,19 +82,22 @@ class CohortCard extends React.Component<Props, {}> {
             <List subheader={<li />}>
               <li className={this.props.classes.reset}>
                 <ul className={this.props.classes.reset}>
-                  <ListSubheader className={this.props.classes.bg}>Instructors</ListSubheader>
+                  <ListSubheader className={this.props.classes.bg}>
+                    Instructors
+                  </ListSubheader>
                   {instructors}
                 </ul>
                 <ul className={this.props.classes.reset}>
-                  <ListSubheader className={this.props.classes.bg}>Students</ListSubheader>
+                  <ListSubheader className={this.props.classes.bg}>
+                    Students
+                  </ListSubheader>
                   {students}
                 </ul>
               </li>
             </List>
           </CardContent>
           <Divider variant="middle" />
-          <div className={this.props.classes.controls}>
-          </div>
+          <div className={this.props.classes.controls} />
         </div>
       </Card>
     );

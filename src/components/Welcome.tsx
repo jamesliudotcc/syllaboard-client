@@ -1,33 +1,32 @@
 import React from 'react';
 
 // Material UI imports
-import { createStyles, Theme, withStyles, WithStyles, } from '@material-ui/core/styles';
+import {
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles,
+} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    title: {
+      margin: '50px auto',
+      textAlign: 'center',
+    },
+  });
 
-function mapStateToProps(state: any) {
-  return {
-    authenticated: state.auth.authenticated,
-    role: state.auth.role,
-  };
-}
+type Props = WithStyles<typeof styles>;
 
-export default () => {
+const Welcome = (props: Props) => {
   return (
     <div>
-      <Typography variant="h1">Welcome to Syllaboard!</Typography>
+      <Typography variant="h1" className={props.classes.title}>
+        Welcome to Syllaboard!
+      </Typography>
     </div>
   );
 };
+
+export default withStyles(styles)(Welcome);

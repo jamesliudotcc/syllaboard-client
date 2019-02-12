@@ -83,10 +83,10 @@ export const renderDropdown = ({
   );
 };
 
+// TODO: Implement comma separated list
 // 'list,of, things in, a string, , ,hi' -> ['list','of','things in','a string','hi']
-export const commaListParser = (input: string) => (
+export const commaListParser = (input: string) =>
   input
     .split(',')
-    .map(item=> item.trim())
-    .filter(item => !!item)
-);
+    .map(item => item.trim())
+    .filter(item => !!item);

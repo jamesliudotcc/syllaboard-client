@@ -8,41 +8,46 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const styles = (theme: Theme) => createStyles({
-  button: {
-    marginTop: '2em',
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      marginTop: '2em',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
 }
 
 const findThreeMonthsFrom = (today: Date) => {
-  return new Date(today.getFullYear(), today.getMonth(), today.getDate()+84)
-}
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 84);
+};
 
 const initDate = {
-  today: new Date,
-  endDate: findThreeMonthsFrom(new Date),
-}
+  today: new Date(),
+  endDate: findThreeMonthsFrom(new Date()),
+};
 
-type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<NewCohortInfo, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<NewCohortInfo, OwnProps>;
 
 class AddCohortForm extends React.Component<Props, {}> {
-
   renderAlert() {
     if (this.props.errorMessage) {
-      return <div className="alert alert-danger">
-        <strong>Oops: </strong>{this.props.errorMessage}
-      </div>;
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops: </strong>
+          {this.props.errorMessage}
+        </div>
+      );
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.props.initialize({
       startDate: initDate.today,
       endDate: initDate.endDate,
@@ -50,13 +55,12 @@ class AddCohortForm extends React.Component<Props, {}> {
   }
 
   render() {
-    const {handleSubmit} = this.props;
+    const { handleSubmit } = this.props;
 
     return (
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Name"
             name="name"
@@ -77,17 +81,13 @@ class AddCohortForm extends React.Component<Props, {}> {
             component={renderDatePicker}
           />
 
-          <Field
-            label="End Date"
-            name="endDate"
-            component={renderDatePicker}
-          />
+          <Field label="End Date" name="endDate" component={renderDatePicker} />
 
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            className={this.props.classes.button} 
-            type="submit" 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
           >
             Add
             <Icon className={this.props.classes.rightIcon}>send</Icon>

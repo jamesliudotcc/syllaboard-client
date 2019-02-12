@@ -2,22 +2,33 @@ import { SharedAction, SharedActions } from '../actions/sharedActions';
 import { Action, Actions } from '../actions/student_dashboard';
 import { Deliverable } from '../Types';
 
-export interface StudentDashboardState {
-  showTurnInDeliverable: boolean;
+export type StudentDashboardState = StudentDashboardUI & StudentDashboardData;
+
+export interface StudentDashboardUI {
   showAllDeliverables: boolean;
+  showTurnInDeliverable: boolean;
   selectedDeliverable: Deliverable | null;
+}
+
+export interface StudentDashboardData {
   deliverables: Deliverable[];
 }
 
 const blankState: StudentDashboardState = {
-  showTurnInDeliverable: false,
+  // UI
   showAllDeliverables: true,
-  selectedDeliverable: null,
+  showTurnInDeliverable: false,
+  // Deliverable
   deliverables: [],
+  selectedDeliverable: null,
 };
 
-export function studentDashboardReducer(state: StudentDashboardState = blankState, action: Action | SharedAction): StudentDashboardState {
+export function studentDashboardReducer(
+  state: StudentDashboardState = blankState,
+  action: Action | SharedAction,
+): StudentDashboardState {
   switch (action.type) {
+    // UI
     case Actions.TOGGLE_TURN_IN_DELIVERABLE:
       return {
         ...state,
@@ -33,12 +44,13 @@ export function studentDashboardReducer(state: StudentDashboardState = blankStat
         ...state,
         deliverables: action.payload,
       };
+    // Deliverable
     case Actions.DELIVERABLE_UPDATE_IN_STORE:
       return {
         ...state,
-        deliverables: state.deliverables.map((deliverable: Deliverable) => (
-          deliverable._id === action.payload._id ? action.payload : deliverable
-        )),
+        deliverables: state.deliverables.map((deliverable: Deliverable) =>
+          deliverable._id === action.payload._id ? action.payload : deliverable,
+        ),
       };
     case Actions.DELIVERABLE_SELECT:
       return {
@@ -46,6 +58,7 @@ export function studentDashboardReducer(state: StudentDashboardState = blankStat
         selectedDeliverable: action.payload,
         showTurnInDeliverable: !!action.payload,
       };
+    // Shared Actions
     case SharedActions.RESET:
       return blankState;
     default:

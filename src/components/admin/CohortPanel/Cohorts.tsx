@@ -1,18 +1,19 @@
-import * as React from 'react';
 // Material UI components
-import { 
-  createStyles, 
+import {
+  createStyles,
   Modal,
-  Theme, 
-  WithStyles, 
-  withStyles } from '@material-ui/core';
+  Theme,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
-import Collapse from '@material-ui/core/Collapse';
+import * as React from 'react';
 import { inlineForm } from '../../../style/generalStyles';
 
 // Types
@@ -90,15 +91,17 @@ class Cohorts extends React.Component<Props, {}> {
       cohorts: this.props.cohorts,
       removeCohort: this.props.removeCohort,
       updateCohort: this.props.updateCohort,
-      selectCohort: this.props.selectCohort
+      selectCohort: this.props.selectCohort,
     };
     const editCohortPanel = (
       <Modal
         open={this.props.showEditCohort}
         onClose={
           this.props.showEditCohort
-          ? this.props.toggleEditCohort
-          : () => { return; }
+            ? this.props.toggleEditCohort
+            : () => {
+                return;
+              }
         }
       >
         <div className={this.props.classes.paper}>
@@ -133,7 +136,9 @@ class Cohorts extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowCohorts} >Cohorts</Typography>
+            <Typography variant="h4" onClick={this.props.toggleShowCohorts}>
+              Cohorts
+            </Typography>
           </Grid>
           <Grid item>
             <IconButton
@@ -149,7 +154,11 @@ class Cohorts extends React.Component<Props, {}> {
             </IconButton>
           </Grid>
         </Grid>
-        <Divider className={this.props.showAllCohorts ? '' : this.props.classes.divider} />
+        <Divider
+          className={
+            this.props.showAllCohorts ? '' : this.props.classes.divider
+          }
+        />
         {addCohortPanel}
         {editCohortPanel}
         <Collapse in={this.props.showAllCohorts} timeout="auto" unmountOnExit>

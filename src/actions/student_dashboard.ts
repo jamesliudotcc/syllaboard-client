@@ -67,53 +67,56 @@ export const toggleShowDeliverables = (): ToggleShowDeliverables => ({
   type: Actions.TOGGLE_SHOW_DELIVERABLES,
 });
 
-export const deliverableRefreshStore = (payload: Deliverable[]): DeliverableRefreshStore => ({
+export const deliverableRefreshStore = (
+  payload: Deliverable[],
+): DeliverableRefreshStore => ({
   type: Actions.DELIVERABLE_REFRESH_STORE,
   payload,
 });
 
-export const deliverableUpdateInStore = (payload: Deliverable): DeliverableUpdateInStore => ({
+export const deliverableUpdateInStore = (
+  payload: Deliverable,
+): DeliverableUpdateInStore => ({
   type: Actions.DELIVERABLE_UPDATE_IN_STORE,
   payload,
 });
 
-export const deliverableSelect = (payload: Deliverable | null): DeliverableSelect => ({
+export const deliverableSelect = (
+  payload: Deliverable | null,
+): DeliverableSelect => ({
   type: Actions.DELIVERABLE_SELECT,
   payload,
-});
-
-export const OtherAction = (): OtherAction => ({
-  type: Actions.OTHER_ACTION,
 });
 
 /*
  * dispatch functions (async)
  */
 
+//
+// Deliverable
+//
 
-
-// Get all Deliverables for student and refresh store 
+// Get all Deliverables for student and refresh store
 export const getAllDeliverables = () => {
   return (dispatch: Dispatch): void => {
-    axios.get(
-        `${SERVER_URL}/student/deliverables`,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .get(`${SERVER_URL}/student/deliverables`, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         dispatch(deliverableRefreshStore(response.data.deliverables));
       })
       .catch(handleError(dispatch));
-  }
+  };
 };
 
 // Turn in deliverable
 export const updateDeliverable = (input: TurnInDeliverableInfo) => {
   return (dispatch: Dispatch): void => {
-    axios.put(
-        `${SERVER_URL}/student/deliverables/${input.deliverableId}`,
-        input,
-        { headers: { authorization: localStorage.getItem('token') } },
-      )
+    axios
+      .put(`${SERVER_URL}/student/deliverables/${input.deliverableId}`, input, {
+        headers: { authorization: localStorage.getItem('token') },
+      })
       .then((response: AxiosResponse) => {
         console.log(response);
         dispatch(deliverableUpdateInStore(response.data.updatedDeliverable));
@@ -121,7 +124,6 @@ export const updateDeliverable = (input: TurnInDeliverableInfo) => {
       .catch(handleError(dispatch));
   };
 };
-
 
 const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   if (error.response) {
@@ -131,4 +133,4 @@ const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   } else {
     dispatch(fetchFailed(error.message));
   }
-}
+};

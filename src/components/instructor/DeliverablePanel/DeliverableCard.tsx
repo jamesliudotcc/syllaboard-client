@@ -51,11 +51,11 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class DeliverableCard extends React.Component<Props, {}> {
-  handleDelete = () => {
-    // TODO: implement delete
-    // this.props.removeDeliverable(this.props.deliverable);
-    return;
-  };
+  // TODO: implement delete once server can handle it
+  // handleDelete = () => {
+  //   this.props.removeDeliverable(this.props.deliverable);
+  //   return;
+  // };
 
   handleGrade = () => {
     this.props.selectDeliverable(this.props.deliverable);
@@ -72,24 +72,26 @@ class DeliverableCard extends React.Component<Props, {}> {
             (deliverable.student as User).lastName
           }`
         : null;
-    
-    const getOverdue = (turnedIn: Date, dueDate: Date) => (
-      turnedIn > dueDate
-        ?
-          <Typography variant="subtitle1" color="error">
-            Overdue by {dateDistance(dueDate, turnedIn)}
-          </Typography>
-        :
-          <Typography variant="subtitle1" color="textSecondary">
-            On Time
-          </Typography>
-    )
+
+    const getOverdue = (turnedIn: Date, dueDate: Date) =>
+      turnedIn > dueDate ? (
+        <Typography variant="subtitle1" color="error">
+          Overdue by {dateDistance(dueDate, turnedIn)}
+        </Typography>
+      ) : (
+        <Typography variant="subtitle1" color="textSecondary">
+          On Time
+        </Typography>
+      );
 
     const getTurnedInInfo = () =>
       deliverable.turnedIn ? (
         <div>
           <Typography variant="subtitle1" color="textSecondary">
-            {`Turned in: ${dateFormat(new Date(deliverable.turnedIn), 'MM/dd/yy')}`}
+            {`Turned in: ${dateFormat(
+              new Date(deliverable.turnedIn),
+              'MM/dd/yy',
+            )}`}
           </Typography>
           {getOverdue(new Date(deliverable.turnedIn), deadline)}
           {getGrade()}
@@ -136,13 +138,14 @@ class DeliverableCard extends React.Component<Props, {}> {
             >
               <EditIcon />
             </IconButton>
-            <IconButton
+            {/* // TODO: Implement delete once server can handle it */}
+            {/* <IconButton
               className={classes.delete}
               aria-label="Delete"
               onClick={this.handleDelete}
             >
               <DeleteIcon />
-            </IconButton>
+            </IconButton> */}
           </div>
         </div>
       </Card>

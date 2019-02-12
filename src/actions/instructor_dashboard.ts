@@ -249,17 +249,13 @@ export const deliverableSelect = (payload: Deliverable | null) => ({
   payload,
 });
 
-// Other
-
-export const OtherAction = (): OtherAction => ({
-  type: Actions.OTHER_ACTION,
-});
-
 /*
  * dispatch functions (async)
  */
 
+//
 // Cohort
+//
 
 // Request all Instructor's cohorts from server and dispatch action to completely refresh store
 export const getAllCohorts = () => {
@@ -301,7 +297,9 @@ export const getAllCohorts = () => {
   };
 };
 
+//
 // Assignment
+//
 
 // Send new assignment data to add to DB then dispatch action to add to store
 export const addNewAssignment = (input: NewAssignmentInfo) => {
@@ -363,7 +361,9 @@ export const getAllAssignments = () => {
   };
 };
 
+//
 // Deliverable
+//
 
 // Send new deliverable data to add to DB then dispatch action to add to store
 export const addNewDeliverable = (input: NewDeliverableInfo) => {
@@ -420,7 +420,7 @@ export const gradeDeliverable = (input: GradeDeliverableInfo) => {
   };
 };
 
-// TODO: implement and test
+// TODO: Implement on server and test
 // Remove deliverable from DB
 export const removeDeliverable = (input: Deliverable) => {
   return (dispatch: Dispatch): void => {

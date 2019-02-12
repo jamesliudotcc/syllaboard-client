@@ -220,20 +220,20 @@ export const userSelect = (payload: User | null) => ({
   payload,
 });
 
-export const OtherAction = (): OtherAction => ({
-  type: Actions.OTHER_ACTION,
-});
 
 /*
  * dispatch functions (async)
  */
+
+//
+// Cohort
+//
 
 // Send new cohort data to add to DB then dispatch action to add to store
 export const addNewCohort = (input: NewCohortInfo) => {
   return (dispatch: Dispatch): void => {
     axios.post(
         `${SERVER_URL}/admin/cohorts`,
-        // { data: input },
         input,
         { headers: { authorization: localStorage.getItem('token') } },
       )
@@ -261,7 +261,7 @@ export const updateCohort = (input: Cohort) => {
   };
 };
 
-// Send cohort with modified fields to be updated in DB and refresh store
+// Send cohort id to have removed from DB
 export const removeCohort = (input: Cohort) => {
   return (dispatch: Dispatch): void => {
     axios.delete(
@@ -290,8 +290,9 @@ export const getAllCohorts = () => {
   }
 };
 
-
+//
 // User
+//
 
 // Send new user data to add to DB then dispatch action to add to store
 export const addNewUsers = (input: NewUserInfo) => {
@@ -325,7 +326,7 @@ export const updateUser = (input: EditUserInfo) => {
   };
 };
 
-// Send user with modified fields to be updated in DB and refresh store
+// Send user id to have removed from DB
 export const removeUser = (input: User) => {
   return (dispatch: Dispatch): void => {
     axios.delete(
@@ -352,7 +353,6 @@ export const getAllUsers = () => {
       })
       .catch(handleError(dispatch));
   }
-
 };
 
 const handleError = (dispatch: Dispatch) => (error: AxiosError) => {

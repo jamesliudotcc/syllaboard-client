@@ -2,15 +2,12 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
-import { fetchMessage } from '../../actions/notifications';
 import * as studentActions from '../../actions/student_dashboard';
 import { State } from '../../reducers';
 import { Deliverable, TurnInDeliverableInfo } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
 import Deliverables from './DeliverablePanel/Deliverables';
 
-
-// TODO: add all needed state/dispatch to props
 const mapStateToProps = (state: State) => ({
   message: state.notifications.message,
   errorMessage: state.auth.error,
@@ -18,18 +15,21 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchMessage: () => fetchMessage()(dispatch),
   deliverable: {
-    toggleTurnInDeliverable: () => dispatch(studentActions.toggleTurnInDeliverable()),
-    toggleShowDeliverables: () => dispatch(studentActions.toggleShowDeliverables()),
+    toggleTurnInDeliverable: () =>
+      dispatch(studentActions.toggleTurnInDeliverable()),
+    toggleShowDeliverables: () =>
+      dispatch(studentActions.toggleShowDeliverables()),
     getAllDeliverables: () => studentActions.getAllDeliverables()(dispatch),
-    updateDeliverable: (deliverable: TurnInDeliverableInfo) => studentActions.updateDeliverable(deliverable)(dispatch),
-    selectDeliverable: (deliverable: Deliverable | null) => dispatch(studentActions.deliverableSelect(deliverable)),
+    updateDeliverable: (deliverable: TurnInDeliverableInfo) =>
+      studentActions.updateDeliverable(deliverable)(dispatch),
+    selectDeliverable: (deliverable: Deliverable | null) =>
+      dispatch(studentActions.deliverableSelect(deliverable)),
   },
 });
 
 const { propsGeneric, connect } = connectedComponentHelper<{}>()(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps,
 );
 type ComponentProps = typeof propsGeneric;
@@ -37,9 +37,7 @@ type ComponentProps = typeof propsGeneric;
 type Props = RouteComponentProps<any> & ComponentProps;
 
 class StudentDashboard extends React.Component<Props, {}> {
-
   componentWillMount() {
-    this.props.fetchMessage();
     this.props.deliverable.getAllDeliverables();
   }
 
@@ -51,7 +49,7 @@ class StudentDashboard extends React.Component<Props, {}> {
       showTurnInDeliverable: this.props.showTurnInDeliverable,
       showAllDeliverables: this.props.showAllDeliverables,
       ...this.props.deliverable,
-    }                                   
+    };
 
     return (
       <div>

@@ -4,23 +4,17 @@ import { SERVER_URL } from '../constants';
 import { Credentials, Role, SignUpInfo } from '../Types';
 import { fetchFailed } from './notifications';
 
-
 /*
  * action types
  */
 
-export type Action =
-  | AuthUser
-  | UnAuthUser
-  | AuthError
-  | OtherAction;
-
+export type Action = AuthUser | UnAuthUser | AuthError | OtherAction;
 
 export enum Actions {
   AUTH_USER = 'AUTH_USER',
   UNAUTH_USER = 'UNAUTH_USER',
   AUTH_ERROR = 'AUTH_ERROR',
-  OTHER_ACTION = '__any_other_action__',
+  OTHER_ACTION = 'AUTH__any_other_action__',
 }
 
 export interface AuthUser {
@@ -59,9 +53,16 @@ export const authError = (payload: string): AuthError => ({
   type: Actions.AUTH_ERROR,
 });
 
-export const OtherAction = (): OtherAction => ({
-  type: Actions.OTHER_ACTION,
-});
+/*
+ * dispatch functions
+ */
+
+// Remove JWT and Current role on signout
+export const signoutUser = (): UnAuthUser => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+  return unAuthUser();
+};
 
 /*
  * dispatch functions (async)
@@ -70,32 +71,26 @@ export const OtherAction = (): OtherAction => ({
 export const signinUser = ({ email, password }: Credentials) => {
   return (dispatch: Dispatch): void => {
     // submit email and password to server
-    axios.post(`${SERVER_URL}/auth/signin`, {
-      email,
-      password,
-    })
+    axios
+      .post(`${SERVER_URL}/auth/signin`, {
+        email,
+        password,
+      })
       .then(response => {
-        // -Save the JWT token
-        console.log(response);
+        // Save the JWT token
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('role', response.data.role);
 
-        // -if request is good, we need to update state to indicate user is authenticated
+        // if request is good, we need to update state to indicate user is authenticated
         dispatch(authUser(response.data.role));
       })
 
       // If request is bad...
-      // -Show an error to the user
+      // Show an error to the user
       .catch(() => {
         dispatch(authError('Bad login info'));
       });
   };
-};
-
-export const signoutUser = (): UnAuthUser => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('role');
-  return unAuthUser();
 };
 
 export const signupUser = ({
@@ -106,7 +101,8 @@ export const signupUser = ({
   cohortKey,
 }: SignUpInfo) => {
   return (dispatch: Dispatch): void => {
-    axios.post(`${SERVER_URL}/auth/signup`, {
+    axios
+      .post(`${SERVER_URL}/auth/signup`, {
         firstName,
         lastName,
         email,
@@ -114,7 +110,6 @@ export const signupUser = ({
         cohortKey,
       })
       .then(response => {
-        console.log(response);
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('token', response.data.token);
         dispatch(authUser(response.data.role));
@@ -131,4 +126,4 @@ const handleError = (dispatch: Dispatch) => (error: AxiosError) => {
   } else {
     dispatch(fetchFailed(error.message));
   }
-}
+};

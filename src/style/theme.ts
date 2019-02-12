@@ -21,8 +21,8 @@ const UiTheme = createMuiTheme({
       main: '#fa4542',
     },
     background: {
-      default: '#F6F6F6'
-    }
+      default: '#F6F6F6',
+    },
   },
   overrides: {
     MuiCard: {
@@ -30,32 +30,31 @@ const UiTheme = createMuiTheme({
         boxShadow: defaultTheme.shadows[5],
         '&:hover': {
           boxShadow: defaultTheme.shadows[8],
-        }
-      }
+        },
+      },
     },
     MuiCardContent: {
       root: {
         textAlign: 'center',
-      }
+      },
     },
     MuiBackdrop: {
       root: {
         backgroundColor: '#1f364294',
-      }
+      },
     },
     MuiFormControl: {
       root: {
         width: '100%',
-      }
+      },
     },
     MuiPaper: {
       root: {
-        height: 'auto'
-      }
+        height: 'auto',
+      },
     },
   },
-  
 });
 
-export default UiTheme;
 // MuiBackdrop
+export default UiTheme;

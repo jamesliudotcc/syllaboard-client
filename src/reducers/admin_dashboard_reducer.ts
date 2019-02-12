@@ -12,8 +12,8 @@ interface AdminDashboardUI {
   selectedCohort: Cohort | null;
   // Users
   showAllUsers: boolean;
-  showSendRegistration: boolean;
   showEditUser: boolean;
+  showSendRegistration: boolean;
   selectedUser: User | null;
 }
 
@@ -24,22 +24,25 @@ interface AdminDashboardData {
 
 const blankState: AdminDashboardState = {
   // Cohorts
+  cohorts: [],
   showAllCohorts: false,
   showAddCohort: false,
   showEditCohort: false,
-  cohorts: [],
   selectedCohort: null,
   // Users
+  users: [],
   showAllUsers: false,
   showEditUser: false,
   showSendRegistration: false,
-  users: [],
   selectedUser: null,
 };
 
-export function adminDashboardReducer(state: AdminDashboardState = blankState, action: Action | SharedAction): AdminDashboardState {
+export function adminDashboardReducer(
+  state: AdminDashboardState = blankState,
+  action: Action | SharedAction,
+): AdminDashboardState {
   switch (action.type) {
-  // UI
+    // UI
     case Actions.TOGGLE_ADD_COHORT:
       return {
         ...state,
@@ -70,7 +73,7 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
         ...state,
         showSendRegistration: !state.showSendRegistration,
       };
-  // Cohort
+    // Cohort
     case Actions.COHORT_REFRESH_STORE:
       return {
         ...state,
@@ -84,24 +87,24 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
     case Actions.COHORT_REMOVE_FROM_STORE:
       return {
         ...state,
-        cohorts: state.cohorts.filter((cohort: Cohort) => (
-          cohort._id !== action.payload
-        )),
+        cohorts: state.cohorts.filter(
+          (cohort: Cohort) => cohort._id !== action.payload,
+        ),
       };
     case Actions.COHORT_UPDATE_IN_STORE:
       return {
         ...state,
-        cohorts: state.cohorts.map((cohort: Cohort) => (
-          cohort._id === action.payload._id ? action.payload : cohort
-        )),
+        cohorts: state.cohorts.map((cohort: Cohort) =>
+          cohort._id === action.payload._id ? action.payload : cohort,
+        ),
       };
     case Actions.COHORT_SELECT:
       return {
         ...state,
         selectedCohort: action.payload,
         showEditCohort: !!action.payload,
-    };
-  // User
+      };
+    // User
     case Actions.USER_REFRESH_STORE:
       return {
         ...state,
@@ -115,16 +118,14 @@ export function adminDashboardReducer(state: AdminDashboardState = blankState, a
     case Actions.USER_REMOVE_FROM_STORE:
       return {
         ...state,
-        users: state.users.filter((user: User) => (
-          user._id !== action.payload
-        )),
+        users: state.users.filter((user: User) => user._id !== action.payload),
       };
     case Actions.USER_UPDATE_IN_STORE:
       return {
         ...state,
-        users: state.users.map((user: User) => (
-          user._id === action.payload._id ? action.payload : user
-        )),
+        users: state.users.map((user: User) =>
+          user._id === action.payload._id ? action.payload : user,
+        ),
       };
     case Actions.USER_SELECT:
       return {

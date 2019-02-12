@@ -105,11 +105,15 @@ class Users extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowUsers} >Users</Typography>
+            <Typography variant="h4" onClick={this.props.toggleShowUsers}>
+              Users
+            </Typography>
           </Grid>
           <Grid item />
         </Grid>
-        <Divider className={this.props.showAllUsers ? '' : this.props.classes.divider} />
+        <Divider
+          className={this.props.showAllUsers ? '' : this.props.classes.divider}
+        />
         {editUserPanel}
         <Collapse in={this.props.showAllUsers} timeout="auto" unmountOnExit>
           <ShowAllUsers {...users} />

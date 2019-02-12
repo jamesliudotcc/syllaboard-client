@@ -1,22 +1,14 @@
-// Material UI components
-import {
-  createStyles,
-  Modal,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import * as React from 'react';
 
+// Material UI components
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/AddCircleOutline';
-import Remove from '@material-ui/icons/RemoveCircleOutline';
-import * as React from 'react';
+
 // Types
-import { Cohort, NewCohortInfo } from '../../../Types';
+import { Cohort } from '../../../Types';
 
 import ShowAllCohorts from './ShowAllCohorts';
 
@@ -65,37 +57,6 @@ class Cohorts extends React.Component<Props, {}> {
     const cohorts = {
       cohorts: this.props.cohorts,
     };
-    // const editCohortPanel = (
-    //   <Modal
-    //     open={this.props.showEditCohort}
-    //     onClose={
-    //       this.props.showEditCohort
-    //         ? this.props.toggleEditCohort
-    //         : () => { return; }
-    //     }
-    //   >
-    //     <div className={this.props.classes.paper}>
-    //       <EditCohortForm
-    //         onSubmit={this.handleEditSubmit}
-    //         errorMessage={this.props.errorMessage}
-    //         cohort={this.props.selectedCohort as Cohort}
-    //       />
-    //     </div>
-    //   </Modal>
-    // );
-
-    // const addCohortPanel = this.props.showAddCohort ? (
-    //   <div>
-    //     <AddCohortForm
-    //       onSubmit={this.handleSubmit}
-    //       errorMessage={this.props.errorMessage}
-    //     />
-    //   </div>
-    // ) : (
-    //     <div />
-    //   );
-
-    // const toggleBtn = !this.props.showAddCohort ? <Add /> : <Remove />;
 
     return (
       <div>
@@ -110,10 +71,13 @@ class Cohorts extends React.Component<Props, {}> {
               Cohorts
             </Typography>
           </Grid>
-          <Grid item>
-          </Grid>
+          <Grid item />
         </Grid>
-        <Divider className={this.props.showAllCohorts ? '' : this.props.classes.divider} />
+        <Divider
+          className={
+            this.props.showAllCohorts ? '' : this.props.classes.divider
+          }
+        />
         <Collapse in={this.props.showAllCohorts} timeout="auto" unmountOnExit>
           <ShowAllCohorts {...cohorts} />
         </Collapse>

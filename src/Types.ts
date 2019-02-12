@@ -1,8 +1,20 @@
+export interface Assignment {
+  _id: ID;
+  name: string;
+  version: number;
+  cohortType: string[];
+  cohortWeek: string;
+  instructor: ID[];
+  instructions: string;
+  resourcesUrls: string[];
+  topics: Topic[];
+}
+
 export interface Cohort {
   _id: ID;
   name: string;
   campus: string;
-  students: []; // This may be trouble
+  students: [];
   instructors: [];
   startDate: Date;
   endDate: Date;
@@ -10,53 +22,70 @@ export interface Cohort {
   studentKey: KEY;
 }
 
-export interface Assignment {
-  _id: ID;
-  name: string;
-  version: number;
-  cohortType: string[]; // Refs cohort
-  cohortWeek: string; // When should this be assigned
-  instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
-  instructions: string; // this is the instructor’s notes on what should be accomplished.
-  resourcesUrls: string[]; // optional
-  topics: Topic[];
+export interface Credentials {
+  email: string;
+  password: string;
 }
 
 export interface Deliverable {
   _id: ID;
   name: string;
   instructor: ID[];
-  student: ID[] | User; // TODO: add specific type or union type
+  student: ID[] | User;
   cohort: ID[];
-  instructions: string; // this is the instructor’s notes on what should be accomplished.
-  resourcesUrls: string[]; // optional
+  instructions: string;
+  resourcesUrls: string[];
   topics: Topic[];
   deadline: Date;
-  turnedIn: Date | null; // Maybe just a Boolean?
-  completed: Date | null; // Date indicates acceptance of assignment
-  deliverable: string | null; // URL to deliverable, Google Doc, or whatever.
-  grade: number | null; // 1-3 usually around 2.1-2.6
+  turnedIn: Date | null;
+  completed: Date | null;
+  deliverable: string | null;
+  grade: number | null;
 }
 
-export interface Topic {
-  question: string;
-  numOfAnswers: number;
-  answers: string[]; // user
-}
-
-export interface User {
+export interface EditUserInfo {
   _id: ID;
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  role: Role,
-  deliverables: ID[],
+  role: Role;
 }
+
+export interface GradeDeliverableInfo {
+  deliverableId: ID;
+  grade: number;
+}
+
+export type ID = string;
 
 export type KEY = string;
 
-export type ID = string;
+export interface NewCohortInfo {
+  name: string;
+  campus: string; // Campus ID
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface NewUserInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: Role;
+}
+
+export interface NewAssignmentInfo {
+  name: string;
+  cohortType: string[];
+  cohortWeek: string;
+  instructions: string;
+  resourcesUrls: string[];
+  // topics: Topic[]; To be added in the future
+}
+
+export interface NewDeliverableInfo {
+  assignmentId: ID;
+  cohortId: ID;
+  dueDate: Date;
+}
 
 export type Role = 'admin' | 'instructor' | 'student' | null;
 
@@ -75,11 +104,6 @@ export const roleOptions: Array<{ value: Role; label: string }> = [
   },
 ];
 
-export interface Credentials {
-  email: string;
-  password: string;
-}
-
 export interface SignUpInfo {
   firstName: string;
   lastName: string;
@@ -89,35 +113,10 @@ export interface SignUpInfo {
   cohortKey: string;
 }
 
-export interface NewCohortInfo {
-  name: string;
-  campus: string; // Campus ID
-  startDate: Date;
-  endDate: Date;
-}
-
-export interface NewUserInfo {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  role: Role,
-}
-
-export interface EditUserInfo {
-  _id: ID,
-  role: Role,
-}
-
-export interface NewAssignmentInfo {
-  name: string;
-  // version: number;
-  cohortType: string[]; // Refs cohort
-  cohortWeek: string; // When should this be assigned
-  // instructor: ID[]; // Who does this belong to? Instructor can filter for own and other instructors' materials
-  instructions: string; // this is the instructor’s notes on what should be accomplished.
-  resourcesUrls: string[]; // optional
-  // topics: Topic[];
+export interface Topic {
+  question: string;
+  numOfAnswers: number;
+  answers: string[]; // user
 }
 
 export interface TurnInDeliverableInfo {
@@ -126,15 +125,12 @@ export interface TurnInDeliverableInfo {
   deliverable: string | null;
 }
 
-
-export interface NewDeliverableInfo {
-  assignmentId: ID;
-  cohortId: ID;
-  dueDate: Date;
-}
-
-export interface GradeDeliverableInfo {
-  deliverableId: ID;
-  grade: number;
-  // completed: Date;
+export interface User {
+  _id: ID;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: Role;
+  deliverables: ID[];
 }

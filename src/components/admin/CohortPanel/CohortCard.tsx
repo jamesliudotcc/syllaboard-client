@@ -9,37 +9,37 @@ import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { Cohort } from '../../../Types';
 
-const styles = (theme: Theme) => createStyles({
-  card: {
-    display: 'flex',
-    margin: theme.spacing.unit,
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-  },
-  key: {
-    color: theme.palette.text.secondary,
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between', 
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-  },
-  edit: {
-    color: '#0cb10c',
-  },
-  delete: {
-    color: '#e40c0c',
-  },
-});
-
+const styles = (theme: Theme) =>
+  createStyles({
+    card: {
+      display: 'flex',
+      margin: theme.spacing.unit,
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
+    },
+    key: {
+      color: theme.palette.text.secondary,
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    controls: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingLeft: theme.spacing.unit,
+      paddingBottom: theme.spacing.unit,
+    },
+    edit: {
+      color: '#0cb10c',
+    },
+    delete: {
+      color: '#e40c0c',
+    },
+  });
 
 export interface OwnProps {
   removeCohort: (input: Cohort) => void;
@@ -50,24 +50,23 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 const dateString = (date: Date) => {
-  return new Date(date).toLocaleDateString('en-US', {  
-    day : 'numeric',
-    month : 'short',
-    year : 'numeric',
-  })
-}
+  return new Date(date).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+};
 
-class CohortCard extends React.Component<Props, {}> {                
+class CohortCard extends React.Component<Props, {}> {
   handleDelete = () => {
-    this.props.removeCohort(this.props.cohort)
-  }
+    this.props.removeCohort(this.props.cohort);
+  };
 
   handleEdit = () => {
     this.props.selectCohort(this.props.cohort);
-  }
- 
-  render() {
+  };
 
+  render() {
     return (
       <Card className={this.props.classes.card}>
         <div className={this.props.classes.details}>
@@ -81,17 +80,25 @@ class CohortCard extends React.Component<Props, {}> {
           </CardContent>
           <Divider variant="middle" />
           <CardContent>
-            <Typography className={this.props.classes.key}><strong>Instructor Key:</strong> {this.props.cohort.instructorKey}</Typography>
-            <Typography className={this.props.classes.key}><strong>Student Key:</strong> {this.props.cohort.studentKey}</Typography>
+            <Typography className={this.props.classes.key}>
+              <strong>Instructor Key:</strong> {this.props.cohort.instructorKey}
+            </Typography>
+            <Typography className={this.props.classes.key}>
+              <strong>Student Key:</strong> {this.props.cohort.studentKey}
+            </Typography>
             <div className={this.props.classes.controls}>
-              <IconButton 
-                className={this.props.classes.edit} 
+              <IconButton
+                className={this.props.classes.edit}
                 aria-label="Edit"
                 onClick={this.handleEdit}
               >
                 <EditIcon />
               </IconButton>
-              <IconButton className={this.props.classes.delete} aria-label="Delete" onClick={this.handleDelete}>
+              <IconButton
+                className={this.props.classes.delete}
+                aria-label="Delete"
+                onClick={this.handleDelete}
+              >
                 <DeleteIcon />
               </IconButton>
             </div>

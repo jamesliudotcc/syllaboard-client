@@ -8,21 +8,24 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const styles = (theme: Theme) => createStyles({
-  button: {
-    marginTop: '2em',
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      marginTop: '2em',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
   user: User;
 }
 
-type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<User, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<User, OwnProps>;
 
 class EditUserForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -49,7 +52,6 @@ class EditUserForm extends React.Component<Props, {}> {
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Role"
             name="role"
@@ -57,11 +59,11 @@ class EditUserForm extends React.Component<Props, {}> {
             options={roleOptions}
           />
 
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            className={this.props.classes.button} 
-            type="submit" 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
           >
             Edit
             <Icon className={this.props.classes.rightIcon}>send</Icon>

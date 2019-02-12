@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { renderTextField, renderDatePicker } from '../../helpers/form_helpers';
+import { renderDatePicker, renderTextField } from '../../helpers/form_helpers';
 
 import { Cohort } from '../../../Types';
 
@@ -9,21 +9,24 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const styles = (theme: Theme) => createStyles({
-  button: {
-    marginTop: '2em',
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      marginTop: '2em',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
   cohort: Cohort;
 }
 
-type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<Cohort, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<Cohort, OwnProps>;
 
 class EditCohortForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -50,7 +53,6 @@ class EditCohortForm extends React.Component<Props, {}> {
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Name"
             name="name"
@@ -81,11 +83,11 @@ class EditCohortForm extends React.Component<Props, {}> {
             value={this.props.cohort.endDate}
           />
 
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            className={this.props.classes.button} 
-            type="submit" 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
           >
             Edit
             <Icon className={this.props.classes.rightIcon}>send</Icon>

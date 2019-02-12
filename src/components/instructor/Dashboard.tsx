@@ -3,7 +3,6 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import * as instructorActions from '../../actions/instructor_dashboard';
-import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import {
   Assignment,
@@ -25,7 +24,6 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchMessage: () => fetchMessage()(dispatch),
   getAllAssignments: () => instructorActions.getAllAssignments()(dispatch),
   getAllCohorts: () => instructorActions.getAllCohorts()(dispatch),
   getAllDeliverables: () => instructorActions.getAllDeliverables()(dispatch),
@@ -80,7 +78,6 @@ type Props = RouteComponentProps<any> & ComponentProps;
 
 class InstructorDashboard extends React.Component<Props, {}> {
   componentWillMount() {
-    this.props.fetchMessage();
     this.props.getAllAssignments();
     this.props.getAllCohorts();
     this.props.getAllDeliverables();
@@ -95,7 +92,10 @@ class InstructorDashboard extends React.Component<Props, {}> {
     };
     const assignmentData = {
       assignments: this.props.assignments,
-      cohortInfo: this.props.cohorts.map((cohort: Cohort) => ({label: cohort.name, value: cohort._id})),
+      cohortInfo: this.props.cohorts.map((cohort: Cohort) => ({
+        label: cohort.name,
+        value: cohort._id,
+      })),
       errorMessage: this.props.errorMessage,
       showAddAssignment: this.props.showAddAssignment,
       showAllAssignments: this.props.showAllAssignments,

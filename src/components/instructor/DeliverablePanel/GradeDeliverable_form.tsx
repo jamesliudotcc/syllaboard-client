@@ -42,13 +42,6 @@ class GradeDeliverableForm extends React.Component<Props, {}> {
             type="number"
           />
 
-          {/* <Field
-            label="Completed"
-            name="completed"
-            component={renderTextField}
-            type="text"
-          /> */}
-
           <button type="submit">Grade</button>
         </form>
       </div>

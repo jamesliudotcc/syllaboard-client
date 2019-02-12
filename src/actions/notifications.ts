@@ -1,7 +1,3 @@
-import axios from 'axios';
-import { Dispatch } from 'redux';
-import { SERVER_URL } from '../constants';
-
 /*
  * action types
  */
@@ -59,29 +55,3 @@ export const fetchPending = (payload: string): FetchPending => ({
   type: Actions.FETCH_PENDING,
   payload, 
 });
-
-export const OtherAction = (): OtherAction => ({
-  type: Actions.OTHER_ACTION,
-});
-
-
-/*
- * dispatch functions (async)
- */
-
-export const fetchMessage = () => {
-  return (dispatch: Dispatch): void => {
-    dispatch(fetchPending('...Loading'));
-    axios.get(`${SERVER_URL}/auth/test`, {
-        headers: { authorization: localStorage.getItem('token') },
-      })
-      .then(response => {
-        dispatch(fetchSuccess(response.data.message));
-      })
-      // TODO: define error type
-      .catch(error => {
-        console.log(error);
-        dispatch(fetchFailed('Failed to load secret message.'));
-      });
-  };
-};

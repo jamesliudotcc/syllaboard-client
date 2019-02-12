@@ -17,7 +17,12 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 
 // Types
-import { Assignment, ID, NewAssignmentInfo, NewDeliverableInfo } from '../../../Types';
+import {
+  Assignment,
+  ID,
+  NewAssignmentInfo,
+  NewDeliverableInfo,
+} from '../../../Types';
 
 // Forms
 import AddAssignmentForm from './AddAssignment_form';
@@ -57,17 +62,17 @@ const styles = (theme: Theme) =>
     inlineForm: {
       margin: '0 auto',
       [theme.breakpoints.down('xs')]: {
-       width: '100%',
+        width: '100%',
       },
       [theme.breakpoints.up('sm')]: {
-        width: '40%'
+        width: '40%',
       },
     },
   });
 
-export interface OwnProps {
+interface OwnProps {
   assignments: Assignment[];
-  cohortInfo: Array<{ label: string, value: ID }>;
+  cohortInfo: Array<{ label: string; value: ID }>;
   errorMessage: string;
   showAddAssignment: boolean;
   showAllAssignments: boolean;
@@ -104,7 +109,7 @@ class Assignments extends React.Component<Props, {}> {
     this.props.toggleShowAssignments();
     this.props.toggleAddDeliverable();
     this.props.addNewDeliverable(input);
-  }
+  };
 
   render() {
     const assignments = {
@@ -123,8 +128,8 @@ class Assignments extends React.Component<Props, {}> {
           this.props.showEditAssignment
             ? this.props.toggleEditAssignment
             : () => {
-              return;
-            }
+                return;
+              }
         }
       >
         <div className={this.props.classes.paper}>
@@ -137,8 +142,9 @@ class Assignments extends React.Component<Props, {}> {
       </Modal>
     );
 
-    // TODO: fix this hack
-    const assignmentId = this.props.selectedAssignment ? this.props.selectedAssignment._id : '0';
+    const assignmentId = this.props.selectedAssignment
+      ? this.props.selectedAssignment._id
+      : '0';
 
     const newDeliverablePanel = (
       <Modal
@@ -147,8 +153,8 @@ class Assignments extends React.Component<Props, {}> {
           this.props.showAddDeliverable
             ? this.props.toggleAddDeliverable
             : () => {
-              return;
-            }
+                return;
+              }
         }
       >
         <div className={this.props.classes.paper}>
@@ -170,8 +176,8 @@ class Assignments extends React.Component<Props, {}> {
         />
       </div>
     ) : (
-        <div />
-      );
+      <div />
+    );
 
     const toggleBtn = !this.props.showAddAssignment ? <Add /> : <Remove />;
 

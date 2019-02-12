@@ -17,11 +17,11 @@ export function authReducer(state: AuthState = blankState, action: Action) {
   switch (action.type) {
     case Actions.AUTH_USER:
       const role = action.payload;
-      return {...state, error: '', authenticated: true, role};
+      return { ...state, error: '', authenticated: true, role };
     case Actions.UNAUTH_USER:
       return blankState;
     case Actions.AUTH_ERROR:
-      return {...state, error: action.payload};
+      return { ...state, error: action.payload };
     default:
       return state;
   }

@@ -8,7 +8,6 @@ export interface Reset {
   type: SharedActions.RESET,
 }
 
-// test.enum.ts
 export enum SharedActions {
   RESET = 'SHARED_RESET',
 }

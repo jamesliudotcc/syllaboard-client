@@ -10,6 +10,6 @@ export const inlineForm = (theme: Theme) => ({
     width: '100%',
   },
   [theme.breakpoints.up('sm')]: {
-    width: '40%'
+    width: '40%',
   },
-})
+});

@@ -2,7 +2,8 @@ import { Action, Actions } from '../actions/instructor_dashboard';
 import { SharedAction, SharedActions } from '../actions/sharedActions';
 import { Assignment, Cohort, Deliverable } from '../Types';
 
-export type InstructorDashboardState = InstructorDashboardUI & InstructorDashboardData;
+export type InstructorDashboardState = InstructorDashboardUI &
+  InstructorDashboardData;
 
 interface InstructorDashboardUI {
   // Assignment
@@ -10,18 +11,18 @@ interface InstructorDashboardUI {
   showAllAssignments: boolean;
   showEditAssignment: boolean;
   selectedAssignment: Assignment | null;
+  // Cohort
+  showAllCohorts: boolean;
   // Deliverable
   showAddDeliverable: boolean;
   showGradeDeliverable: boolean;
   selectedDeliverable: Deliverable | null;
   showAllDeliverables: boolean;
-  // Cohort
-  showAllCohorts: boolean;
 }
 
 interface InstructorDashboardData {
-  cohorts: Cohort[];
   assignments: Assignment[];
+  cohorts: Cohort[];
   deliverables: Deliverable[];
 }
 
@@ -32,19 +33,23 @@ const blankState: InstructorDashboardState = {
   showAllAssignments: false,
   showEditAssignment: false,
   selectedAssignment: null,
+  // Cohort
+  cohorts: [],
+  showAllCohorts: false,
   // Deliverable
   deliverables: [],
   showAddDeliverable: false,
   showGradeDeliverable: false,
   selectedDeliverable: null,
   showAllDeliverables: false,
-  // Cohort
-  cohorts: [],
-  showAllCohorts: false,
 };
 
-export function instructorDashboardReducer(state: InstructorDashboardState = blankState, action: Action | SharedAction): InstructorDashboardState {
+export function instructorDashboardReducer(
+  state: InstructorDashboardState = blankState,
+  action: Action | SharedAction,
+): InstructorDashboardState {
   switch (action.type) {
+    // UI
     case Actions.TOGGLE_ADD_ASSIGNMENT:
       return {
         ...state,
@@ -80,13 +85,7 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         ...state,
         showAllDeliverables: !state.showAllDeliverables,
       };
-  // Cohort
-    case Actions.COHORT_REFRESH_STORE:
-      return {
-        ...state,
-        cohorts: action.payload,
-      }
-  // Assignment
+    // Assignment
     case Actions.ASSIGNMENT_REFRESH_STORE:
       return {
         ...state,
@@ -100,24 +99,29 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
     case Actions.ASSIGNMENT_REMOVE_FROM_STORE:
       return {
         ...state,
-        assignments: state.assignments.filter((assignment: Assignment) => (
-          assignment._id !== action.payload
-        )),
+        assignments: state.assignments.filter(
+          (assignment: Assignment) => assignment._id !== action.payload,
+        ),
       };
     case Actions.ASSIGNMENT_UPDATE_IN_STORE:
       return {
         ...state,
-        assignments: state.assignments.map((assignment: Assignment) => (
-          assignment._id === action.payload._id ? action.payload : assignment
-        )),
+        assignments: state.assignments.map((assignment: Assignment) =>
+          assignment._id === action.payload._id ? action.payload : assignment,
+        ),
       };
     case Actions.ASSIGNMENT_SELECT:
       return {
         ...state,
         selectedAssignment: action.payload,
-        // showEditAssignment: !!action.payload,
       };
-  // Deliverable
+    // Cohort
+    case Actions.COHORT_REFRESH_STORE:
+      return {
+        ...state,
+        cohorts: action.payload,
+      };
+    // Deliverable
     case Actions.DELIVERABLE_REFRESH_STORE:
       return {
         ...state,
@@ -131,22 +135,21 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
     case Actions.DELIVERABLE_REMOVE_FROM_STORE:
       return {
         ...state,
-        deliverables: state.deliverables.filter((deliverable: Deliverable) => (
-          deliverable._id !== action.payload
-        )),
+        deliverables: state.deliverables.filter(
+          (deliverable: Deliverable) => deliverable._id !== action.payload,
+        ),
       };
     case Actions.DELIVERABLE_UPDATE_IN_STORE:
       return {
         ...state,
-        deliverables: state.deliverables.map((deliverable: Deliverable) => (
+        deliverables: state.deliverables.map((deliverable: Deliverable) =>
           deliverable._id === action.payload._id
-            ?
-            {
-              ...action.payload,
-              student: deliverable.student,
-            }
-            : deliverable
-        )),
+            ? {
+                ...action.payload,
+                student: deliverable.student,
+              }
+            : deliverable,
+        ),
       };
     case Actions.DELIVERABLE_SELECT:
       return {
@@ -154,7 +157,7 @@ export function instructorDashboardReducer(state: InstructorDashboardState = bla
         selectedDeliverable: action.payload,
         showGradeDeliverable: !!action.payload,
       };
-  // Shared Actions
+    // Shared Actions
     case SharedActions.RESET:
       return blankState;
     default:

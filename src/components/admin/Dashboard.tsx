@@ -3,7 +3,6 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import * as adminActions from '../../actions/admin_dashboard';
-import { fetchMessage } from '../../actions/notifications';
 import { State } from '../../reducers';
 import { Cohort, NewCohortInfo, User } from '../../Types';
 import { connectedComponentHelper } from '../../utils/connectedComponent';
@@ -17,9 +16,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchMessage: () => fetchMessage()(dispatch),
   cohort: {
-    // Cohort actions
     toggleAddCohort: () => dispatch(adminActions.toggleAddCohort()),
     toggleEditCohort: () => dispatch(adminActions.toggleEditCohort()),
     toggleShowCohorts: () => dispatch(adminActions.toggleShowCohorts()),
@@ -39,8 +36,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     updateUser: (user: User) => adminActions.updateUser(user)(dispatch),
     selectUser: (user: User | null) => dispatch(adminActions.userSelect(user)),
   },
-  instructor: {},
-  student: {},
   toggleSendRegistration: () => dispatch(adminActions.toggleSendRegistration()),
 });
 
@@ -54,7 +49,6 @@ type Props = RouteComponentProps<any> & ComponentProps;
 
 class AdminDashboard extends React.Component<Props, {}> {
   componentWillMount() {
-    this.props.fetchMessage();
     this.props.cohort.getAllCohorts();
     this.props.user.getAllUsers();
   }

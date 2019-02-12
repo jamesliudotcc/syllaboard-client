@@ -8,21 +8,24 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const styles = (theme: Theme) => createStyles({
-  button: {
-    marginTop: '2em',
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      marginTop: '2em',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<Deliverable, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<Deliverable, OwnProps>;
 
 class EditDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {

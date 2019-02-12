@@ -8,21 +8,24 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const styles = (theme: Theme) => createStyles({
-  button: {
-    margin: '1em auto',
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  }
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      margin: '1em auto',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<TurnInDeliverableInfo, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<TurnInDeliverableInfo, OwnProps>;
 
 class TurnInDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -57,11 +60,11 @@ class TurnInDeliverableForm extends React.Component<Props, {}> {
             type="text"
           />
 
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            className={this.props.classes.button} 
-            type="submit" 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
           >
             Turn In
             <Icon className={this.props.classes.rightIcon}>send</Icon>

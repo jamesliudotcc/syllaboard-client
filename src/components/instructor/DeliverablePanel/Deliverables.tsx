@@ -13,9 +13,12 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-
 // Types
-import { Deliverable, GradeDeliverableInfo, NewDeliverableInfo } from '../../../Types';
+import {
+  Deliverable,
+  GradeDeliverableInfo,
+  NewDeliverableInfo,
+} from '../../../Types';
 
 // Forms
 import GradeDeliverableForm from './GradeDeliverable_form';
@@ -68,7 +71,6 @@ export interface OwnProps {
 type Props = OwnProps & WithStyles<typeof styles>;
 
 class Deliverables extends React.Component<Props, {}> {
-
   handleGradeSubmit = (input: GradeDeliverableInfo) => {
     this.props.selectDeliverable(null);
     this.props.gradeDeliverable(input);
@@ -103,7 +105,6 @@ class Deliverables extends React.Component<Props, {}> {
       </Modal>
     );
 
-
     return (
       <div>
         <Grid
@@ -113,12 +114,14 @@ class Deliverables extends React.Component<Props, {}> {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h4" onClick={this.props.toggleShowDeliverables}>
+            <Typography
+              variant="h4"
+              onClick={this.props.toggleShowDeliverables}
+            >
               Deliverables
             </Typography>
           </Grid>
-          <Grid item>
-          </Grid>
+          <Grid item />
         </Grid>
         <Divider
           className={
