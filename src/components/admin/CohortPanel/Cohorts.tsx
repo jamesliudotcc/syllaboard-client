@@ -13,13 +13,16 @@ import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/AddCircleOutline';
 import Remove from '@material-ui/icons/RemoveCircleOutline';
 import Collapse from '@material-ui/core/Collapse';
+import { inlineForm } from '../../../style/generalStyles';
+
 // Types
 import { Cohort, NewCohortInfo, User } from '../../../Types';
 
-import ShowAllCohorts from './ShowAllCohorts';
 // Forms
 import AddCohortForm from './AddCohort_form';
 import EditCohortForm from './EditCohort_form';
+
+import ShowAllCohorts from './ShowAllCohorts';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -50,6 +53,7 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 4,
       outline: 'none',
     },
+    inlineForm: inlineForm(theme),
   });
 
 export interface OwnProps {
@@ -108,7 +112,7 @@ class Cohorts extends React.Component<Props, {}> {
     );
 
     const addCohortPanel = this.props.showAddCohort ? (
-      <div>
+      <div className={this.props.classes.inlineForm}>
         <AddCohortForm
           onSubmit={this.handleSubmit}
           errorMessage={this.props.errorMessage}

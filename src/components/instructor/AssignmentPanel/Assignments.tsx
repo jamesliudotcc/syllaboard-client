@@ -54,6 +54,15 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 4,
       outline: 'none',
     },
+    inlineForm: {
+      margin: '0 auto',
+      [theme.breakpoints.down('xs')]: {
+       width: '100%',
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: '40%'
+      },
+    },
   });
 
 export interface OwnProps {
@@ -154,7 +163,7 @@ class Assignments extends React.Component<Props, {}> {
     );
 
     const addAssignmentPanel = this.props.showAddAssignment ? (
-      <div>
+      <div className={this.props.classes.inlineForm}>
         <AddAssignmentForm
           onSubmit={this.handleSubmit}
           errorMessage={this.props.errorMessage}

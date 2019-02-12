@@ -25,9 +25,17 @@ const UiTheme = createMuiTheme({
     }
   },
   overrides: {
-    MuiPaper: {
+    MuiCard: {
       root: {
-        height: 'auto'
+        boxShadow: defaultTheme.shadows[5],
+        '&:hover': {
+          boxShadow: defaultTheme.shadows[8],
+        }
+      }
+    },
+    MuiCardContent: {
+      root: {
+        textAlign: 'center',
       }
     },
     MuiBackdrop: {
@@ -40,19 +48,11 @@ const UiTheme = createMuiTheme({
         width: '100%',
       }
     },
-    MuiCardContent: {
+    MuiPaper: {
       root: {
-        textAlign: 'center',
+        height: 'auto'
       }
     },
-    MuiCard: {
-      root: {
-        boxShadow: defaultTheme.shadows[5],
-        '&:hover': {
-          boxShadow: defaultTheme.shadows[8],
-        }
-      }
-    }
   },
   
 });

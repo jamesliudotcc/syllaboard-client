@@ -11,10 +11,8 @@ import {
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/AddCircleOutline';
-import Remove from '@material-ui/icons/RemoveCircleOutline';
+
 
 // Types
 import { Deliverable, GradeDeliverableInfo, NewDeliverableInfo } from '../../../Types';
