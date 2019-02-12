@@ -11,10 +11,8 @@ import {
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/AddCircleOutline';
-import Remove from '@material-ui/icons/RemoveCircleOutline';
+
 
 // Types
 import { Deliverable, GradeDeliverableInfo, NewDeliverableInfo } from '../../../Types';
@@ -39,7 +37,6 @@ const styles = (theme: Theme) =>
         position: 'absolute',
         top: '25%',
         width: '100%',
-        height: theme.spacing.unit * 20,
       },
       [theme.breakpoints.up('sm')]: {
         position: 'absolute',
@@ -47,7 +44,6 @@ const styles = (theme: Theme) =>
         left: '35vw',
         borderRadius: '1em',
         width: theme.spacing.unit * 30,
-        height: theme.spacing.unit * 20,
       },
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[10],

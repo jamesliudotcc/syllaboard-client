@@ -36,7 +36,6 @@ const styles = (theme: Theme) =>
         position: 'absolute',
         top: '25%',
         width: '100%',
-        height: theme.spacing.unit * 20,
       },
       [theme.breakpoints.up('sm')]: {
         position: 'absolute',
@@ -44,7 +43,6 @@ const styles = (theme: Theme) =>
         left: '35vw',
         borderRadius: '1em',
         width: theme.spacing.unit * 30,
-        height: theme.spacing.unit * 20,
       },
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[10],

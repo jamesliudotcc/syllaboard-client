@@ -41,7 +41,6 @@ const styles = (theme: Theme) =>
         position: 'absolute',
         top: '25%',
         width: '100%',
-        height: theme.spacing.unit * 20,
       },
       [theme.breakpoints.up('sm')]: {
         position: 'absolute',
@@ -49,12 +48,20 @@ const styles = (theme: Theme) =>
         left: '35vw',
         borderRadius: '1em',
         width: theme.spacing.unit * 30,
-        height: theme.spacing.unit * 20,
       },
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[10],
       padding: theme.spacing.unit * 4,
       outline: 'none',
+    },
+    inlineForm: {
+      margin: '0 auto',
+      [theme.breakpoints.down('xs')]: {
+       width: '100%',
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: '40%'
+      },
     },
   });
 
@@ -156,7 +163,7 @@ class Assignments extends React.Component<Props, {}> {
     );
 
     const addAssignmentPanel = this.props.showAddAssignment ? (
-      <div>
+      <div className={this.props.classes.inlineForm}>
         <AddAssignmentForm
           onSubmit={this.handleSubmit}
           errorMessage={this.props.errorMessage}
