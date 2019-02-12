@@ -3,12 +3,26 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Deliverable } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
+// Material UI
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) => createStyles({
+  button: {
+    marginTop: '2em',
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+})
+
 interface OwnProps {
   errorMessage: string;
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & InjectedFormProps<Deliverable, OwnProps>;
+type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<Deliverable, OwnProps>;
 
 class EditDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -51,4 +65,4 @@ class EditDeliverableForm extends React.Component<Props, {}> {
 
 export default reduxForm<Deliverable, OwnProps>({
   form: 'editDeliverable',
-})(EditDeliverableForm);
+})(withStyles(styles)(EditDeliverableForm));

@@ -3,12 +3,26 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Assignment } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
+// Material UI
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) => createStyles({
+  button: {
+    marginTop: '2em',
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+})
+
 interface OwnProps {
   errorMessage: string;
   assignment: Assignment;
 }
 
-type Props = OwnProps & InjectedFormProps<Assignment, OwnProps>;
+type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<Assignment, OwnProps>;
 
 class EditAssignmentForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -43,7 +57,15 @@ class EditAssignmentForm extends React.Component<Props, {}> {
             type="text"
           />
 
-          <button type="submit">Edit</button>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            className={this.props.classes.button} 
+            type="submit" 
+          >
+            Edit
+            <Icon className={this.props.classes.rightIcon}>send</Icon>
+          </Button>
         </form>
       </div>
     );
@@ -52,4 +74,4 @@ class EditAssignmentForm extends React.Component<Props, {}> {
 
 export default reduxForm<Assignment, OwnProps>({
   form: 'editAssignment',
-})(EditAssignmentForm);
+})(withStyles(styles)(EditAssignmentForm));
