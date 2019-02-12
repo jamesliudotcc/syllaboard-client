@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
-import { LoadingIndicator } from 'react-select/lib/components/indicators';
 import { Deliverable, User } from '../../../Types';
+
+import dateFormat from 'date-fns/format';
+import dateDistance from 'date-fns/formatDistance';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -70,13 +72,26 @@ class DeliverableCard extends React.Component<Props, {}> {
             (deliverable.student as User).lastName
           }`
         : null;
+    
+    const getOverdue = (turnedIn: Date, dueDate: Date) => (
+      turnedIn > dueDate
+        ?
+          <Typography variant="subtitle1" color="error">
+            Overdue by {dateDistance(dueDate, turnedIn)}
+          </Typography>
+        :
+          <Typography variant="subtitle1" color="textSecondary">
+            On Time
+          </Typography>
+    )
 
     const getTurnedInInfo = () =>
       deliverable.turnedIn ? (
         <div>
           <Typography variant="subtitle1" color="textSecondary">
-            {`Turned in: ${deliverable.turnedIn}`}
+            {`Turned in: ${dateFormat(new Date(deliverable.turnedIn), 'MM/dd/yy')}`}
           </Typography>
+          {getOverdue(new Date(deliverable.turnedIn), deadline)}
           {getGrade()}
         </div>
       ) : now > deadline ? (
