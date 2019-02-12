@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { label } from '../../style/generalStyles';
+import { label, inlineForm } from '../../style/generalStyles';
 import { Credentials } from '../../Types';
 import { renderTextField } from '../helpers/form_helpers';
 
@@ -14,6 +14,7 @@ const styles = (theme: Theme) => createStyles({
     margin: '1rem',
   },
   label: label(theme),
+  inlineForm: inlineForm(theme),
 });
 
 interface OwnProps {
@@ -40,7 +41,7 @@ class SigninForm extends React.Component<Props, {}> {
         {this.renderAlert()}
         <Typography variant="h1">Sign In</Typography>
         <h2 className={classes.label}>Enter Info Here</h2> 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={this.props.classes.inlineForm}>
 
           <Field
             label="Username"

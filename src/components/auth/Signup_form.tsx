@@ -1,15 +1,27 @@
-import Button from '@material-ui/core/Button';
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { SignUpInfo } from '../../Types';
 import { renderTextField } from '../helpers/form_helpers';
+import { inlineForm } from '../../style/generalStyles';
+
+// Material UI
+import Button from '@material-ui/core/Button';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+
+
+const styles = (theme: Theme) => createStyles({
+  button: {
+    marginTop: '2em',
+  },
+  inlineForm: inlineForm(theme),
+})
 
 interface OwnProps {
   errorMessage: string;
   cohortKey: string;
 }
 
-type Props = OwnProps & InjectedFormProps<SignUpInfo, OwnProps>;
+type Props = OwnProps & WithStyles<typeof styles> & InjectedFormProps<SignUpInfo, OwnProps>;
 
 class SignupForm extends React.Component<Props, {}> {
 
@@ -33,7 +45,7 @@ class SignupForm extends React.Component<Props, {}> {
     return (
       <div>
         {this.renderAlert()}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={this.props.classes.inlineForm}>
 
           <Field
             label="First Name"
@@ -117,4 +129,4 @@ const validate = (values: SignUpInfo) => {
 export default reduxForm<SignUpInfo, OwnProps>({
   form: 'signup',
   validate,
-})(SignupForm);
+})(withStyles(styles)(SignupForm));
