@@ -2,7 +2,7 @@
 A dashboard for instructors at GA.
 Immersive courses are just that: immersive. When you have multiple things going on, it can be easy to let somethings slip through the cracks: laundry, personal care, and more often than not, the outcomes homework that is also a part of the course. This webapp aims to help both the outcomes instructors and the students to stay organised and on-top of the work.
 
-[Syllaboard Live](#)
+[Syllaboard Live](http://syllaboard.herokuapp.com/)
 
 ## Getting Started
 
@@ -10,8 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-<!-- Flesh this out -->
-You can either use our [deployed backend](https://#) or write your own using our [backend repository](https://github.com/jamesliudotcc/syllaboard-backend)
+This repo only contains the front-end side of the app. In order to use this client go to our [backend repository](https://github.com/jamesliudotcc/syllaboard-backend) and set that up first. 
 
 ### Installing
 
@@ -29,58 +28,32 @@ Then start the system.
 yarn start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+This will point to localhost:3000 for the server. Change the .env.development file if that needs to be different.
 
-## Running the tests
+### Coding Style
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+There are prettier and tslint configurations in the root folder. Those should keep all new code consistent.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Deployment is fairly straightforward since this was made with create react app. You can look look at their [documentation](https://facebook.github.io/create-react-app/docs/deployment) for more info.
+
+One thing that needs to be done is to add a .env.production file to set the server url.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [React](https://reactjs.org/)
+* [Material-Ui](https://material-ui.com/)
+* [Redux](https://redux.js.org/)
+* [Typescript](https://www.typescriptlang.org/)
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See the list of [contributors](https://github.com/parkercouch/syllaboard-client/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Thanks to Marcel Veldhuizen for a helper function to properly type Redux connected react components. [Link to Blog Post](https://thorarin.net/blog/post/2017/05/05/redux-connected-react-components-in-typescript.aspx)
