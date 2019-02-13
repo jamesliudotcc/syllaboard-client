@@ -238,7 +238,6 @@ export const addNewCohort = (input: NewCohortInfo) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(cohortAddToStore(response.data.cohort));
       })
       .catch(handleError(dispatch));
@@ -254,7 +253,6 @@ export const updateCohort = (input: Cohort) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(cohortUpdateInStore(response.data.edited));
       })
       .catch(handleError(dispatch));
@@ -269,7 +267,6 @@ export const removeCohort = (input: Cohort) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(cohortRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
@@ -303,7 +300,6 @@ export const addNewUsers = (input: NewUserInfo) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(userAddToStore(response.data.user));
       })
       .catch(handleError(dispatch));
@@ -319,7 +315,6 @@ export const updateUser = (input: EditUserInfo) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(userUpdateInStore(response.data.edited));
       })
       .catch(handleError(dispatch));
@@ -334,7 +329,6 @@ export const removeUser = (input: User) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(userRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));

@@ -3,12 +3,28 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Deliverable, GradeDeliverableInfo } from '../../../Types';
 import { renderTextField } from '../../helpers/form_helpers';
 
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      margin: '1em auto',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
+
 interface OwnProps {
   errorMessage: string;
   deliverable: Deliverable;
 }
 
-type Props = OwnProps & InjectedFormProps<GradeDeliverableInfo, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<GradeDeliverableInfo, OwnProps>;
 
 class GradeDeliverableForm extends React.Component<Props, {}> {
   renderAlert() {
@@ -42,7 +58,15 @@ class GradeDeliverableForm extends React.Component<Props, {}> {
             type="number"
           />
 
-          <button type="submit">Grade</button>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
+          >
+            Grade
+            <Icon className={this.props.classes.rightIcon}>edit</Icon>
+          </Button>
         </form>
       </div>
     );
@@ -51,4 +75,4 @@ class GradeDeliverableForm extends React.Component<Props, {}> {
 
 export default reduxForm<GradeDeliverableInfo, OwnProps>({
   form: 'gradeDeliverable',
-})(GradeDeliverableForm);
+})(withStyles(styles)(GradeDeliverableForm));

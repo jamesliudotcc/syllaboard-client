@@ -15,6 +15,9 @@ const styles = (theme: Theme) =>
     },
     label: label(theme),
     inlineForm: inlineForm(theme),
+    centered: {
+      textAlign: 'center',
+    },
   });
 
 interface OwnProps {
@@ -41,13 +44,13 @@ class SigninForm extends React.Component<Props, {}> {
     const { handleSubmit, classes } = this.props;
 
     return (
-      <div>
+      <div className={this.props.classes.centered}>
         {this.renderAlert()}
-        <Typography variant="h1">Sign In</Typography>
+        <Typography variant="h2">Sign In</Typography>
         <h2 className={classes.label}>Enter Info Here</h2>
         <form onSubmit={handleSubmit} className={this.props.classes.inlineForm}>
           <Field
-            label="Username"
+            label="Email"
             name="email"
             component={renderTextField}
             type="text"

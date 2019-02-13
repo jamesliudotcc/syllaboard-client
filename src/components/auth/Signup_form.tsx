@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { inlineForm } from '../../style/generalStyles';
+import { inlineForm, label } from '../../style/generalStyles';
 import { SignUpInfo } from '../../Types';
 import { renderTextField } from '../helpers/form_helpers';
 
 // Material UI
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import {
+  createStyles,
+  Theme,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 const styles = (theme: Theme) =>
@@ -14,6 +20,10 @@ const styles = (theme: Theme) =>
       marginTop: '2em',
     },
     inlineForm: inlineForm(theme),
+    label: label(theme),
+    centered: {
+      textAlign: 'center',
+    },
   });
 
 interface OwnProps {
@@ -47,8 +57,10 @@ class SignupForm extends React.Component<Props, {}> {
     const { handleSubmit } = this.props;
 
     return (
-      <div>
+      <div className={this.props.classes.centered}>
         {this.renderAlert()}
+        <Typography variant="h2">Sign Up</Typography>
+        <h2 className={this.props.classes.label}>Enter Info Here</h2>
         <form onSubmit={handleSubmit} className={this.props.classes.inlineForm}>
           <Field
             label="First Name"
@@ -91,6 +103,9 @@ class SignupForm extends React.Component<Props, {}> {
             component={renderTextField}
             type="text"
           />
+
+          <br />
+          <br />
 
           <Button type="submit" variant="contained" color="primary">
             Sign Up

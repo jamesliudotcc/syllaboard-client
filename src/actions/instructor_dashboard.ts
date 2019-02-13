@@ -11,6 +11,7 @@ import {
   NewDeliverableInfo,
 } from '../Types';
 import { fetchFailed } from './notifications';
+import { commaListParser } from '../components/helpers/form_helpers';
 
 /*
  * action types
@@ -267,8 +268,6 @@ export const getAllCohorts = () => {
           { headers: { authorization: localStorage.getItem('token') } },
         );
 
-        console.log(instructorCohorts);
-
         if (!instructorCohorts.data.cohorts) {
           return;
         }
@@ -304,8 +303,14 @@ export const getAllCohorts = () => {
 // Send new assignment data to add to DB then dispatch action to add to store
 export const addNewAssignment = (input: NewAssignmentInfo) => {
   return (dispatch: Dispatch): void => {
+    const assignment = {
+      ...input,
+      resourcesUrls: input.resourcesUrls ? commaListParser(input.resourcesUrls) : null,
+      cohortType: input.cohortType ? commaListParser(input.cohortType) : null,
+    };
+
     axios
-      .post(`${SERVER_URL}/instructor/assignments`, input, {
+      .post(`${SERVER_URL}/instructor/assignments`, assignment, {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
@@ -324,7 +329,6 @@ export const updateAssignment = (input: Assignment) => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(assignmentUpdateInStore(response.data.edited));
       })
       .catch(handleError(dispatch));
@@ -339,7 +343,6 @@ export const removeAssignment = (input: Assignment) => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(assignmentRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
@@ -354,7 +357,6 @@ export const getAllAssignments = () => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(assignmentRefreshStore(response.data.assignments));
       })
       .catch(handleError(dispatch));
@@ -378,7 +380,6 @@ export const addNewDeliverable = (input: NewDeliverableInfo) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         getAllDeliverables()(dispatch);
       })
       .catch(handleError(dispatch));
@@ -393,7 +394,6 @@ export const updateDeliverable = (input: Deliverable) => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(deliverableUpdateInStore(response.data.edited));
       })
       .catch(handleError(dispatch));
@@ -413,7 +413,6 @@ export const gradeDeliverable = (input: GradeDeliverableInfo) => {
         { headers: { authorization: localStorage.getItem('token') } },
       )
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(deliverableUpdateInStore(response.data.editedDeliverable));
       })
       .catch(handleError(dispatch));
@@ -429,7 +428,6 @@ export const removeDeliverable = (input: Deliverable) => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(deliverableRemoveFromStore(response.data.deleted.value._id));
       })
       .catch(handleError(dispatch));
@@ -445,8 +443,6 @@ export const getAllDeliverables = () => {
           `${SERVER_URL}/instructor/deliverables`,
           { headers: { authorization: localStorage.getItem('token') } },
         );
-
-        console.log(instructorDeliverables);
 
         if (!instructorDeliverables.data.deliverables) {
           return;

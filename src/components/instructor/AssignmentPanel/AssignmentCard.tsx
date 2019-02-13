@@ -4,8 +4,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import AddCircleIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleIcon from '@material-ui/icons/AddCircleOutline'
 import EditIcon from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { Assignment } from '../../../Types';
@@ -35,6 +35,9 @@ const styles = (theme: Theme) =>
     edit: {
       color: '#0cb10c',
     },
+    assign: {
+      color: '#add8e6',
+    },
     delete: {
       color: '#e40c0c',
     },
@@ -58,7 +61,7 @@ class AssignmentCard extends React.Component<Props, {}> {
   handleAssign = () => {
     this.props.selectAssignment(this.props.assignment);
     this.props.toggleAddDeliverable();
-  }
+  };
 
   handleEdit = () => {
     this.props.selectAssignment(this.props.assignment);
@@ -66,35 +69,50 @@ class AssignmentCard extends React.Component<Props, {}> {
   };
 
   render() {
+    const { assignment, classes } = this.props;
+
+    const showCohortType = () =>
+      assignment.cohortType ? (
+        <Typography variant="subtitle1" color="textSecondary">
+          Cohort Type:
+          {typeof assignment.cohortType !== 'string'
+            ? assignment.cohortType.map((type, i) => (
+                <span key={i}> {type}</span>
+              ))
+            : <span> {assignment.cohortType}</span>}
+        </Typography>
+      ) : null;
+
     return (
-      <Card className={this.props.classes.card}>
-        <div className={this.props.classes.details}>
-          <CardContent className={this.props.classes.content}>
+      <Card className={classes.card}>
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {this.props.assignment.name}
+              {assignment.name}
             </Typography>
+            {showCohortType()}
             <Typography variant="subtitle1" color="textSecondary">
-              End-Date:
+              Cohort Week: {assignment.cohortWeek}
             </Typography>
           </CardContent>
           <Divider variant="middle" />
-          <div className={this.props.classes.controls}>
+          <div className={classes.controls}>
             <IconButton
-              className={this.props.classes.edit}
+              className={classes.edit}
               aria-label="Edit"
               onClick={this.handleEdit}
             >
               <EditIcon />
             </IconButton>
             <IconButton
-              className={this.props.classes.delete}
+              className={classes.assign}
               aria-label="Assign"
               onClick={this.handleAssign}
             >
               <AddCircleIcon />
             </IconButton>
             <IconButton
-              className={this.props.classes.delete}
+              className={classes.delete}
               aria-label="Delete"
               onClick={this.handleDelete}
             >

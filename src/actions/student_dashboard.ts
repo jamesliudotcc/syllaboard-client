@@ -118,7 +118,6 @@ export const updateDeliverable = (input: TurnInDeliverableInfo) => {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response: AxiosResponse) => {
-        console.log(response);
         dispatch(deliverableUpdateInStore(response.data.updatedDeliverable));
       })
       .catch(handleError(dispatch));

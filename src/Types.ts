@@ -74,10 +74,10 @@ export interface NewUserInfo {
 
 export interface NewAssignmentInfo {
   name: string;
-  cohortType: string[];
+  cohortType: string; // Input is comma separated list, parsed into string[]
   cohortWeek: string;
   instructions: string;
-  resourcesUrls: string[];
+  resourcesUrls: string; // Input is a comma separated list, parsed into a string[]
   // topics: Topic[]; To be added in the future
 }
 

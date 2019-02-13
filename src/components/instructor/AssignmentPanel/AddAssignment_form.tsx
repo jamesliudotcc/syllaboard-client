@@ -1,38 +1,49 @@
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { commaListParser, renderDatePicker, renderDropdown, renderTextField } from '../../helpers/form_helpers';
-
 import { NewAssignmentInfo } from '../../../Types';
+import { commaListParser, renderTextField } from '../../helpers/form_helpers';
+
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
+const styles = (theme: Theme) =>
+  createStyles({
+    button: {
+      margin: '1em auto',
+    },
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
 
 interface OwnProps {
   errorMessage: string;
 }
 
-type Props = OwnProps & InjectedFormProps<NewAssignmentInfo, OwnProps>;
+type Props = OwnProps &
+  WithStyles<typeof styles> &
+  InjectedFormProps<NewAssignmentInfo, OwnProps>;
 
 class AddAssignmentForm extends React.Component<Props, {}> {
-
   renderAlert() {
     if (this.props.errorMessage) {
-      return <div className="alert alert-danger">
-        <strong>Oops: </strong>{this.props.errorMessage}
-      </div>;
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops: </strong>
+          {this.props.errorMessage}
+        </div>
+      );
     }
   }
 
-  // componentWillMount () {
-  //   this.props.initialize({
-  //   });
-  // }
-
   render() {
-    const {handleSubmit} = this.props;
+    const { handleSubmit } = this.props;
 
     return (
       <div>
         {this.renderAlert()}
         <form onSubmit={handleSubmit}>
-
           <Field
             label="Name"
             name="name"
@@ -54,22 +65,30 @@ class AddAssignmentForm extends React.Component<Props, {}> {
             type="number"
           />
 
-          {/* // TODO: Change to textarea */}
           <Field
             label="Instructions"
             name="instructions"
             component={renderTextField}
             type="text"
+            multiline={true}
           />
 
           <Field
             label="Resources"
-            name="resourceUrls"
+            name="resourcesUrls"
             component={renderTextField}
             type="text"
           />
 
-          <button type="submit">Add</button>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.button}
+            type="submit"
+          >
+            Add
+            <Icon className={this.props.classes.rightIcon}>send</Icon>
+          </Button>
         </form>
       </div>
     );
@@ -83,10 +102,12 @@ const validate = (values: NewAssignmentInfo) => {
     errors.name = 'Please enter a name for the assignment';
   }
 
-  // // TODO: This is weird... 
-  // if (commaListParser(values.cohortType.join('')).length > 0) {
-  //   errors.cohortType = 'Please enter a comma seperated list. Ex. WDI,UX';
-  // }
+  // Parse list and if no value then flag error
+  if (values.cohortType) {
+    if (commaListParser(values.cohortType).join('').length < 1) {
+      errors.cohortType = 'Please enter a comma separated list. Ex. WDI,UX';
+    }
+  }
 
   if (!values.cohortWeek) {
     errors.cohortWeek = 'Please enter the estimated week for the assignment';
@@ -96,8 +117,11 @@ const validate = (values: NewAssignmentInfo) => {
     errors.instructions = 'Please enter some instructions';
   }
 
-  if (!values.resourcesUrls) {
-    errors.resourcesUrls = 'Please enter a password';
+  // Parse list and if no value then flag error
+  if (values.resourcesUrls) {
+    if (commaListParser(values.resourcesUrls).join('').length < 1) {
+      errors.resourcesUrls = 'Please enter a comma separated list of urls';
+    }
   }
 
   return errors;
@@ -106,4 +130,4 @@ const validate = (values: NewAssignmentInfo) => {
 export default reduxForm<NewAssignmentInfo, OwnProps>({
   form: 'addAssignment',
   validate,
-})(AddAssignmentForm);
+})(withStyles(styles)(AddAssignmentForm));
