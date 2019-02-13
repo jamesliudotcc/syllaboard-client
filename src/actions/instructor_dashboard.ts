@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
+import { commaListParser } from '../components/helpers/form_helpers';
 import { SERVER_URL } from '../constants';
 import {
   Assignment,
@@ -11,7 +12,6 @@ import {
   NewDeliverableInfo,
 } from '../Types';
 import { fetchFailed } from './notifications';
-import { commaListParser } from '../components/helpers/form_helpers';
 
 /*
  * action types

@@ -25,8 +25,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     getAllCohorts: () => adminActions.getAllCohorts()(dispatch),
     removeCohort: (cohort: Cohort) =>
       adminActions.removeCohort(cohort)(dispatch),
-    updateCohort: (cohort: Cohort) => adminActions.updateCohort(cohort)(dispatch),
-    selectCohort: (cohort: Cohort | null) => dispatch(adminActions.cohortSelect(cohort)),
+    updateCohort: (cohort: Cohort) =>
+      adminActions.updateCohort(cohort)(dispatch),
+    selectCohort: (cohort: Cohort | null) =>
+      dispatch(adminActions.cohortSelect(cohort)),
   },
   user: {
     toggleEditUser: () => dispatch(adminActions.toggleEditUser()),
@@ -49,9 +51,13 @@ type Props = RouteComponentProps<any> & ComponentProps;
 
 class AdminDashboard extends React.Component<Props, {}> {
   componentWillMount() {
+    this.refreshAll();
+  }
+
+  refreshAll = () => {
     this.props.cohort.getAllCohorts();
     this.props.user.getAllUsers();
-  }
+  };
 
   render() {
     const cohortData = {
@@ -75,7 +81,7 @@ class AdminDashboard extends React.Component<Props, {}> {
 
     return (
       <div>
-        <Typography variant="h2" align="center">
+        <Typography variant="h2" align="center" onClick={this.refreshAll}>
           Admin Dashboard
         </Typography>
         <Cohorts {...cohortData} />

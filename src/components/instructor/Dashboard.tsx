@@ -78,10 +78,14 @@ type Props = RouteComponentProps<any> & ComponentProps;
 
 class InstructorDashboard extends React.Component<Props, {}> {
   componentWillMount() {
+    this.refreshAll();
+  }
+
+  refreshAll = () => {
     this.props.getAllAssignments();
     this.props.getAllCohorts();
     this.props.getAllDeliverables();
-  }
+  };
 
   render() {
     const cohortData = {
@@ -115,7 +119,7 @@ class InstructorDashboard extends React.Component<Props, {}> {
 
     return (
       <div>
-        <Typography variant="h2" align="center">
+        <Typography variant="h2" align="center" onClick={this.refreshAll}>
           Instructor Dashboard
         </Typography>
         <Cohorts {...cohortData} />

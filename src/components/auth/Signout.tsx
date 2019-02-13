@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import { signoutUser } from '../../actions/auth';
 import { resetAll } from '../../actions/sharedActions';
@@ -28,7 +28,14 @@ class Signout extends React.Component<Props, {}> {
   }
 
   render() {
-    return <div>Bye Bye</div>;
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: {},
+        }}
+      />
+    );
   }
 }
 
