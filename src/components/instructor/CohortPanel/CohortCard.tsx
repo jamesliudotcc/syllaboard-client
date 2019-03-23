@@ -59,10 +59,10 @@ type Props = OwnProps & WithStyles<typeof styles>;
 class CohortCard extends React.Component<Props, {}> {
   render() {
     const { cohort } = this.props;
-    const students = cohort.students.map((student: User) => (
-      <ListItem key={student._id}>
+    const students = cohort.students.map((student: User, i) => (
+      student ? <ListItem key={student._id}>
         <ListItemText primary={`${student.firstName} ${student.lastName}`} />
-      </ListItem>
+      </ListItem> : null
     ));
     const instructors = cohort.instructors.map((instructor: User) =>
       instructor ? (
