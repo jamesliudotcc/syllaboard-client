@@ -1042,10 +1042,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-datepicker@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-2.0.2.tgz#83b43c1db5f90cd9cc7371be2d202d3aed8629fb"
-  integrity sha512-IKnXmlKZXws8aeA2gjEAqhMo36qE4ISILsbA2XPoEvXB+7KiJ6w4knD1MO7FbxNw9bEqVBTEW5cHfx1mth6lxA==
+"@types/react-datepicker@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-2.3.0.tgz#9bd57914fc714c070653d7aa5381a139e4fabb63"
+  integrity sha512-E+FNo6BRiFi12R5VqFb9OFc8cNZxQFJLIowLFcuSefdi+4SJLRCe6W6r1kxYNYW5uvGOJ35SS5Oe/PLqcfUezA==
   dependencies:
     "@types/react" "*"
     popper.js "^1.14.1"
