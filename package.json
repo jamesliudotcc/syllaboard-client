@@ -15,7 +15,7 @@
     "date-fns": "2.0.0-alpha.25",
     "history": "^4.7.2",
     "material-ui-pickers": "^2.1.2",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
