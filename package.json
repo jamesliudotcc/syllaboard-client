@@ -10,7 +10,7 @@
     "@types/node": "10.12.21",
     "@types/react": "16.8.1",
     "@types/react-dom": "16.0.11",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "connected-react-router": "^6.2.2",
     "date-fns": "2.0.0-alpha.25",
     "history": "^4.7.2",
