@@ -1007,10 +1007,10 @@
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
 
-"@types/material-ui@^0.21.5":
-  version "0.21.5"
-  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.5.tgz#a93cc4a551f7c07a0ec54e52b4ad7994a5a9450e"
-  integrity sha512-TfS3WQEsu4oCJC/+qOTf2t5UjthxsE4LKWnY0yR8+2G+TJ9zO+2dlkH5b5uEIX7ftJM7vn/ZqihZCYCTKNjDCg==
+"@types/material-ui@^0.21.9":
+  version "0.21.9"
+  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.9.tgz#156a7e78274b8d0c55e19a6b5483b105aa53c0f3"
+  integrity sha512-YhZzW7rRqT2VpNTDYdXAB4Qgy1oBK2YDL1QSeL8t2ALmFTv141a5KW1buTobkc840QN+GGvon/u814jOxsvZLw==
   dependencies:
     "@types/react" "*"
     "@types/react-addons-linked-state-mixin" "*"
